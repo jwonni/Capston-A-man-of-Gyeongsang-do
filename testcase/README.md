@@ -1,4 +1,4 @@
-# TestCase (0/24 0%)
+# TestCase (3/24 13%)
 ### 1. 시각 지능 (Model A & B) — 3/7 (42%)
 
 #### Model A · 텍스트 탐지

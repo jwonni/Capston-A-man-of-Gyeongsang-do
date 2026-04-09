@@ -1,0 +1,460 @@
+{
+    "total_predictions": 50,
+    "model_path": ".\\outputs\\unet_trained\\bce_iou_512_30_0.5_0.5_10\\model_final.pt",
+    "image_dir": ".\\data\\train\\images\\",
+    "output_dir": ".\\experiments\\exp01_bce_iou",
+    "image_size": 512,
+    "threshold": 0.5,
+    "predictions": [
+        {
+            "image": "phase1_001.jpg",
+            "mask": "phase1_001_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_001_mask.png",
+            "original_size": [
+                1122,
+                1006
+            ]
+        },
+        {
+            "image": "phase1_002.jpg",
+            "mask": "phase1_002_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_002_mask.png",
+            "original_size": [
+                2624,
+                2864
+            ]
+        },
+        {
+            "image": "phase1_003.jpg",
+            "mask": "phase1_003_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_003_mask.png",
+            "original_size": [
+                1399,
+                1031
+            ]
+        },
+        {
+            "image": "phase1_004.jpg",
+            "mask": "phase1_004_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_004_mask.png",
+            "original_size": [
+                1399,
+                1030
+            ]
+        },
+        {
+            "image": "phase1_005.jpg",
+            "mask": "phase1_005_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_005_mask.png",
+            "original_size": [
+                1399,
+                1654
+            ]
+        },
+        {
+            "image": "phase1_006.png",
+            "mask": "phase1_006_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_006_mask.png",
+            "original_size": [
+                1418,
+                838
+            ]
+        },
+        {
+            "image": "phase1_007.jpg",
+            "mask": "phase1_007_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_007_mask.png",
+            "original_size": [
+                750,
+                786
+            ]
+        },
+        {
+            "image": "phase1_008.jpg",
+            "mask": "phase1_008_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_008_mask.png",
+            "original_size": [
+                1100,
+                1498
+            ]
+        },
+        {
+            "image": "phase1_009.png",
+            "mask": "phase1_009_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_009_mask.png",
+            "original_size": [
+                1928,
+                1130
+            ]
+        },
+        {
+            "image": "phase1_010.jpg",
+            "mask": "phase1_010_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_010_mask.png",
+            "original_size": [
+                1206,
+                1207
+            ]
+        },
+        {
+            "image": "phase1_011.jpg",
+            "mask": "phase1_011_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_011_mask.png",
+            "original_size": [
+                1600,
+                890
+            ]
+        },
+        {
+            "image": "phase1_012.jpg",
+            "mask": "phase1_012_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_012_mask.png",
+            "original_size": [
+                2985,
+                1660
+            ]
+        },
+        {
+            "image": "phase1_013.jpg",
+            "mask": "phase1_013_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_013_mask.png",
+            "original_size": [
+                1684,
+                3353
+            ]
+        },
+        {
+            "image": "phase1_014.jpg",
+            "mask": "phase1_014_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_014_mask.png",
+            "original_size": [
+                1920,
+                1008
+            ]
+        },
+        {
+            "image": "phase1_015.jpg",
+            "mask": "phase1_015_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_015_mask.png",
+            "original_size": [
+                1920,
+                1649
+            ]
+        },
+        {
+            "image": "phase1_016.jpg",
+            "mask": "phase1_016_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_016_mask.png",
+            "original_size": [
+                1920,
+                1649
+            ]
+        },
+        {
+            "image": "phase1_017.jpg",
+            "mask": "phase1_017_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_017_mask.png",
+            "original_size": [
+                1800,
+                1314
+            ]
+        },
+        {
+            "image": "phase1_018.png",
+            "mask": "phase1_018_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_018_mask.png",
+            "original_size": [
+                1100,
+                503
+            ]
+        },
+        {
+            "image": "phase1_019.png",
+            "mask": "phase1_019_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_019_mask.png",
+            "original_size": [
+                1058,
+                1354
+            ]
+        },
+        {
+            "image": "phase1_020.png",
+            "mask": "phase1_020_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_020_mask.png",
+            "original_size": [
+                1100,
+                582
+            ]
+        },
+        {
+            "image": "phase1_021.jpg",
+            "mask": "phase1_021_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_021_mask.png",
+            "original_size": [
+                1140,
+                640
+            ]
+        },
+        {
+            "image": "phase1_022.jpg",
+            "mask": "phase1_022_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_022_mask.png",
+            "original_size": [
+                421,
+                595
+            ]
+        },
+        {
+            "image": "phase1_023.jpg",
+            "mask": "phase1_023_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_023_mask.png",
+            "original_size": [
+                689,
+                420
+            ]
+        },
+        {
+            "image": "phase1_024.jpg",
+            "mask": "phase1_024_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_024_mask.png",
+            "original_size": [
+                674,
+                411
+            ]
+        },
+        {
+            "image": "phase1_025.jpg",
+            "mask": "phase1_025_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_025_mask.png",
+            "original_size": [
+                1397,
+                1030
+            ]
+        },
+        {
+            "image": "phase1_026.jpg",
+            "mask": "phase1_026_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_026_mask.png",
+            "original_size": [
+                1399,
+                1030
+            ]
+        },
+        {
+            "image": "phase1_027.jpg",
+            "mask": "phase1_027_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_027_mask.png",
+            "original_size": [
+                1399,
+                1031
+            ]
+        },
+        {
+            "image": "phase1_028.jpg",
+            "mask": "phase1_028_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_028_mask.png",
+            "original_size": [
+                1920,
+                2404
+            ]
+        },
+        {
+            "image": "phase1_029.jpg",
+            "mask": "phase1_029_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_029_mask.png",
+            "original_size": [
+                1000,
+                827
+            ]
+        },
+        {
+            "image": "phase1_030.jpg",
+            "mask": "phase1_030_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_030_mask.png",
+            "original_size": [
+                1000,
+                827
+            ]
+        },
+        {
+            "image": "phase1_031.jpg",
+            "mask": "phase1_031_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_031_mask.png",
+            "original_size": [
+                1000,
+                827
+            ]
+        },
+        {
+            "image": "phase1_032.jpg",
+            "mask": "phase1_032_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_032_mask.png",
+            "original_size": [
+                14010,
+                6019
+            ]
+        },
+        {
+            "image": "phase1_033.jpg",
+            "mask": "phase1_033_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_033_mask.png",
+            "original_size": [
+                1600,
+                1143
+            ]
+        },
+        {
+            "image": "phase1_034.jpg",
+            "mask": "phase1_034_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_034_mask.png",
+            "original_size": [
+                1600,
+                1143
+            ]
+        },
+        {
+            "image": "phase1_035.jpg",
+            "mask": "phase1_035_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_035_mask.png",
+            "original_size": [
+                1559,
+                1234
+            ]
+        },
+        {
+            "image": "phase1_036.jpg",
+            "mask": "phase1_036_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_036_mask.png",
+            "original_size": [
+                2481,
+                3558
+            ]
+        },
+        {
+            "image": "phase1_037.jpg",
+            "mask": "phase1_037_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_037_mask.png",
+            "original_size": [
+                2210,
+                953
+            ]
+        },
+        {
+            "image": "phase1_038.jpg",
+            "mask": "phase1_038_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_038_mask.png",
+            "original_size": [
+                1200,
+                2467
+            ]
+        },
+        {
+            "image": "phase1_039.jpg",
+            "mask": "phase1_039_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_039_mask.png",
+            "original_size": [
+                611,
+                665
+            ]
+        },
+        {
+            "image": "phase1_040.jpg",
+            "mask": "phase1_040_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_040_mask.png",
+            "original_size": [
+                742,
+                497
+            ]
+        },
+        {
+            "image": "phase1_041.jpg",
+            "mask": "phase1_041_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_041_mask.png",
+            "original_size": [
+                517,
+                658
+            ]
+        },
+        {
+            "image": "phase1_042.jpg",
+            "mask": "phase1_042_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_042_mask.png",
+            "original_size": [
+                1100,
+                520
+            ]
+        },
+        {
+            "image": "phase1_043.jpg",
+            "mask": "phase1_043_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_043_mask.png",
+            "original_size": [
+                600,
+                558
+            ]
+        },
+        {
+            "image": "phase1_044.jpg",
+            "mask": "phase1_044_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_044_mask.png",
+            "original_size": [
+                722,
+                644
+            ]
+        },
+        {
+            "image": "phase1_045.jpg",
+            "mask": "phase1_045_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_045_mask.png",
+            "original_size": [
+                743,
+                649
+            ]
+        },
+        {
+            "image": "phase1_046.jpg",
+            "mask": "phase1_046_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_046_mask.png",
+            "original_size": [
+                787,
+                622
+            ]
+        },
+        {
+            "image": "phase1_047.jpg",
+            "mask": "phase1_047_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_047_mask.png",
+            "original_size": [
+                773,
+                820
+            ]
+        },
+        {
+            "image": "phase1_048.jpg",
+            "mask": "phase1_048_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_048_mask.png",
+            "original_size": [
+                923,
+                520
+            ]
+        },
+        {
+            "image": "phase1_049.jpg",
+            "mask": "phase1_049_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_049_mask.png",
+            "original_size": [
+                720,
+                419
+            ]
+        },
+        {
+            "image": "phase1_050.jpg",
+            "mask": "phase1_050_mask.png",
+            "output_path": "experiments\\exp01_bce_iou\\phase1_050_mask.png",
+            "original_size": [
+                2785,
+                1243
+            ]
+        }
+    ]
+}

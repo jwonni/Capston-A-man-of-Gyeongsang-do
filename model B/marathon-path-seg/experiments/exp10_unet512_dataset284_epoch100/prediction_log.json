@@ -1,0 +1,190 @@
+{
+    "total_predictions": 20,
+    "model_path": "outputs/unet_trained/model_final.pt",
+    "image_dir": "data/test/images",
+    "output_dir": "outputs/predictions/unet",
+    "image_size": 512,
+    "threshold": 0.5,
+    "predictions": [
+        {
+            "image": "test001.jpg",
+            "mask": "test001_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test001_mask.png",
+            "original_size": [
+                1200,
+                2467
+            ]
+        },
+        {
+            "image": "test002.jpg",
+            "mask": "test002_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test002_mask.png",
+            "original_size": [
+                611,
+                665
+            ]
+        },
+        {
+            "image": "test003.jpg",
+            "mask": "test003_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test003_mask.png",
+            "original_size": [
+                742,
+                497
+            ]
+        },
+        {
+            "image": "test004.jpg",
+            "mask": "test004_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test004_mask.png",
+            "original_size": [
+                517,
+                658
+            ]
+        },
+        {
+            "image": "test005.jpg",
+            "mask": "test005_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test005_mask.png",
+            "original_size": [
+                1100,
+                520
+            ]
+        },
+        {
+            "image": "test006.jpg",
+            "mask": "test006_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test006_mask.png",
+            "original_size": [
+                600,
+                558
+            ]
+        },
+        {
+            "image": "test007.jpg",
+            "mask": "test007_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test007_mask.png",
+            "original_size": [
+                722,
+                644
+            ]
+        },
+        {
+            "image": "test008.jpg",
+            "mask": "test008_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test008_mask.png",
+            "original_size": [
+                743,
+                649
+            ]
+        },
+        {
+            "image": "test009.jpg",
+            "mask": "test009_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test009_mask.png",
+            "original_size": [
+                787,
+                622
+            ]
+        },
+        {
+            "image": "test010.jpg",
+            "mask": "test010_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test010_mask.png",
+            "original_size": [
+                773,
+                820
+            ]
+        },
+        {
+            "image": "test011.jpg",
+            "mask": "test011_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test011_mask.png",
+            "original_size": [
+                923,
+                520
+            ]
+        },
+        {
+            "image": "test012.jpg",
+            "mask": "test012_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test012_mask.png",
+            "original_size": [
+                720,
+                419
+            ]
+        },
+        {
+            "image": "test013.jpg",
+            "mask": "test013_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test013_mask.png",
+            "original_size": [
+                2785,
+                1243
+            ]
+        },
+        {
+            "image": "test014.png",
+            "mask": "test014_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test014_mask.png",
+            "original_size": [
+                981,
+                654
+            ]
+        },
+        {
+            "image": "test015.png",
+            "mask": "test015_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test015_mask.png",
+            "original_size": [
+                1397,
+                1030
+            ]
+        },
+        {
+            "image": "test016.jpg",
+            "mask": "test016_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test016_mask.png",
+            "original_size": [
+                843,
+                596
+            ]
+        },
+        {
+            "image": "test017.png",
+            "mask": "test017_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test017_mask.png",
+            "original_size": [
+                2001,
+                1401
+            ]
+        },
+        {
+            "image": "test018.jpg",
+            "mask": "test018_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test018_mask.png",
+            "original_size": [
+                1295,
+                592
+            ]
+        },
+        {
+            "image": "test019.png",
+            "mask": "test019_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test019_mask.png",
+            "original_size": [
+                842,
+                596
+            ]
+        },
+        {
+            "image": "test020.png",
+            "mask": "test020_mask.png",
+            "output_path": "outputs\\predictions\\unet\\test020_mask.png",
+            "original_size": [
+                1025,
+                517
+            ]
+        }
+    ]
+}

@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Build / package artifacts
+build/
+dist/
+*.egg-info/
+
+# Training artifacts (models/logs) - keep data and experiment images tracked
+outputs/
+
+# Notebook/runtime temp
+*.log
+
+# Datasets
+data/train/
+
+# TESTING

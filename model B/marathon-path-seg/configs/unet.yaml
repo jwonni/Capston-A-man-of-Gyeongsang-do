@@ -1,0 +1,29 @@
+# U-Net 기본 학습 설정
+model_name: "unet"
+
+# Data
+data_root: "data/train"
+image_size: 512
+val_ratio: 0.2
+use_augmentation: false
+
+# Model
+base_channels: 32
+
+# Training
+batch_size: 4
+epochs: 30
+lr: 0.001
+seed: 42
+num_workers: 0
+
+# Loss
+loss_type: "bce_iou"
+bce_weight: 1.0
+iou_weight: 0.0
+dice_weight: 0.5
+pos_weight: 10.0
+
+# Output
+output_dir: "outputs/unet_trained"
+save_interval: 1

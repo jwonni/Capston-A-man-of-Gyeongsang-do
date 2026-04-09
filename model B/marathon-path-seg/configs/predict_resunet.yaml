@@ -1,0 +1,7 @@
+# ResUNet 추론 설정
+model_path: "outputs/resunet_trained/model_final.pt"
+image_dir: "data/test/images"
+output_dir: "outputs/predictions/resunet"
+image_size: 512
+threshold: 0.5
+base_channels: 32

@@ -1,0 +1,29 @@
+# DeepLabV3 학습 설정
+model_name: "deeplabv3"
+
+# Data
+data_root: "data/train"
+image_size: 512
+val_ratio: 0.2
+use_augmentation: false
+
+# Model
+base_channels: 32
+
+# Training
+batch_size: 4
+epochs: 30
+lr: 0.0005
+seed: 42
+num_workers: 0
+
+# Loss
+loss_type: "bce_iou"
+bce_weight: 0.5
+iou_weight: 0.5
+dice_weight: 0.5
+pos_weight: 10.0
+
+# Output
+output_dir: "outputs/deeplabv3_trained"
+save_interval: 1

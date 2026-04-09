@@ -1,0 +1,92 @@
+[
+  {
+    "idx": 1,
+    "text": "구y리",
+    "confidence": 0.14103649408113983,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 2,
+    "text": "승근보점피장",
+    "confidence": 0.011337759125978777,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 3,
+    "text": "'받아다다",
+    "confidence": 0.20538988962064336,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 4,
+    "text": "나다디",
+    "confidence": 0.010103932215957333,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 5,
+    "text": "나구금9",
+    "confidence": 0.04491102695465088,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 7,
+    "text": "하다다W다다",
+    "confidence": 0.0010306639464587105,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 8,
+    "text": "놔우요 \"",
+    "confidence": 0.154766516799362,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 9,
+    "text": "Okm",
+    "confidence": 0.9972854651844928,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 10,
+    "text": "영어다보",
+    "confidence": 0.2591431140899658,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 11,
+    "text": "반환",
+    "confidence": 0.5553210395453068,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 12,
+    "text": "금선 면",
+    "confidence": 0.21562884747982025,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 13,
+    "text": "'주하되스하업",
+    "confidence": 0.049640243076398916,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 14,
+    "text": "뱃가;대교",
+    "confidence": 0.17416468299502702,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 16,
+    "text": "엉신강세유공원",
+    "confidence": 0.3784047165986398,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 17,
+    "text": "믿'",
+    "confidence": 0.010474633328571,
+    "reason": "below_confidence_or_not_whitelisted"
+  }
+]

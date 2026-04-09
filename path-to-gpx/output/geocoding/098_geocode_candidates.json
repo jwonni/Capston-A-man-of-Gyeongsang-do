@@ -1,0 +1,8 @@
+{
+  "image": "path-to-gpx\\data\\images\\098.jpg",
+  "mode": "kr_place_whitelist_only",
+  "geocode_candidates": [],
+  "gps_regex_candidates": {
+    "gps_matches": []
+  }
+}

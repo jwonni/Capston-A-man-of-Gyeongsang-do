@@ -1,0 +1,54 @@
+{
+  "image": "path-to-gpx\\data\\images\\083.jpg",
+  "mode": "kr_place_whitelist_only",
+  "geocode_candidates": [
+    {
+      "idx": 9,
+      "text": "여의도",
+      "matched_place": "여의도",
+      "geocoded": true,
+      "lat": 37.5256731,
+      "lon": 126.9252171,
+      "display_name": "여의도, 영등포구, 서울특별시, 대한민국"
+    },
+    {
+      "idx": 18,
+      "text": "여의도",
+      "matched_place": "여의도",
+      "geocoded": true,
+      "lat": 37.5256731,
+      "lon": 126.9252171,
+      "display_name": "여의도, 영등포구, 서울특별시, 대한민국"
+    },
+    {
+      "idx": 62,
+      "text": "여의도",
+      "matched_place": "여의도",
+      "geocoded": true,
+      "lat": 37.5256731,
+      "lon": 126.9252171,
+      "display_name": "여의도, 영등포구, 서울특별시, 대한민국"
+    },
+    {
+      "idx": 64,
+      "text": "여의도",
+      "matched_place": "여의도",
+      "geocoded": true,
+      "lat": 37.5256731,
+      "lon": 126.9252171,
+      "display_name": "여의도, 영등포구, 서울특별시, 대한민국"
+    },
+    {
+      "idx": 21,
+      "text": "한강공원",
+      "matched_place": "한강공원",
+      "geocoded": true,
+      "lat": 37.5219498,
+      "lon": 127.0996957,
+      "display_name": "한강공원 잠실나루역나들목, 신천동, 잠실6동, 송파구, 서울특별시, 05504, 대한민국"
+    }
+  ],
+  "gps_regex_candidates": {
+    "gps_matches": []
+  }
+}

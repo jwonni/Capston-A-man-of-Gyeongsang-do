@@ -1,0 +1,40 @@
+{
+  "image": "path-to-gpx\\data\\images\\106.jpg",
+  "engine": "easyocr",
+  "mode": "kr_place_whitelist_only",
+  "whitelist_size": 43,
+  "detection_count": 1,
+  "rejected_count": 12,
+  "detections": [
+    {
+      "idx": 2,
+      "text": "광주시점",
+      "matched_place": "광주",
+      "confidence": 0.4625818133354187,
+      "polygon_xy": [
+        [
+          425.0,
+          31.0
+        ],
+        [
+          467.0,
+          31.0
+        ],
+        [
+          467.0,
+          45.0
+        ],
+        [
+          425.0,
+          45.0
+        ]
+      ],
+      "center_x": 446.0,
+      "center_y": 38.0,
+      "width": 42.0,
+      "height": 14.0,
+      "norm_center_x": 0.601078167115903,
+      "norm_center_y": 0.06690140845070422
+    }
+  ]
+}

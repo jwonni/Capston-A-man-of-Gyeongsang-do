@@ -1,0 +1,74 @@
+[
+  {
+    "idx": 1,
+    "text": "흔느겨기 리_",
+    "confidence": 0.018908757083331052,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 3,
+    "text": "골인",
+    "confidence": 0.7656017866260036,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 4,
+    "text": "@늘 고- 느",
+    "confidence": 0.009530123709011705,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 5,
+    "text": "넘로4가오",
+    "confidence": 0.09321714883845683,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 6,
+    "text": "사머되도",
+    "confidence": 0.006357626523822546,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 7,
+    "text": "9 서점다",
+    "confidence": 0.04626622996263676,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 8,
+    "text": "하프반환",
+    "confidence": 0.7755814790725708,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 9,
+    "text": "UTL",
+    "confidence": 0.5254538331255013,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 10,
+    "text": "서라두",
+    "confidence": 0.08232019543714826,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 11,
+    "text": "{리n지도",
+    "confidence": 0.17791046394284632,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 12,
+    "text": "구급차",
+    "confidence": 0.9969328024043326,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 13,
+    "text": "n반관 |",
+    "confidence": 0.2728338503631491,
+    "reason": "below_confidence_or_not_whitelisted"
+  }
+]

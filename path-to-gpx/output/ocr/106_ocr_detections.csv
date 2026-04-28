@@ -1,2 +1,0 @@
-idx,text,matched_place,confidence,center_x,center_y,width,height,norm_center_x,norm_center_y,polygon_xy
-2,광주시점,광주,0.4625818133354187,446.0,38.0,42.0,14.0,0.601078167115903,0.06690140845070422,"[[425.0, 31.0], [467.0, 31.0], [467.0, 45.0], [425.0, 45.0]]"

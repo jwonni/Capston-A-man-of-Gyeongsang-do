@@ -1,0 +1,101 @@
+{
+  "created_at_utc": "2026-04-28T07:03:33.124875+00:00",
+  "image": "path-to-gpx\\data\\images\\083.jpg",
+  "image_width": 1397,
+  "image_height": 1030,
+  "zoom": 16,
+  "patch_size": 512,
+  "anchor_count": 3,
+  "anchors": [
+    {
+      "idx": 51,
+      "text": "국회의사당역",
+      "lat": 37.5281465047706,
+      "lon": 126.91783895106,
+      "display_name": "국회의사당역 9호선",
+      "image_center_x": 700.0,
+      "image_center_y": 639.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\083_anchor_51_src.png",
+      "src_offset": {
+        "offset_x": 444,
+        "offset_y": 383,
+        "center_in_image_x": 700.0,
+        "center_in_image_y": 639.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 1397,
+        "image_height": 1030
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\083_anchor_51_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 37.5281465047706,
+        "center_lon": 126.91783895106,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 19,
+      "text": "국회의사당",
+      "lat": 37.53190827313679,
+      "lon": 126.91416237338858,
+      "display_name": "국회의사당",
+      "image_center_x": 516.0,
+      "image_center_y": 410.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\083_anchor_19_src.png",
+      "src_offset": {
+        "offset_x": 260,
+        "offset_y": 154,
+        "center_in_image_x": 516.0,
+        "center_in_image_y": 410.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 1397,
+        "image_height": 1030
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\083_anchor_19_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 37.53190827313679,
+        "center_lon": 126.91416237338858,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 110,
+      "text": "여의도공원 문화의마당",
+      "lat": 37.524630704323,
+      "lon": 126.920336120685,
+      "display_name": "여의도공원 문화의마당",
+      "image_center_x": 859.0,
+      "image_center_y": 940.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\083_anchor_110_src.png",
+      "src_offset": {
+        "offset_x": 603,
+        "offset_y": 684,
+        "center_in_image_x": 859.0,
+        "center_in_image_y": 940.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 1397,
+        "image_height": 1030
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\083_anchor_110_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 37.524630704323,
+        "center_lon": 126.920336120685,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    }
+  ]
+}

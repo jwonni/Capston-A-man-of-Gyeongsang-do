@@ -1,0 +1,40 @@
+{
+  "image": "path-to-gpx\\data\\images\\110.jpg",
+  "engine": "easyocr",
+  "mode": "kr_place_whitelist_only",
+  "whitelist_size": 51,
+  "detection_count": 1,
+  "rejected_count": 16,
+  "detections": [
+    {
+      "idx": 6,
+      "text": "나주대교",
+      "matched_place": "나주대교",
+      "confidence": 0.9891166090965271,
+      "polygon_xy": [
+        [
+          311.0,
+          361.0
+        ],
+        [
+          355.0,
+          361.0
+        ],
+        [
+          355.0,
+          375.0
+        ],
+        [
+          311.0,
+          375.0
+        ]
+      ],
+      "center_x": 333.0,
+      "center_y": 368.0,
+      "width": 44.0,
+      "height": 14.0,
+      "norm_center_x": 0.5203125,
+      "norm_center_y": 0.46
+    }
+  ]
+}

@@ -1,0 +1,246 @@
+{
+  "created_at_utc": "2026-04-27T14:31:25.317888+00:00",
+  "source_geocode_json": "path-to-gpx\\output\\geocoding\\083_geocode_candidates.json",
+  "selected_candidate": {
+    "idx": 9,
+    "text": "여의도",
+    "matched_place": "여의도",
+    "lat": 37.5256731,
+    "lon": 126.9252171,
+    "display_name": "여의도, 영등포구, 서울특별시, 대한민국"
+  },
+  "zoom": 14,
+  "tile_size": 1400,
+  "native_osm_tile_size": 256,
+  "primary_keyword": "",
+  "tile_count": 1,
+  "tile": {
+    "zoom": 14,
+    "x": 13968,
+    "y": 6347,
+    "tile_path": "path-to-gpx\\output\\osm\\tiles\\083_z14_x13968_y6347.png",
+    "saved_width": 1400,
+    "saved_height": 1400,
+    "centered": true,
+    "center_pixel_in_output_x": 700.9605094399303,
+    "center_pixel_in_output_y": 700.7499326299876,
+    "source_tile_range": {
+      "x_start": 13965,
+      "x_end": 13971,
+      "y_start": 6344,
+      "y_end": 6349
+    },
+    "source_tiles": [
+      {
+        "x": 13965,
+        "y": 6344,
+        "tile_url": "https://tile.openstreetmap.org/14/13965/6344.png"
+      },
+      {
+        "x": 13966,
+        "y": 6344,
+        "tile_url": "https://tile.openstreetmap.org/14/13966/6344.png"
+      },
+      {
+        "x": 13967,
+        "y": 6344,
+        "tile_url": "https://tile.openstreetmap.org/14/13967/6344.png"
+      },
+      {
+        "x": 13968,
+        "y": 6344,
+        "tile_url": "https://tile.openstreetmap.org/14/13968/6344.png"
+      },
+      {
+        "x": 13969,
+        "y": 6344,
+        "tile_url": "https://tile.openstreetmap.org/14/13969/6344.png"
+      },
+      {
+        "x": 13970,
+        "y": 6344,
+        "tile_url": "https://tile.openstreetmap.org/14/13970/6344.png"
+      },
+      {
+        "x": 13971,
+        "y": 6344,
+        "tile_url": "https://tile.openstreetmap.org/14/13971/6344.png"
+      },
+      {
+        "x": 13965,
+        "y": 6345,
+        "tile_url": "https://tile.openstreetmap.org/14/13965/6345.png"
+      },
+      {
+        "x": 13966,
+        "y": 6345,
+        "tile_url": "https://tile.openstreetmap.org/14/13966/6345.png"
+      },
+      {
+        "x": 13967,
+        "y": 6345,
+        "tile_url": "https://tile.openstreetmap.org/14/13967/6345.png"
+      },
+      {
+        "x": 13968,
+        "y": 6345,
+        "tile_url": "https://tile.openstreetmap.org/14/13968/6345.png"
+      },
+      {
+        "x": 13969,
+        "y": 6345,
+        "tile_url": "https://tile.openstreetmap.org/14/13969/6345.png"
+      },
+      {
+        "x": 13970,
+        "y": 6345,
+        "tile_url": "https://tile.openstreetmap.org/14/13970/6345.png"
+      },
+      {
+        "x": 13971,
+        "y": 6345,
+        "tile_url": "https://tile.openstreetmap.org/14/13971/6345.png"
+      },
+      {
+        "x": 13965,
+        "y": 6346,
+        "tile_url": "https://tile.openstreetmap.org/14/13965/6346.png"
+      },
+      {
+        "x": 13966,
+        "y": 6346,
+        "tile_url": "https://tile.openstreetmap.org/14/13966/6346.png"
+      },
+      {
+        "x": 13967,
+        "y": 6346,
+        "tile_url": "https://tile.openstreetmap.org/14/13967/6346.png"
+      },
+      {
+        "x": 13968,
+        "y": 6346,
+        "tile_url": "https://tile.openstreetmap.org/14/13968/6346.png"
+      },
+      {
+        "x": 13969,
+        "y": 6346,
+        "tile_url": "https://tile.openstreetmap.org/14/13969/6346.png"
+      },
+      {
+        "x": 13970,
+        "y": 6346,
+        "tile_url": "https://tile.openstreetmap.org/14/13970/6346.png"
+      },
+      {
+        "x": 13971,
+        "y": 6346,
+        "tile_url": "https://tile.openstreetmap.org/14/13971/6346.png"
+      },
+      {
+        "x": 13965,
+        "y": 6347,
+        "tile_url": "https://tile.openstreetmap.org/14/13965/6347.png"
+      },
+      {
+        "x": 13966,
+        "y": 6347,
+        "tile_url": "https://tile.openstreetmap.org/14/13966/6347.png"
+      },
+      {
+        "x": 13967,
+        "y": 6347,
+        "tile_url": "https://tile.openstreetmap.org/14/13967/6347.png"
+      },
+      {
+        "x": 13968,
+        "y": 6347,
+        "tile_url": "https://tile.openstreetmap.org/14/13968/6347.png"
+      },
+      {
+        "x": 13969,
+        "y": 6347,
+        "tile_url": "https://tile.openstreetmap.org/14/13969/6347.png"
+      },
+      {
+        "x": 13970,
+        "y": 6347,
+        "tile_url": "https://tile.openstreetmap.org/14/13970/6347.png"
+      },
+      {
+        "x": 13971,
+        "y": 6347,
+        "tile_url": "https://tile.openstreetmap.org/14/13971/6347.png"
+      },
+      {
+        "x": 13965,
+        "y": 6348,
+        "tile_url": "https://tile.openstreetmap.org/14/13965/6348.png"
+      },
+      {
+        "x": 13966,
+        "y": 6348,
+        "tile_url": "https://tile.openstreetmap.org/14/13966/6348.png"
+      },
+      {
+        "x": 13967,
+        "y": 6348,
+        "tile_url": "https://tile.openstreetmap.org/14/13967/6348.png"
+      },
+      {
+        "x": 13968,
+        "y": 6348,
+        "tile_url": "https://tile.openstreetmap.org/14/13968/6348.png"
+      },
+      {
+        "x": 13969,
+        "y": 6348,
+        "tile_url": "https://tile.openstreetmap.org/14/13969/6348.png"
+      },
+      {
+        "x": 13970,
+        "y": 6348,
+        "tile_url": "https://tile.openstreetmap.org/14/13970/6348.png"
+      },
+      {
+        "x": 13971,
+        "y": 6348,
+        "tile_url": "https://tile.openstreetmap.org/14/13971/6348.png"
+      },
+      {
+        "x": 13965,
+        "y": 6349,
+        "tile_url": "https://tile.openstreetmap.org/14/13965/6349.png"
+      },
+      {
+        "x": 13966,
+        "y": 6349,
+        "tile_url": "https://tile.openstreetmap.org/14/13966/6349.png"
+      },
+      {
+        "x": 13967,
+        "y": 6349,
+        "tile_url": "https://tile.openstreetmap.org/14/13967/6349.png"
+      },
+      {
+        "x": 13968,
+        "y": 6349,
+        "tile_url": "https://tile.openstreetmap.org/14/13968/6349.png"
+      },
+      {
+        "x": 13969,
+        "y": 6349,
+        "tile_url": "https://tile.openstreetmap.org/14/13969/6349.png"
+      },
+      {
+        "x": 13970,
+        "y": 6349,
+        "tile_url": "https://tile.openstreetmap.org/14/13970/6349.png"
+      },
+      {
+        "x": 13971,
+        "y": 6349,
+        "tile_url": "https://tile.openstreetmap.org/14/13971/6349.png"
+      }
+    ]
+  }
+}

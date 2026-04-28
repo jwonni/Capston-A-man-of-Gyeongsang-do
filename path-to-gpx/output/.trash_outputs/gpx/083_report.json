@@ -1,0 +1,21 @@
+{
+  "image": "path-to-gpx\\data\\images\\083.jpg",
+  "skeleton_waypoints": 500,
+  "tps_model_type": "tps",
+  "tps_control_points": 39,
+  "tps_self_residual_deg": 3.347928126950024e-09,
+  "coverage_quality": {
+    "n_cps": 39,
+    "quality": "excellent",
+    "coverage_pct": 44.13,
+    "x_span_pct": 55.28,
+    "y_span_pct": 79.84
+  },
+  "projected_raw": 500,
+  "projected_valid": 500,
+  "osrm_used": true,
+  "osrm_url": "http://router.project-osrm.org",
+  "osrm_profile": "foot",
+  "final_trackpoints": 500,
+  "gpx_path": "path-to-gpx\\output\\gpx\\083.gpx"
+}

@@ -1,0 +1,71 @@
+{
+  "created_at_utc": "2026-04-28T06:44:50.631657+00:00",
+  "source_geocode_json": "path-to-gpx\\output\\02.geocoding\\083_geocode_candidates.json",
+  "zoom": 17,
+  "tile_size": 1400,
+  "tile_count": 3,
+  "tiles": [
+    {
+      "zoom": 17,
+      "lat": 37.5281465047706,
+      "lon": 126.91783895106,
+      "tile_path": "path-to-gpx\\output\\03.osm\\tiles\\083_idx51_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 51,
+      "place_label": "국회의사당역"
+    },
+    {
+      "zoom": 17,
+      "lat": 37.53190827313679,
+      "lon": 126.91416237338858,
+      "tile_path": "path-to-gpx\\output\\03.osm\\tiles\\083_idx19_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 19,
+      "place_label": "국회의사당"
+    },
+    {
+      "zoom": 17,
+      "lat": 37.524630704323,
+      "lon": 126.920336120685,
+      "tile_path": "path-to-gpx\\output\\03.osm\\tiles\\083_idx110_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 110,
+      "place_label": "여의도공원 문화의마당"
+    }
+  ],
+  "candidates": [
+    {
+      "idx": 51,
+      "text": "국회의사당역",
+      "matched_place": "국회의사당역",
+      "lat": 37.5281465047706,
+      "lon": 126.91783895106,
+      "display_name": "국회의사당역 9호선"
+    },
+    {
+      "idx": 19,
+      "text": "국회의사당",
+      "matched_place": "국회의사당",
+      "lat": 37.53190827313679,
+      "lon": 126.91416237338858,
+      "display_name": "국회의사당"
+    },
+    {
+      "idx": 110,
+      "text": "여의도공원 문화의마당",
+      "matched_place": "여의도공원 문화의마당",
+      "lat": 37.524630704323,
+      "lon": 126.920336120685,
+      "display_name": "여의도공원 문화의마당"
+    }
+  ]
+}

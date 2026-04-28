@@ -1,0 +1,752 @@
+[
+  {
+    "idx": 1,
+    "text": "여의하류IC 교차로가기전",
+    "confidence": 0.7809347748299287,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 2,
+    "text": "5KM",
+    "confidence": 0.24892620321127065,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 3,
+    "text": "5KM 코스반환점",
+    "confidence": 0.6783280457243205,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 4,
+    "text": "울마리다",
+    "confidence": 0.7257207632064819,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 5,
+    "text": "기탑승장",
+    "confidence": 0.7106146228793156,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 6,
+    "text": "여의도이용소",
+    "confidence": 0.36055224200797814,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 7,
+    "text": "래미안",
+    "confidence": 0.6820564361682366,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 8,
+    "text": "당신1지아파드",
+    "confidence": 0.4949843210073996,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 9,
+    "text": "여의도",
+    "confidence": 0.9998538160368458,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 10,
+    "text": "서칙장",
+    "confidence": 0.6195614346748592,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 11,
+    "text": "사이니숲",
+    "confidence": 0.9483210444450378,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 12,
+    "text": "수영장",
+    "confidence": 0.9969125072593235,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 13,
+    "text": "소녀시대쇼",
+    "confidence": 0.5165891843190675,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 14,
+    "text": "운동장",
+    "confidence": 0.8092089258818997,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 15,
+    "text": "여의도빛꽃길",
+    "confidence": 0.7328749798473335,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 16,
+    "text": "당신중학교",
+    "confidence": 0.4625678504383593,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 17,
+    "text": "육빛무대",
+    "confidence": 0.6450039744377136,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 18,
+    "text": "여의도",
+    "confidence": 0.9995951104761099,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 20,
+    "text": "국회박물관",
+    "confidence": 0.9932347598056628,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 21,
+    "text": "한강공원",
+    "confidence": 0.9752029776573181,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 22,
+    "text": "당신먹리버리치",
+    "confidence": 0.12736415754914143,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 23,
+    "text": "어린이박물관",
+    "confidence": 0.9207167869892663,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 24,
+    "text": "오피스템",
+    "confidence": 0.834656834602356,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 25,
+    "text": "용진임시의점원",
+    "confidence": 0.4123865357656192,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 26,
+    "text": "고방세",
+    "confidence": 0.1563021539879121,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 27,
+    "text": "잔디마당",
+    "confidence": 0.9738252758979797,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 28,
+    "text": "미장기념전시실",
+    "confidence": 0.5538180340682964,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 29,
+    "text": "한산오피스템",
+    "confidence": 0.8612259553422877,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 30,
+    "text": "리153",
+    "confidence": 0.928135871887207,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 31,
+    "text": "SK언크린",
+    "confidence": 0.6550579202315219,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 32,
+    "text": "GS관텍스",
+    "confidence": 0.44695815085016827,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 33,
+    "text": "서물색공원",
+    "confidence": 0.6577208261352685,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 34,
+    "text": "당산무르지오",
+    "confidence": 0.48701099747759125,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 35,
+    "text": "권심런호텔",
+    "confidence": 0.15149154638570678,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 36,
+    "text": "아파트",
+    "confidence": 0.9552187233390397,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 37,
+    "text": "여의도",
+    "confidence": 0.7118627049764789,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 38,
+    "text": "강련래미안",
+    "confidence": 0.24579293991045928,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 39,
+    "text": "투심플레이스",
+    "confidence": 0.10295964319632495,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 40,
+    "text": "영웅포삼관",
+    "confidence": 0.3901250167376437,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 41,
+    "text": "아파트",
+    "confidence": 0.8566103207337034,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 42,
+    "text": "아파디",
+    "confidence": 0.3435692200235215,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 43,
+    "text": "CCMM빌",
+    "confidence": 0.8640018914489154,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 44,
+    "text": "한세실입",
+    "confidence": 0.4039956033229828,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 45,
+    "text": "KB국민은행",
+    "confidence": 0.641864667859442,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 46,
+    "text": "급고미술관",
+    "confidence": 0.5908674920408404,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 47,
+    "text": "파리바계뜨",
+    "confidence": 0.5327695524731959,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 48,
+    "text": "NICE그룹",
+    "confidence": 0.8667771837040001,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 49,
+    "text": "여의동",
+    "confidence": 0.9990090472089196,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 50,
+    "text": "드럭시드",
+    "confidence": 0.4005880355834961,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 52,
+    "text": "1사목",
+    "confidence": 0.6513894422696207,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 53,
+    "text": "이파트",
+    "confidence": 0.7918703565963029,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 54,
+    "text": "S멘크런",
+    "confidence": 0.13266119360923767,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 55,
+    "text": "현대 오일생크",
+    "confidence": 0.26900530427381464,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 56,
+    "text": "중소기업",
+    "confidence": 0.9995656609535217,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 57,
+    "text": "LGE위타뭐",
+    "confidence": 0.3892332805933232,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 58,
+    "text": "주댁공제소합",
+    "confidence": 0.15300820188734177,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 59,
+    "text": "진톱",
+    "confidence": 0.22370333467657638,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 60,
+    "text": "한전웨터",
+    "confidence": 0.3518458604812622,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 61,
+    "text": "글래드",
+    "confidence": 0.7606108395671434,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 62,
+    "text": "여의도",
+    "confidence": 0.9990352662935242,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 63,
+    "text": "어의프리자",
+    "confidence": 0.5723703695821929,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 64,
+    "text": "여의도",
+    "confidence": 0.9987148630136612,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 65,
+    "text": "서울영등",
+    "confidence": 0.8064064383506775,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 66,
+    "text": "금로다이어",
+    "confidence": 0.6287537575297383,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 67,
+    "text": "스타발",
+    "confidence": 0.16984013513983057,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 68,
+    "text": "타위",
+    "confidence": 0.9057705942179769,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 69,
+    "text": "조중학교",
+    "confidence": 0.5781006813049316,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 70,
+    "text": "KBS",
+    "confidence": 0.9989318356370063,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 71,
+    "text": "사이언스위터",
+    "confidence": 0.5815440142913139,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 72,
+    "text": "파크원",
+    "confidence": 0.5100192838996371,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 73,
+    "text": "타위]",
+    "confidence": 0.39292126743273725,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 74,
+    "text": "여의도공작",
+    "confidence": 0.7261227096409473,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 75,
+    "text": "서문시지부",
+    "confidence": 0.9222203255475859,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 76,
+    "text": "아파드",
+    "confidence": 0.48488948194554676,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 77,
+    "text": "KBSa",
+    "confidence": 0.4025379419326782,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 78,
+    "text": "여의도공원",
+    "confidence": 0.8562340287568406,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 79,
+    "text": "더런대서움",
+    "confidence": 0.43322884291713715,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 80,
+    "text": "스데이션",
+    "confidence": 0.6283008456230164,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 81,
+    "text": "대림BCo",
+    "confidence": 0.42584134735633067,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 82,
+    "text": "더섭",
+    "confidence": 0.11534278909659408,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 83,
+    "text": "유니클로",
+    "confidence": 0.5183752179145813,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 84,
+    "text": "GS관렉스",
+    "confidence": 0.6689115339573471,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 85,
+    "text": "아일랜드파크",
+    "confidence": 0.3837597434516263,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 86,
+    "text": "IFC몸",
+    "confidence": 0.3895714581012726,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 87,
+    "text": "전래드서클",
+    "confidence": 0.19534470231379364,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 88,
+    "text": "떼어온드럭배서더",
+    "confidence": 0.052211683559852756,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 89,
+    "text": "신화요양범원",
+    "confidence": 0.27071953999743503,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 90,
+    "text": "KBSt관",
+    "confidence": 0.10044467362914802,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 91,
+    "text": "원센터님",
+    "confidence": 0.22204115986824036,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 92,
+    "text": "하우스컵어",
+    "confidence": 0.37677743733619495,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 93,
+    "text": "에이지",
+    "confidence": 0.6682850105277938,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 94,
+    "text": "플러스429",
+    "confidence": 0.7601753508699417,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 95,
+    "text": "엉등포님라운스톤",
+    "confidence": 0.21234910875594798,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 96,
+    "text": "신물여의지하도로",
+    "confidence": 0.44566840840576305,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 97,
+    "text": "브라이블여의도",
+    "confidence": 0.19306459967133388,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 98,
+    "text": "아파트",
+    "confidence": 0.9761241467338849,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 99,
+    "text": "IBK기I업은행",
+    "confidence": 0.3927408370493359,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 100,
+    "text": "오피스템",
+    "confidence": 0.2741447985172272,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 101,
+    "text": "댐",
+    "confidence": 0.011546537055389161,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 102,
+    "text": "START",
+    "confidence": 0.9998978535634702,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 103,
+    "text": "FINISH",
+    "confidence": 0.5447823847442627,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 104,
+    "text": "스시이지",
+    "confidence": 0.8913394212722778,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 105,
+    "text": "포프유",
+    "confidence": 0.3811060857536414,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 106,
+    "text": "예외주화적",
+    "confidence": 0.038181881345384264,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 107,
+    "text": "아크로타위",
+    "confidence": 0.29799693806645383,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 108,
+    "text": "포레나평등포",
+    "confidence": 0.17028548354261686,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 109,
+    "text": "스웨어",
+    "confidence": 0.9616349902627751,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 111,
+    "text": "아아파트",
+    "confidence": 0.474943071603775,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 112,
+    "text": "자연생터의소",
+    "confidence": 0.8492615313451394,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 113,
+    "text": "한림대학교",
+    "confidence": 0.5623129433830281,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 114,
+    "text": "리버타뭐",
+    "confidence": 0.8063568858081982,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 115,
+    "text": "다이소",
+    "confidence": 0.874768940652742,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 116,
+    "text": "한강성심범원",
+    "confidence": 0.3835853380751922,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 117,
+    "text": "오피스길",
+    "confidence": 0.3600994050502777,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 118,
+    "text": "예스트레뉴",
+    "confidence": 0.49334122023094334,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 119,
+    "text": "수정이다트",
+    "confidence": 0.20881405292676258,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 120,
+    "text": "KRX안국거래소",
+    "confidence": 0.8777144956171881,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 121,
+    "text": "영등포시장역",
+    "confidence": 0.9522814829232934,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 122,
+    "text": "하나은행",
+    "confidence": 0.8845509886741638,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 123,
+    "text": "서문사무소",
+    "confidence": 0.23106293366659003,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 124,
+    "text": "어의도우체국",
+    "confidence": 0.8237728059019161,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 125,
+    "text": "\"신안산선공사",
+    "confidence": 0.1735775031680181,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 126,
+    "text": "'마석간급",
+    "confidence": 0.3479069172546685,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 127,
+    "text": "~인드대입구",
+    "confidence": 0.33240406868904465,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 128,
+    "text": "[여금렇철도",
+    "confidence": 0.09637333928307504,
+    "reason": "below_confidence_or_not_whitelisted"
+  }
+]

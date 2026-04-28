@@ -1,0 +1,21 @@
+{
+  "image": "path-to-gpx\\data\\images\\110.jpg",
+  "mode": "kr_place_whitelist_only",
+  "source_detection_json": "path-to-gpx\\output\\01.ocr\\110_ocr_detections.json",
+  "landmark_db_entries": 40,
+  "geocode_candidates": [
+    {
+      "idx": 6,
+      "text": "나주대교",
+      "matched_place": "나주대교",
+      "geocoded": true,
+      "lat": 35.03576003277898,
+      "lon": 126.73597497584566,
+      "display_name": "나주대교",
+      "source": "kakao"
+    }
+  ],
+  "gps_regex_candidates": {
+    "gps_matches": []
+  }
+}

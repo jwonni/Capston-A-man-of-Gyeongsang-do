@@ -1,0 +1,175 @@
+{
+  "image": "path-to-gpx\\data\\images\\083.jpg",
+  "image_width": 1397,
+  "image_height": 1030,
+  "zoom": 17,
+  "patch_size": 512,
+  "anchor_count": 5,
+  "anchors": [
+    {
+      "idx": 9,
+      "text": "여의도",
+      "lat": 37.5256731,
+      "lon": 126.9252171,
+      "display_name": "여의도, 영등포구, 서울특별시, 대한민국",
+      "image_center_x": 918.0,
+      "image_center_y": 246.0,
+      "src_patch": "path-to-gpx\\output\\anchors\\patches\\083_anchor_9_src.png",
+      "src_offset": {
+        "offset_x": 662,
+        "offset_y": -10,
+        "center_in_image_x": 918.0,
+        "center_in_image_y": 246.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 1397,
+        "image_height": 1030
+      },
+      "ref_tile": "path-to-gpx\\output\\anchors\\patches\\083_anchor_9_ref.png",
+      "geotransform": {
+        "zoom": 17,
+        "center_lat": 37.5256731,
+        "center_lon": 126.9252171,
+        "center_pixel_x": 256,
+        "center_pixel_y": 256,
+        "top_left_tx_float": 111747.06126592,
+        "top_left_ty_float": 50775.67968539469,
+        "osm_tile_px": 256,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 18,
+      "text": "여의도",
+      "lat": 37.5256731,
+      "lon": 126.9252171,
+      "display_name": "여의도, 영등포구, 서울특별시, 대한민국",
+      "image_center_x": 1081.0,
+      "image_center_y": 400.0,
+      "src_patch": "path-to-gpx\\output\\anchors\\patches\\083_anchor_18_src.png",
+      "src_offset": {
+        "offset_x": 825,
+        "offset_y": 144,
+        "center_in_image_x": 1081.0,
+        "center_in_image_y": 400.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 1397,
+        "image_height": 1030
+      },
+      "ref_tile": "path-to-gpx\\output\\anchors\\patches\\083_anchor_18_ref.png",
+      "geotransform": {
+        "zoom": 17,
+        "center_lat": 37.5256731,
+        "center_lon": 126.9252171,
+        "center_pixel_x": 256,
+        "center_pixel_y": 256,
+        "top_left_tx_float": 111747.06126592,
+        "top_left_ty_float": 50775.67968539469,
+        "osm_tile_px": 256,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 62,
+      "text": "여의도",
+      "lat": 37.5256731,
+      "lon": 126.9252171,
+      "display_name": "여의도, 영등포구, 서울특별시, 대한민국",
+      "image_center_x": 892.0,
+      "image_center_y": 678.0,
+      "src_patch": "path-to-gpx\\output\\anchors\\patches\\083_anchor_62_src.png",
+      "src_offset": {
+        "offset_x": 636,
+        "offset_y": 422,
+        "center_in_image_x": 892.0,
+        "center_in_image_y": 678.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 1397,
+        "image_height": 1030
+      },
+      "ref_tile": "path-to-gpx\\output\\anchors\\patches\\083_anchor_62_ref.png",
+      "geotransform": {
+        "zoom": 17,
+        "center_lat": 37.5256731,
+        "center_lon": 126.9252171,
+        "center_pixel_x": 256,
+        "center_pixel_y": 256,
+        "top_left_tx_float": 111747.06126592,
+        "top_left_ty_float": 50775.67968539469,
+        "osm_tile_px": 256,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 64,
+      "text": "여의도",
+      "lat": 37.5256731,
+      "lon": 126.9252171,
+      "display_name": "여의도, 영등포구, 서울특별시, 대한민국",
+      "image_center_x": 677.0,
+      "image_center_y": 696.0,
+      "src_patch": "path-to-gpx\\output\\anchors\\patches\\083_anchor_64_src.png",
+      "src_offset": {
+        "offset_x": 421,
+        "offset_y": 440,
+        "center_in_image_x": 677.0,
+        "center_in_image_y": 696.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 1397,
+        "image_height": 1030
+      },
+      "ref_tile": "path-to-gpx\\output\\anchors\\patches\\083_anchor_64_ref.png",
+      "geotransform": {
+        "zoom": 17,
+        "center_lat": 37.5256731,
+        "center_lon": 126.9252171,
+        "center_pixel_x": 256,
+        "center_pixel_y": 256,
+        "top_left_tx_float": 111747.06126592,
+        "top_left_ty_float": 50775.67968539469,
+        "osm_tile_px": 256,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 21,
+      "text": "한강공원",
+      "lat": 37.5219498,
+      "lon": 127.0996957,
+      "display_name": "한강공원 잠실나루역나들목, 신천동, 잠실6동, 송파구, 서울특별시, 05504, 대한민국",
+      "image_center_x": 1082.0,
+      "image_center_y": 415.0,
+      "src_patch": "path-to-gpx\\output\\anchors\\patches\\083_anchor_21_src.png",
+      "src_offset": {
+        "offset_x": 826,
+        "offset_y": 159,
+        "center_in_image_x": 1082.0,
+        "center_in_image_y": 415.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 1397,
+        "image_height": 1030
+      },
+      "ref_tile": "path-to-gpx\\output\\anchors\\patches\\083_anchor_21_ref.png",
+      "geotransform": {
+        "zoom": 17,
+        "center_lat": 37.5219498,
+        "center_lon": 127.0996957,
+        "center_pixel_x": 256,
+        "center_pixel_y": 256,
+        "top_left_tx_float": 111810.58698552888,
+        "top_left_ty_float": 50777.388942343154,
+        "osm_tile_px": 256,
+        "patch_size": 512
+      }
+    }
+  ]
+}

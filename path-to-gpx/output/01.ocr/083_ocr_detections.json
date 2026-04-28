@@ -1,0 +1,100 @@
+{
+  "image": "path-to-gpx\\data\\images\\083.jpg",
+  "engine": "easyocr",
+  "mode": "kr_place_whitelist_only",
+  "whitelist_size": 50,
+  "detection_count": 3,
+  "rejected_count": 125,
+  "detections": [
+    {
+      "idx": 19,
+      "text": "국회의사당",
+      "matched_place": "국회의사당",
+      "confidence": 0.944982668721745,
+      "polygon_xy": [
+        [
+          485.0,
+          401.0
+        ],
+        [
+          547.0,
+          401.0
+        ],
+        [
+          547.0,
+          419.0
+        ],
+        [
+          485.0,
+          419.0
+        ]
+      ],
+      "center_x": 516.0,
+      "center_y": 410.0,
+      "width": 62.0,
+      "height": 18.0,
+      "norm_center_x": 0.3693629205440229,
+      "norm_center_y": 0.39805825242718446
+    },
+    {
+      "idx": 51,
+      "text": "국회의사당역",
+      "matched_place": "국회의사당역",
+      "confidence": 0.9954005997036263,
+      "polygon_xy": [
+        [
+          663.0,
+          631.0
+        ],
+        [
+          737.0,
+          631.0
+        ],
+        [
+          737.0,
+          647.0
+        ],
+        [
+          663.0,
+          647.0
+        ]
+      ],
+      "center_x": 700.0,
+      "center_y": 639.0,
+      "width": 74.0,
+      "height": 16.0,
+      "norm_center_x": 0.5010737294201861,
+      "norm_center_y": 0.6203883495145631
+    },
+    {
+      "idx": 110,
+      "text": "여의도공원 문화의마당",
+      "matched_place": "여의도공원 문화의마당",
+      "confidence": 0.6489285425375076,
+      "polygon_xy": [
+        [
+          782.0,
+          928.0
+        ],
+        [
+          936.0,
+          928.0
+        ],
+        [
+          936.0,
+          952.0
+        ],
+        [
+          782.0,
+          952.0
+        ]
+      ],
+      "center_x": 859.0,
+      "center_y": 940.0,
+      "width": 154.0,
+      "height": 24.0,
+      "norm_center_x": 0.6148890479599141,
+      "norm_center_y": 0.912621359223301
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+idx,text,matched_place,confidence,center_x,center_y,width,height,norm_center_x,norm_center_y,polygon_xy
+6,나주대교,나주대교,0.9891166090965271,333.0,368.0,44.0,14.0,0.5203125,0.46,"[[311.0, 361.0], [355.0, 361.0], [355.0, 375.0], [311.0, 375.0]]"

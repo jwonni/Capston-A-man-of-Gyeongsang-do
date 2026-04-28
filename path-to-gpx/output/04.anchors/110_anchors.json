@@ -1,0 +1,41 @@
+{
+  "created_at_utc": "2026-04-28T08:18:35.234320+00:00",
+  "image": "path-to-gpx\\data\\images\\110.jpg",
+  "image_width": 640,
+  "image_height": 800,
+  "zoom": 16,
+  "patch_size": 512,
+  "anchor_count": 1,
+  "anchors": [
+    {
+      "idx": 6,
+      "text": "나주대교",
+      "lat": 35.03576003277898,
+      "lon": 126.73597497584566,
+      "display_name": "나주대교",
+      "image_center_x": 333.0,
+      "image_center_y": 368.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\110_anchor_6_src.png",
+      "src_offset": {
+        "offset_x": 77,
+        "offset_y": 112,
+        "center_in_image_x": 333.0,
+        "center_in_image_y": 368.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 640,
+        "image_height": 800
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\110_anchor_6_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 35.03576003277898,
+        "center_lon": 126.73597497584566,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    }
+  ]
+}

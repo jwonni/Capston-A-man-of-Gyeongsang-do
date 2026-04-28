@@ -1,0 +1,31 @@
+{
+  "created_at_utc": "2026-04-28T08:16:54.916848+00:00",
+  "source_geocode_json": "path-to-gpx\\output\\02.geocoding\\110_geocode_candidates.json",
+  "zoom": 17,
+  "tile_size": 1400,
+  "tile_count": 1,
+  "tiles": [
+    {
+      "zoom": 17,
+      "lat": 35.03576003277898,
+      "lon": 126.73597497584566,
+      "tile_path": "path-to-gpx\\output\\03.osm\\tiles\\110_idx6_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 6,
+      "place_label": "나주대교"
+    }
+  ],
+  "candidates": [
+    {
+      "idx": 6,
+      "text": "나주대교",
+      "matched_place": "나주대교",
+      "lat": 35.03576003277898,
+      "lon": 126.73597497584566,
+      "display_name": "나주대교"
+    }
+  ]
+}

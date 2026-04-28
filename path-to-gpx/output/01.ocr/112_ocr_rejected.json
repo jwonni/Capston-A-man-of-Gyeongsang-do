@@ -1,0 +1,272 @@
+[
+  {
+    "idx": 1,
+    "text": "제g하중도",
+    "confidence": 0.09705987392538966,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 2,
+    "text": "상무고등사고",
+    "confidence": 0.8938935727922896,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 3,
+    "text": "제기회 여미세표),",
+    "confidence": 0.16255301510292336,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 4,
+    "text": "STRRT",
+    "confidence": 0.6768979711556642,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 5,
+    "text": "내감간신",
+    "confidence": 0.04889189824461937,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 6,
+    "text": "FINISH",
+    "confidence": 0.9899915287115931,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 7,
+    "text": "아파",
+    "confidence": 0.44461778703799065,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 8,
+    "text": "청년함께",
+    "confidence": 0.9937053918838501,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 9,
+    "text": "'치평동",
+    "confidence": 0.6493504643440247,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 10,
+    "text": "연산감",
+    "confidence": 0.26579057901294995,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 11,
+    "text": "RUN",
+    "confidence": 0.9881995309093823,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 12,
+    "text": "평U",
+    "confidence": 0.03532453897328449,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 13,
+    "text": "운전여",
+    "confidence": 0.9757041023763753,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 14,
+    "text": "전남고등다교",
+    "confidence": 0.6395441363015123,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 15,
+    "text": "상무역",
+    "confidence": 0.47344462224053574,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 16,
+    "text": "김대중",
+    "confidence": 0.5892554663977108,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 17,
+    "text": "언번선선터",
+    "confidence": 0.7473441873884619,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 18,
+    "text": "공광역",
+    "confidence": 0.46533167362213135,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 19,
+    "text": "김대중권번선센터역",
+    "confidence": 0.21504298545147646,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 20,
+    "text": "영산감",
+    "confidence": 0.46455901845643005,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 21,
+    "text": "광주금함",
+    "confidence": 0.19058571755886078,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 22,
+    "text": "(IorSmI",
+    "confidence": 0.12003186586556638,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 23,
+    "text": "단지가파다",
+    "confidence": 0.13513691094183353,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 24,
+    "text": "=로스",
+    "confidence": 0.3455296037761033,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 25,
+    "text": "금호1동",
+    "confidence": 0.44575848926746564,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 26,
+    "text": "3나TIo",
+    "confidence": 0.14950765187472465,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 27,
+    "text": "1동",
+    "confidence": 0.8793512450349982,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 28,
+    "text": "솜인깔리스길",
+    "confidence": 0.01609827304338235,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 29,
+    "text": "매답메너지",
+    "confidence": 0.15871903907153387,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 30,
+    "text": "아파트",
+    "confidence": 0.46006488895410586,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 31,
+    "text": "심무CCS진소",
+    "confidence": 0.2261386648967733,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 32,
+    "text": "3호2통",
+    "confidence": 0.5340030789375305,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 33,
+    "text": "금로대 주파크빌",
+    "confidence": 0.350319628110634,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 34,
+    "text": "1차하파드",
+    "confidence": 0.2270127861343053,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 35,
+    "text": "이엘리움",
+    "confidence": 0.16817927360534668,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 36,
+    "text": "로기비망이파트",
+    "confidence": 0.18960683017968255,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 37,
+    "text": "부명아마트",
+    "confidence": 0.35638008629631923,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 38,
+    "text": "간",
+    "confidence": 0.015377695773147515,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 39,
+    "text": "Iokm",
+    "confidence": 0.6902437546260063,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 40,
+    "text": "반환",
+    "confidence": 0.951626173623602,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 41,
+    "text": "코스 안내",
+    "confidence": 0.9178483991434392,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 42,
+    "text": "상무시민공원 출발",
+    "confidence": 0.9994022433738879,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 43,
+    "text": "영상강 인포메이선",
+    "confidence": 0.7407644079326982,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 44,
+    "text": "재활용센터 (IOkm 반환)",
+    "confidence": 0.740823468930758,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 45,
+    "text": "무무다",
+    "confidence": 0.019657000088025338,
+    "reason": "below_confidence_or_not_whitelisted"
+  }
+]

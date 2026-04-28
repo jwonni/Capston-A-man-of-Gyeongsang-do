@@ -1,0 +1,31 @@
+{
+  "image": "path-to-gpx\\data\\images\\287.jpg",
+  "mode": "kr_place_whitelist_only",
+  "source_detection_json": "path-to-gpx\\output\\01.ocr\\287_ocr_detections.json",
+  "landmark_db_entries": 40,
+  "geocode_candidates": [
+    {
+      "idx": 148,
+      "text": "안동시민운동장",
+      "matched_place": "안동시민운동장",
+      "geocoded": true,
+      "lat": 36.54910776869417,
+      "lon": 128.72515803066727,
+      "display_name": "안동시민운동장",
+      "source": "kakao"
+    },
+    {
+      "idx": 33,
+      "text": "대구지방검찰청",
+      "matched_place": "대구지방검찰청",
+      "geocoded": true,
+      "lat": 35.86314894467592,
+      "lon": 128.62929600758514,
+      "display_name": "대구지방검찰청",
+      "source": "kakao"
+    }
+  ],
+  "gps_regex_candidates": {
+    "gps_matches": []
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "image": "path-to-gpx\\data\\images\\124.jpg",
+  "mode": "kr_place_whitelist_only",
+  "source_detection_json": "path-to-gpx\\output\\01.ocr\\124_ocr_detections.json",
+  "landmark_db_entries": 40,
+  "geocode_candidates": [
+    {
+      "idx": 36,
+      "text": "정부대전청사",
+      "matched_place": "정부대전청사",
+      "geocoded": true,
+      "lat": 36.3612446622356,
+      "lon": 127.384892006365,
+      "display_name": "정부대전청사",
+      "source": "kakao"
+    },
+    {
+      "idx": 20,
+      "text": "만년고등학교",
+      "matched_place": "만년고등학교",
+      "geocoded": true,
+      "lat": 36.3672844170383,
+      "lon": 127.372927680646,
+      "display_name": "대전만년고등학교",
+      "source": "kakao"
+    }
+  ],
+  "gps_regex_candidates": {
+    "gps_matches": []
+  }
+}

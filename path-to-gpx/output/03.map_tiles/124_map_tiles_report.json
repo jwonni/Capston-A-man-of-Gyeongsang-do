@@ -1,0 +1,51 @@
+{
+  "created_at_utc": "2026-04-28T14:21:51.865551+00:00",
+  "source_geocode_json": "path-to-gpx\\output\\02.geocoding\\124_geocode_candidates.json",
+  "zoom": 17,
+  "tile_size": 1400,
+  "tile_count": 2,
+  "tiles": [
+    {
+      "zoom": 17,
+      "lat": 36.3612446622356,
+      "lon": 127.384892006365,
+      "tile_path": "path-to-gpx\\output\\03.map_tiles\\tiles\\124_idx36_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 36,
+      "place_label": "정부대전청사"
+    },
+    {
+      "zoom": 17,
+      "lat": 36.3672844170383,
+      "lon": 127.372927680646,
+      "tile_path": "path-to-gpx\\output\\03.map_tiles\\tiles\\124_idx20_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 20,
+      "place_label": "만년고등학교"
+    }
+  ],
+  "candidates": [
+    {
+      "idx": 36,
+      "text": "정부대전청사",
+      "matched_place": "정부대전청사",
+      "lat": 36.3612446622356,
+      "lon": 127.384892006365,
+      "display_name": "정부대전청사"
+    },
+    {
+      "idx": 20,
+      "text": "만년고등학교",
+      "matched_place": "만년고등학교",
+      "lat": 36.3672844170383,
+      "lon": 127.372927680646,
+      "display_name": "대전만년고등학교"
+    }
+  ]
+}

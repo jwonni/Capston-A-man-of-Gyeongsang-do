@@ -1,0 +1,70 @@
+{
+  "image": "path-to-gpx\\data\\images\\287.jpg",
+  "engine": "easyocr",
+  "mode": "kr_place_whitelist_only",
+  "whitelist_size": 67,
+  "detection_count": 2,
+  "rejected_count": 193,
+  "detections": [
+    {
+      "idx": 33,
+      "text": "대구지방검찰청",
+      "matched_place": "대구지방검찰청",
+      "confidence": 0.9118262540758828,
+      "polygon_xy": [
+        [
+          7873.0,
+          2795.0
+        ],
+        [
+          8292.0,
+          2795.0
+        ],
+        [
+          8292.0,
+          2885.0
+        ],
+        [
+          7873.0,
+          2885.0
+        ]
+      ],
+      "center_x": 8082.5,
+      "center_y": 2840.0,
+      "width": 419.0,
+      "height": 90.0,
+      "norm_center_x": 0.5769093504639543,
+      "norm_center_y": 0.47183917594284763
+    },
+    {
+      "idx": 148,
+      "text": "안동시민운동장",
+      "matched_place": "안동시민운동장",
+      "confidence": 0.9970634217684834,
+      "polygon_xy": [
+        [
+          3149.0,
+          5294.0
+        ],
+        [
+          3921.0,
+          5294.0
+        ],
+        [
+          3921.0,
+          5464.0
+        ],
+        [
+          3149.0,
+          5464.0
+        ]
+      ],
+      "center_x": 3535.0,
+      "center_y": 5379.0,
+      "width": 772.0,
+      "height": 170.0,
+      "norm_center_x": 0.2523197715917202,
+      "norm_center_y": 0.8936700448579499
+    }
+  ]
+}

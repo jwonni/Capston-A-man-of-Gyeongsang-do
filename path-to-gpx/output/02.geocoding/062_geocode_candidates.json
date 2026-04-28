@@ -1,0 +1,115 @@
+{
+  "image": "path-to-gpx\\data\\images\\062.jpg",
+  "mode": "kr_place_whitelist_only",
+  "source_detection_json": "path-to-gpx\\output\\01.ocr\\062_ocr_detections.json",
+  "landmark_db_entries": 40,
+  "geocode_candidates": [
+    {
+      "idx": 42,
+      "text": "국회의사당",
+      "matched_place": "국회의사당",
+      "geocoded": true,
+      "lat": 37.53190827313679,
+      "lon": 126.91416237338858,
+      "display_name": "국회의사당",
+      "source": "kakao"
+    },
+    {
+      "idx": 71,
+      "text": "양화대교",
+      "matched_place": "양화대교",
+      "geocoded": true,
+      "lat": 37.544297449957455,
+      "lon": 126.90529141400738,
+      "display_name": "양화대교",
+      "source": "kakao"
+    },
+    {
+      "idx": 18,
+      "text": "마포구청역",
+      "matched_place": "마포구청역",
+      "geocoded": true,
+      "lat": 37.5634871865932,
+      "lon": 126.903425598797,
+      "display_name": "마포구청역 6호선",
+      "source": "kakao"
+    },
+    {
+      "idx": 27,
+      "text": "충정로역",
+      "matched_place": "충정로역",
+      "geocoded": true,
+      "lat": 37.55976328822766,
+      "lon": 126.96449207476172,
+      "display_name": "충정로역 2호선",
+      "source": "kakao"
+    },
+    {
+      "idx": 45,
+      "text": "63빌딩",
+      "matched_place": "63빌딩",
+      "geocoded": true,
+      "lat": 37.5197,
+      "lon": 126.9404,
+      "display_name": "여의도 63빌딩",
+      "source": "landmark_db",
+      "db_canonical": "63빌딩"
+    },
+    {
+      "idx": 41,
+      "text": "당산역",
+      "matched_place": "당산역",
+      "geocoded": true,
+      "lat": 37.5347843171332,
+      "lon": 126.902611795523,
+      "display_name": "당산역 2호선",
+      "source": "kakao"
+    },
+    {
+      "idx": 17,
+      "text": "덕수궁",
+      "matched_place": "덕수궁",
+      "geocoded": true,
+      "lat": 37.5658,
+      "lon": 126.9748,
+      "display_name": "덕수궁 대한문",
+      "source": "landmark_db",
+      "db_canonical": "덕수궁"
+    },
+    {
+      "idx": 9,
+      "text": "난지천공원",
+      "matched_place": "난지천공원",
+      "geocoded": true,
+      "lat": 37.57213335842017,
+      "lon": 126.88740136782069,
+      "display_name": "난지천공원",
+      "source": "kakao"
+    },
+    {
+      "idx": 14,
+      "text": "광화문광장",
+      "matched_place": "광화문광장",
+      "geocoded": true,
+      "lat": 37.5759,
+      "lon": 126.9769,
+      "display_name": "서울 동아국제마라톤 출발지, 광화문광장 세종대왕 동상 앞",
+      "source": "landmark_db",
+      "db_canonical": "광화문"
+    },
+    {
+      "idx": 72,
+      "text": "'마포대교",
+      "matched_place": "마포대교",
+      "geocoded": true,
+      "lat": 37.5437,
+      "lon": 126.9476,
+      "display_name": "마포대교 중간점",
+      "source": "landmark_db",
+      "db_canonical": "마포대교"
+    }
+  ],
+  "gps_regex_candidates": {
+    "gps_matches": []
+  }
+}

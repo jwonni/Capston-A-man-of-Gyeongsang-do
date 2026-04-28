@@ -1,0 +1,71 @@
+{
+  "created_at_utc": "2026-04-28T14:22:31.345051+00:00",
+  "image": "path-to-gpx\\data\\images\\124.jpg",
+  "image_width": 700,
+  "image_height": 700,
+  "zoom": 16,
+  "patch_size": 512,
+  "anchor_count": 2,
+  "anchors": [
+    {
+      "idx": 36,
+      "text": "정부대전청사",
+      "lat": 36.3612446622356,
+      "lon": 127.384892006365,
+      "display_name": "정부대전청사",
+      "image_center_x": 445.0,
+      "image_center_y": 649.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\124_anchor_36_src.png",
+      "src_offset": {
+        "offset_x": 189,
+        "offset_y": 393,
+        "center_in_image_x": 445.0,
+        "center_in_image_y": 649.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 700,
+        "image_height": 700
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\124_anchor_36_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 36.3612446622356,
+        "center_lon": 127.384892006365,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 20,
+      "text": "만년고등학교",
+      "lat": 36.3672844170383,
+      "lon": 127.372927680646,
+      "display_name": "대전만년고등학교",
+      "image_center_x": 185.0,
+      "image_center_y": 490.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\124_anchor_20_src.png",
+      "src_offset": {
+        "offset_x": -71,
+        "offset_y": 234,
+        "center_in_image_x": 185.0,
+        "center_in_image_y": 490.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 700,
+        "image_height": 700
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\124_anchor_20_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 36.3672844170383,
+        "center_lon": 127.372927680646,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    }
+  ]
+}

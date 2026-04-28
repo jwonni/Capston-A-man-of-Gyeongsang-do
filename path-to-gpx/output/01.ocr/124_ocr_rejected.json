@@ -1,0 +1,224 @@
+[
+  {
+    "idx": 1,
+    "text": "우성이신",
+    "confidence": 0.4070388078689575,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 2,
+    "text": "(178 Im)",
+    "confidence": 0.6464762942050747,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 3,
+    "text": "대전유성",
+    "confidence": 0.41458117961883545,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 4,
+    "text": "방서",
+    "confidence": 0.9198285360783962,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 5,
+    "text": "예;모",
+    "confidence": 0.14547514095792977,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 6,
+    "text": "과하공원",
+    "confidence": 0.2344561517238617,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 7,
+    "text": "START8",
+    "confidence": 0.6172025367409183,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 8,
+    "text": "국립궁앙",
+    "confidence": 0.285101056098938,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 9,
+    "text": "FIMISH",
+    "confidence": 0.582983511389212,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 10,
+    "text": "과의관",
+    "confidence": 0.6922713742211551,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 11,
+    "text": "더전과라",
+    "confidence": 0.4386622905731201,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 12,
+    "text": "'문히원",
+    "confidence": 0.43707332015037537,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 13,
+    "text": "수심공원",
+    "confidence": 0.2678171992301941,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 14,
+    "text": "YBS",
+    "confidence": 0.3456169664859772,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 15,
+    "text": "대전방송중국",
+    "confidence": 0.6222036146475252,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 16,
+    "text": "반환점",
+    "confidence": 0.16220088699120674,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 17,
+    "text": "안밥수국민",
+    "confidence": 0.2115896200556569,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 18,
+    "text": "초원아파트",
+    "confidence": 0.5531150995226483,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 19,
+    "text": "만년동",
+    "confidence": 0.9891882850454445,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 21,
+    "text": "대전어스포",
+    "confidence": 0.7935533248239391,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 22,
+    "text": "시민리점",
+    "confidence": 0.15700577199459076,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 23,
+    "text": "수험대",
+    "confidence": 0.5041453838348389,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 24,
+    "text": "마때",
+    "confidence": 0.21277012443405363,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 25,
+    "text": "예;의전당",
+    "confidence": 0.273438972124837,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 26,
+    "text": "도산주공",
+    "confidence": 0.7952554225921631,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 27,
+    "text": "엉핑등무궁화",
+    "confidence": 0.010895647574942827,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 28,
+    "text": "눈산주3",
+    "confidence": 0.19107221066951752,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 29,
+    "text": "3던지아파드",
+    "confidence": 0.9091876443309669,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 30,
+    "text": "아파트",
+    "confidence": 0.9822892235339247,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 31,
+    "text": "씹어리]터지",
+    "confidence": 0.10715401704303391,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 32,
+    "text": "1단지아마트",
+    "confidence": 0.5921505551798124,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 33,
+    "text": "위평2동",
+    "confidence": 0.624252438545227,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 34,
+    "text": "합실다타오",
+    "confidence": 0.10058938832174083,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 35,
+    "text": "넥라아파드",
+    "confidence": 0.0842590833421421,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 37,
+    "text": "5km",
+    "confidence": 0.9987802362760977,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 38,
+    "text": "'로아파운평3동어대전",
+    "confidence": 0.1328494943232925,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 39,
+    "text": "아파드",
+    "confidence": 0.13793709874153137,
+    "reason": "below_confidence_or_not_whitelisted"
+  }
+]

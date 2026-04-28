@@ -1,0 +1,1160 @@
+[
+  {
+    "idx": 1,
+    "text": "농시",
+    "confidence": 0.7727264911794416,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 2,
+    "text": "아파트",
+    "confidence": 0.999951271694149,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 3,
+    "text": "게이트불장",
+    "confidence": 0.4360090114885774,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 4,
+    "text": "207",
+    "confidence": 1.0,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 5,
+    "text": "206",
+    "confidence": 0.9999995182214076,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 6,
+    "text": "인라인",
+    "confidence": 0.9957261974658086,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 7,
+    "text": "테이트장",
+    "confidence": 0.33614078164100647,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 8,
+    "text": "낙동강",
+    "confidence": 0.7673793779022575,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 9,
+    "text": "낙전공원",
+    "confidence": 0.7843109910341756,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 10,
+    "text": "피엘디",
+    "confidence": 0.8157901295825776,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 11,
+    "text": "안동",
+    "confidence": 0.9995213296561601,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 12,
+    "text": "레치편션",
+    "confidence": 0.11968185752630234,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 13,
+    "text": "낙동강",
+    "confidence": 0.9152503464998454,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 14,
+    "text": "뜻살장",
+    "confidence": 0.7755771809763501,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 15,
+    "text": "0요",
+    "confidence": 0.3345548162945849,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 16,
+    "text": "하",
+    "confidence": 0.05697312418363154,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 17,
+    "text": "물",
+    "confidence": 0.9371812792738297,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 18,
+    "text": "3km",
+    "confidence": 0.3790574805871931,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 19,
+    "text": "2.5km",
+    "confidence": 0.9480544863090803,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 20,
+    "text": "5km코스 반환점",
+    "confidence": 0.6971601667926485,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 21,
+    "text": "통영바다장어",
+    "confidence": 0.9955568676730301,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 22,
+    "text": "위시존",
+    "confidence": 0.45487914376650984,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 23,
+    "text": "2km",
+    "confidence": 0.8606148980989411,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 24,
+    "text": "SK주",
+    "confidence": 0.9964578747749329,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 25,
+    "text": "안동귀래정",
+    "confidence": 0.9618255225060717,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 26,
+    "text": "유아히어카페",
+    "confidence": 0.8396082508194619,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 27,
+    "text": "경안신육원",
+    "confidence": 0.7312491472463786,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 28,
+    "text": "안동",
+    "confidence": 0.9995726577053164,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 29,
+    "text": "정하침계교회",
+    "confidence": 0.3249943379349043,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 30,
+    "text": "파크골프장",
+    "confidence": 0.987811965087554,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 31,
+    "text": "한국적렬증사",
+    "confidence": 0.051889209122983636,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 32,
+    "text": "2.5km",
+    "confidence": 0.7922849379103553,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 34,
+    "text": "어4",
+    "confidence": 0.9183859411663201,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 35,
+    "text": "명호서원",
+    "confidence": 0.8700968027114868,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 36,
+    "text": "대한정학번원",
+    "confidence": 0.04769426873234342,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 37,
+    "text": "안동지청",
+    "confidence": 0.9619309306144714,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 38,
+    "text": "한환경",
+    "confidence": 0.20237641488739003,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 39,
+    "text": "도드람양돈서비스",
+    "confidence": 0.8523911476064646,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 40,
+    "text": "카페M2",
+    "confidence": 0.9981950521469116,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 41,
+    "text": "테니스장",
+    "confidence": 0.9999116659164429,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 42,
+    "text": "금서산방민박",
+    "confidence": 0.9958388739931355,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 43,
+    "text": "경북사무소",
+    "confidence": 0.9670021414258921,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 44,
+    "text": "강남파출소",
+    "confidence": 0.8311883914744369,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 45,
+    "text": "신승박시비",
+    "confidence": 0.9542036727811098,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 46,
+    "text": "예미정",
+    "confidence": 0.9998472089197017,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 47,
+    "text": "예미정",
+    "confidence": 0.9532589316368103,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 48,
+    "text": "대한법률구조공단",
+    "confidence": 0.9709176506821292,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 49,
+    "text": "가동상사",
+    "confidence": 0.34906441179855224,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 50,
+    "text": "법무사림철현",
+    "confidence": 0.40500975528392547,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 51,
+    "text": "안동출장소",
+    "confidence": 0.9978225106135008,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 52,
+    "text": "볶끼요",
+    "confidence": 0.7864965515756599,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 53,
+    "text": "모터랜드",
+    "confidence": 0.9536488056182861,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 54,
+    "text": "변호사안형진",
+    "confidence": 0.9492131449637449,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 55,
+    "text": "'현승부잇최체장애인협회",
+    "confidence": 0.056994132687079854,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 56,
+    "text": "춘천슷불닭갈비 본점",
+    "confidence": 0.11955998876584435,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 57,
+    "text": "현대자동차",
+    "confidence": 0.9966139564140021,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 58,
+    "text": "202",
+    "confidence": 1.0,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 59,
+    "text": "충혼탑",
+    "confidence": 0.9262212514877319,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 60,
+    "text": "법률사무소",
+    "confidence": 0.9981294315751991,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 61,
+    "text": "성희여자",
+    "confidence": 0.7895382046699524,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 62,
+    "text": "5-oil",
+    "confidence": 0.4996821072285716,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 63,
+    "text": "안팎세하콜라",
+    "confidence": 0.028845131575381395,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 64,
+    "text": "고등학교",
+    "confidence": 0.9999141693115234,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 65,
+    "text": "엉춘중",
+    "confidence": 0.0294686060775342,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 66,
+    "text": "귀@동텔",
+    "confidence": 0.11275751143693924,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 67,
+    "text": "걸력시모텔",
+    "confidence": 0.2861401426458941,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 68,
+    "text": "추대감 남원",
+    "confidence": 0.8399353274219624,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 69,
+    "text": "유소",
+    "confidence": 0.9999063509870175,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 70,
+    "text": "104",
+    "confidence": 0.8986186385154724,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 71,
+    "text": "강남1공원",
+    "confidence": 0.9993850235829822,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 72,
+    "text": "추어탕",
+    "confidence": 0.44308506452053925,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 73,
+    "text": "204",
+    "confidence": 0.9999984858388146,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 74,
+    "text": "현진에버빌",
+    "confidence": 0.8419977926914163,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 75,
+    "text": "안동평강교회",
+    "confidence": 0.9559682179987554,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 76,
+    "text": "취험진화",
+    "confidence": 0.022738613188266754,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 77,
+    "text": "편안한가",
+    "confidence": 0.9951944947242737,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 78,
+    "text": "GS25",
+    "confidence": 0.9970647692680359,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 79,
+    "text": "강남아파트",
+    "confidence": 0.9991459517740509,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 80,
+    "text": "강남복지회관",
+    "confidence": 0.9860848077142846,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 81,
+    "text": "203",
+    "confidence": 0.9999998623489704,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 82,
+    "text": "아파트",
+    "confidence": 0.9999364054946799,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 83,
+    "text": "안동",
+    "confidence": 0.9997530284011836,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 84,
+    "text": "GS25",
+    "confidence": 0.975238181142379,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 85,
+    "text": "강남동우체국",
+    "confidence": 0.9980842980595306,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 86,
+    "text": "혈대자동차",
+    "confidence": 0.17087113465126288,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 87,
+    "text": "101",
+    "confidence": 0.9321761937285402,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 88,
+    "text": "102",
+    "confidence": 0.9914684891700745,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 89,
+    "text": "더스터님",
+    "confidence": 0.6145305037498474,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 90,
+    "text": "GS25",
+    "confidence": 0.995381236076355,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 91,
+    "text": "현진에버빌",
+    "confidence": 0.8491294329763815,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 92,
+    "text": "본죽&비범밥",
+    "confidence": 0.29846557516894573,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 93,
+    "text": "풀빌라",
+    "confidence": 0.9833021110003657,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 94,
+    "text": "2차아파트01",
+    "confidence": 0.552855858419555,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 95,
+    "text": "뚜레주르",
+    "confidence": 0.8450307862685794,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 96,
+    "text": "cafe",
+    "confidence": 0.9995001851139105,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 97,
+    "text": "202",
+    "confidence": 1.0,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 98,
+    "text": "법무부 안동",
+    "confidence": 0.996170138477495,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 99,
+    "text": "기쁨소식",
+    "confidence": 0.9653540849685669,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 100,
+    "text": "센m플로라",
+    "confidence": 0.05022245272051635,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 101,
+    "text": "사휴원",
+    "confidence": 0.889757822964666,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 102,
+    "text": "정하필스타",
+    "confidence": 0.40040152646195354,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 103,
+    "text": "준법지원센터",
+    "confidence": 0.8444244115705195,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 104,
+    "text": "안동교회",
+    "confidence": 0.9995423555374146,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 105,
+    "text": "1차아파트",
+    "confidence": 0.9915139043532292,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 106,
+    "text": "안동",
+    "confidence": 0.9930493260480171,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 107,
+    "text": "강남미래의원",
+    "confidence": 0.9985711023596836,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 108,
+    "text": "정성카페",
+    "confidence": 0.9989920258522034,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 109,
+    "text": "아파트",
+    "confidence": 0.9994549218246491,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 110,
+    "text": "올인모텔",
+    "confidence": 0.5979977250099182,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 111,
+    "text": "베네치아",
+    "confidence": 0.5334970715298858,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 112,
+    "text": "강남소등학교",
+    "confidence": 0.6480281738125396,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 113,
+    "text": "디어제이|",
+    "confidence": 0.33587993242633885,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 114,
+    "text": "하모니",
+    "confidence": 0.9746155847524061,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 115,
+    "text": "초홀핏모텔",
+    "confidence": 0.16106733939306456,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 116,
+    "text": "모델아이리스",
+    "confidence": 0.5172838763490455,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 117,
+    "text": "안동교회",
+    "confidence": 0.999523937702179,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 118,
+    "text": "강남마루",
+    "confidence": 0.9994873404502869,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 119,
+    "text": "15Om",
+    "confidence": 0.8575320243835449,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 120,
+    "text": "석미한아름",
+    "confidence": 0.8003747191437532,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 121,
+    "text": "@정상동성당",
+    "confidence": 0.9876235554009649,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 122,
+    "text": "아&",
+    "confidence": 0.33896328558206446,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 123,
+    "text": "안동강남교회",
+    "confidence": 0.9953406133183961,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 124,
+    "text": "해오름빌",
+    "confidence": 0.510701596736908,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 125,
+    "text": "GS25",
+    "confidence": 0.9928151369094849,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 126,
+    "text": "103",
+    "confidence": 1.0,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 127,
+    "text": "CU",
+    "confidence": 0.9999315542041156,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 128,
+    "text": "안동",
+    "confidence": 0.9962992760054871,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 129,
+    "text": "세분일레분",
+    "confidence": 0.4345033376406123,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 130,
+    "text": "동부한우갈비",
+    "confidence": 0.704879197736122,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 131,
+    "text": "시민운동장",
+    "confidence": 0.9703382834075405,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 132,
+    "text": "맘스터치",
+    "confidence": 0.9686523675918579,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 133,
+    "text": "105",
+    "confidence": 0.9999845831004693,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 134,
+    "text": "정원발",
+    "confidence": 0.5895910697395764,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 135,
+    "text": "오복갈비",
+    "confidence": 0.9939554929733276,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 136,
+    "text": "안동병원 전문",
+    "confidence": 0.6838386183430923,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 137,
+    "text": "안동시체육회",
+    "confidence": 0.9463245989883199,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 138,
+    "text": "축구장",
+    "confidence": 0.9945585087344518,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 139,
+    "text": "강남동",
+    "confidence": 0.9999514093442825,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 140,
+    "text": "안동시람",
+    "confidence": 0.5600717067718506,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 141,
+    "text": "302",
+    "confidence": 0.9999997246979434,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 142,
+    "text": "요양센터",
+    "confidence": 0.9988040328025818,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 143,
+    "text": "행정복지센터",
+    "confidence": 0.9945790352445033,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 144,
+    "text": "렌이도서관",
+    "confidence": 0.7851335550353049,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 145,
+    "text": "301",
+    "confidence": 0.9999999311744849,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 146,
+    "text": "정하제2호",
+    "confidence": 0.79677973251773,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 147,
+    "text": "106",
+    "confidence": 0.9999991740938607,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 149,
+    "text": "어린이공원",
+    "confidence": 0.9998718369465112,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 150,
+    "text": "1031",
+    "confidence": 0.37379348278045654,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 151,
+    "text": "정화중화요리",
+    "confidence": 0.9999100624959701,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 152,
+    "text": "세분일레분",
+    "confidence": 0.9636252308300136,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 153,
+    "text": "주차장1",
+    "confidence": 0.9973658323287964,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 154,
+    "text": "먼다리",
+    "confidence": 0.9640227872605303,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 155,
+    "text": "고타야능금",
+    "confidence": 0.9925640217499871,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 156,
+    "text": "안동",
+    "confidence": 0.9994110907415547,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 157,
+    "text": "START/FINISH",
+    "confidence": 0.9554262808079412,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 158,
+    "text": "303",
+    "confidence": 0.7388443946838379,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 159,
+    "text": "304",
+    "confidence": 1.0,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 160,
+    "text": "생선구이",
+    "confidence": 0.9996339082717896,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 161,
+    "text": "정하제",
+    "confidence": 0.9999333083735176,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 162,
+    "text": "3호공원",
+    "confidence": 0.9991797549329424,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 163,
+    "text": "아래기골",
+    "confidence": 0.9998289942741394,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 164,
+    "text": "예일메디택고등학교",
+    "confidence": 0.6663179869384211,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 165,
+    "text": "골프연습장",
+    "confidence": 0.9994363133101101,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 166,
+    "text": "사장2",
+    "confidence": 0.9630543567539969,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 167,
+    "text": "화성드림파크 107",
+    "confidence": 0.5603361058383601,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 168,
+    "text": "엘리트",
+    "confidence": 0.9997489287428409,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 169,
+    "text": "'기숙사",
+    "confidence": 0.9348401427268982,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 170,
+    "text": "현진에버",
+    "confidence": 0.9848465919494629,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 171,
+    "text": "102",
+    "confidence": 0.9999988299663297,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 172,
+    "text": "아파트",
+    "confidence": 0.9999307618526357,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 173,
+    "text": "안동남부교회",
+    "confidence": 0.9997136342228623,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 174,
+    "text": "진주네다육",
+    "confidence": 0.9592408557056905,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 175,
+    "text": "3차아파트",
+    "confidence": 0.9965713429497948,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 176,
+    "text": "306",
+    "confidence": 0.9999998623489704,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 177,
+    "text": "인향",
+    "confidence": 0.9987722302949973,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 178,
+    "text": "305",
+    "confidence": 0.9497461539535418,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 179,
+    "text": "종은이",
+    "confidence": 0.6209160141829382,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 180,
+    "text": "해적선편선",
+    "confidence": 0.5173891667087148,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 181,
+    "text": "108",
+    "confidence": 0.9999992429193688,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 182,
+    "text": "어울림",
+    "confidence": 0.9944252235517845,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 183,
+    "text": "불금등갈비",
+    "confidence": 0.9904789201414412,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 184,
+    "text": "안동반다비",
+    "confidence": 0.9986359555562164,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 185,
+    "text": "101",
+    "confidence": 0.7402755249630693,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 186,
+    "text": "반변천로",
+    "confidence": 0.9864432215690613,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 187,
+    "text": "품",
+    "confidence": 0.21742808456878393,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 188,
+    "text": "반변천",
+    "confidence": 0.9929598633988364,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 189,
+    "text": "성곡천교",
+    "confidence": 0.7723282215867975,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 190,
+    "text": "반변천",
+    "confidence": 0.9922606718755521,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 191,
+    "text": "반변천",
+    "confidence": 0.9894317142551078,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 192,
+    "text": "강남로",
+    "confidence": 0.9997477587485316,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 193,
+    "text": "뿐",
+    "confidence": 0.8969990565285322,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 194,
+    "text": "지코바 `",
+    "confidence": 0.4157842253706008,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 195,
+    "text": "강남5길",
+    "confidence": 0.9756404757499695,
+    "reason": "below_confidence_or_not_whitelisted"
+  }
+]

@@ -1,0 +1,70 @@
+{
+  "image": "path-to-gpx\\data\\images\\124.jpg",
+  "engine": "easyocr",
+  "mode": "kr_place_whitelist_only",
+  "whitelist_size": 69,
+  "detection_count": 2,
+  "rejected_count": 37,
+  "detections": [
+    {
+      "idx": 20,
+      "text": "만년고등학교",
+      "matched_place": "만년고등학교",
+      "confidence": 0.5840927692256073,
+      "polygon_xy": [
+        [
+          153.0,
+          483.0
+        ],
+        [
+          217.0,
+          483.0
+        ],
+        [
+          217.0,
+          497.0
+        ],
+        [
+          153.0,
+          497.0
+        ]
+      ],
+      "center_x": 185.0,
+      "center_y": 490.0,
+      "width": 64.0,
+      "height": 14.0,
+      "norm_center_x": 0.2642857142857143,
+      "norm_center_y": 0.7
+    },
+    {
+      "idx": 36,
+      "text": "정부대전청사",
+      "matched_place": "정부대전청사",
+      "confidence": 0.5854647039175951,
+      "polygon_xy": [
+        [
+          413.0,
+          641.0
+        ],
+        [
+          477.0,
+          641.0
+        ],
+        [
+          477.0,
+          657.0
+        ],
+        [
+          413.0,
+          657.0
+        ]
+      ],
+      "center_x": 445.0,
+      "center_y": 649.0,
+      "width": 64.0,
+      "height": 16.0,
+      "norm_center_x": 0.6357142857142857,
+      "norm_center_y": 0.9271428571428572
+    }
+  ]
+}

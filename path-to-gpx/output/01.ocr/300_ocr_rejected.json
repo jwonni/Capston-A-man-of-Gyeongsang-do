@@ -1,0 +1,170 @@
+[
+  {
+    "idx": 1,
+    "text": "1OK",
+    "confidence": 0.9212529471419487,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 2,
+    "text": "강동구청혀",
+    "confidence": 0.33552444484499316,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 3,
+    "text": "눈손동력",
+    "confidence": 0.09360282123088837,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 4,
+    "text": "집신나무이",
+    "confidence": 0.35474585058801833,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 5,
+    "text": "START",
+    "confidence": 0.9992241147095301,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 6,
+    "text": "물리피공원 편화의금장",
+    "confidence": 0.08671491901155592,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 7,
+    "text": "8호섭 몸존토성여",
+    "confidence": 0.13517295814506772,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 8,
+    "text": "팀일3다",
+    "confidence": 0.20159074664115906,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 9,
+    "text": "올림픽공업역",
+    "confidence": 0.1562244894559161,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 10,
+    "text": "참실여",
+    "confidence": 0.4357603630534798,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 11,
+    "text": "궁밥운 터장사기리",
+    "confidence": 0.03384007120243784,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 12,
+    "text": "밥어s",
+    "confidence": 0.10569434628789293,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 13,
+    "text": "FINISH",
+    "confidence": 0.6313044044123919,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 14,
+    "text": "훈",
+    "confidence": 0.016751309984624152,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 15,
+    "text": "{l운로움장력",
+    "confidence": 0.06157090793523637,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 16,
+    "text": "스다?5",
+    "confidence": 0.25180602073669434,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 17,
+    "text": "오급혀",
+    "confidence": 0.21099881230443576,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 18,
+    "text": "식혼든",
+    "confidence": 0.14848511601637784,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 19,
+    "text": "승파력",
+    "confidence": 0.1490867972234424,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 20,
+    "text": "가무15",
+    "confidence": 0.2957206666469574,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 21,
+    "text": "올림픽공원 출발",
+    "confidence": 0.9995229072507492,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 22,
+    "text": "잠실종합운동장 주경기장 도착 (예정)",
+    "confidence": 0.9737827238770592,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 23,
+    "text": "*일부 코스 변경 가능",
+    "confidence": 0.8222684196569213,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 24,
+    "text": "틈",
+    "confidence": 0.17787520690050318,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 25,
+    "text": "둘사거",
+    "confidence": 0.18681430402553248,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 26,
+    "text": "사퀴겨사거리",
+    "confidence": 0.004526601783764166,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 27,
+    "text": "@않 부경야 사거리",
+    "confidence": 0.0031338292774143847,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 28,
+    "text": "'오금사거리",
+    "confidence": 0.1190642554121807,
+    "reason": "below_confidence_or_not_whitelisted"
+  }
+]

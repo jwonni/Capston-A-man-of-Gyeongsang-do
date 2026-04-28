@@ -1,0 +1,9 @@
+{
+  "image": "path-to-gpx\\data\\images\\112.jpg",
+  "engine": "easyocr",
+  "mode": "kr_place_whitelist_only",
+  "whitelist_size": 53,
+  "detection_count": 0,
+  "rejected_count": 45,
+  "detections": []
+}

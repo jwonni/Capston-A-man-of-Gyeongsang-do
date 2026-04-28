@@ -1,0 +1,211 @@
+{
+  "created_at_utc": "2026-04-28T14:00:55.981174+00:00",
+  "source_geocode_json": "path-to-gpx\\output\\02.geocoding\\062_geocode_candidates.json",
+  "zoom": 17,
+  "tile_size": 1400,
+  "tile_count": 10,
+  "tiles": [
+    {
+      "zoom": 17,
+      "lat": 37.53190827313679,
+      "lon": 126.91416237338858,
+      "tile_path": "path-to-gpx\\output\\03.map_tiles\\tiles\\062_idx42_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 42,
+      "place_label": "국회의사당"
+    },
+    {
+      "zoom": 17,
+      "lat": 37.544297449957455,
+      "lon": 126.90529141400738,
+      "tile_path": "path-to-gpx\\output\\03.map_tiles\\tiles\\062_idx71_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 71,
+      "place_label": "양화대교"
+    },
+    {
+      "zoom": 17,
+      "lat": 37.5634871865932,
+      "lon": 126.903425598797,
+      "tile_path": "path-to-gpx\\output\\03.map_tiles\\tiles\\062_idx18_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 18,
+      "place_label": "마포구청역"
+    },
+    {
+      "zoom": 17,
+      "lat": 37.55976328822766,
+      "lon": 126.96449207476172,
+      "tile_path": "path-to-gpx\\output\\03.map_tiles\\tiles\\062_idx27_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 27,
+      "place_label": "충정로역"
+    },
+    {
+      "zoom": 17,
+      "lat": 37.5197,
+      "lon": 126.9404,
+      "tile_path": "path-to-gpx\\output\\03.map_tiles\\tiles\\062_idx45_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 45,
+      "place_label": "63빌딩"
+    },
+    {
+      "zoom": 17,
+      "lat": 37.5347843171332,
+      "lon": 126.902611795523,
+      "tile_path": "path-to-gpx\\output\\03.map_tiles\\tiles\\062_idx41_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 41,
+      "place_label": "당산역"
+    },
+    {
+      "zoom": 17,
+      "lat": 37.5658,
+      "lon": 126.9748,
+      "tile_path": "path-to-gpx\\output\\03.map_tiles\\tiles\\062_idx17_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 17,
+      "place_label": "덕수궁"
+    },
+    {
+      "zoom": 17,
+      "lat": 37.57213335842017,
+      "lon": 126.88740136782069,
+      "tile_path": "path-to-gpx\\output\\03.map_tiles\\tiles\\062_idx9_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 9,
+      "place_label": "난지천공원"
+    },
+    {
+      "zoom": 17,
+      "lat": 37.5759,
+      "lon": 126.9769,
+      "tile_path": "path-to-gpx\\output\\03.map_tiles\\tiles\\062_idx14_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 14,
+      "place_label": "광화문광장"
+    },
+    {
+      "zoom": 17,
+      "lat": 37.5437,
+      "lon": 126.9476,
+      "tile_path": "path-to-gpx\\output\\03.map_tiles\\tiles\\062_idx72_z17_naver.png",
+      "saved_width": 1400,
+      "saved_height": 1400,
+      "center_pixel_in_output_x": 700.0,
+      "center_pixel_in_output_y": 700.0,
+      "idx": 72,
+      "place_label": "마포대교"
+    }
+  ],
+  "candidates": [
+    {
+      "idx": 42,
+      "text": "국회의사당",
+      "matched_place": "국회의사당",
+      "lat": 37.53190827313679,
+      "lon": 126.91416237338858,
+      "display_name": "국회의사당"
+    },
+    {
+      "idx": 71,
+      "text": "양화대교",
+      "matched_place": "양화대교",
+      "lat": 37.544297449957455,
+      "lon": 126.90529141400738,
+      "display_name": "양화대교"
+    },
+    {
+      "idx": 18,
+      "text": "마포구청역",
+      "matched_place": "마포구청역",
+      "lat": 37.5634871865932,
+      "lon": 126.903425598797,
+      "display_name": "마포구청역 6호선"
+    },
+    {
+      "idx": 27,
+      "text": "충정로역",
+      "matched_place": "충정로역",
+      "lat": 37.55976328822766,
+      "lon": 126.96449207476172,
+      "display_name": "충정로역 2호선"
+    },
+    {
+      "idx": 45,
+      "text": "63빌딩",
+      "matched_place": "63빌딩",
+      "lat": 37.5197,
+      "lon": 126.9404,
+      "display_name": "여의도 63빌딩"
+    },
+    {
+      "idx": 41,
+      "text": "당산역",
+      "matched_place": "당산역",
+      "lat": 37.5347843171332,
+      "lon": 126.902611795523,
+      "display_name": "당산역 2호선"
+    },
+    {
+      "idx": 17,
+      "text": "덕수궁",
+      "matched_place": "덕수궁",
+      "lat": 37.5658,
+      "lon": 126.9748,
+      "display_name": "덕수궁 대한문"
+    },
+    {
+      "idx": 9,
+      "text": "난지천공원",
+      "matched_place": "난지천공원",
+      "lat": 37.57213335842017,
+      "lon": 126.88740136782069,
+      "display_name": "난지천공원"
+    },
+    {
+      "idx": 14,
+      "text": "광화문광장",
+      "matched_place": "광화문광장",
+      "lat": 37.5759,
+      "lon": 126.9769,
+      "display_name": "서울 동아국제마라톤 출발지, 광화문광장 세종대왕 동상 앞"
+    },
+    {
+      "idx": 72,
+      "text": "'마포대교",
+      "matched_place": "마포대교",
+      "lat": 37.5437,
+      "lon": 126.9476,
+      "display_name": "마포대교 중간점"
+    }
+  ]
+}

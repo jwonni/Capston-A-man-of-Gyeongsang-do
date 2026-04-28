@@ -1,0 +1,311 @@
+{
+  "created_at_utc": "2026-04-28T14:02:29.391707+00:00",
+  "image": "path-to-gpx\\data\\images\\062.jpg",
+  "image_width": 800,
+  "image_height": 733,
+  "zoom": 16,
+  "patch_size": 512,
+  "anchor_count": 10,
+  "anchors": [
+    {
+      "idx": 42,
+      "text": "국회의사당",
+      "lat": 37.53190827313679,
+      "lon": 126.91416237338858,
+      "display_name": "국회의사당",
+      "image_center_x": 250.0,
+      "image_center_y": 437.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_42_src.png",
+      "src_offset": {
+        "offset_x": -6,
+        "offset_y": 181,
+        "center_in_image_x": 250.0,
+        "center_in_image_y": 437.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 800,
+        "image_height": 733
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_42_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 37.53190827313679,
+        "center_lon": 126.91416237338858,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 71,
+      "text": "양화대교",
+      "lat": 37.544297449957455,
+      "lon": 126.90529141400738,
+      "display_name": "양화대교",
+      "image_center_x": 243.0,
+      "image_center_y": 347.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_71_src.png",
+      "src_offset": {
+        "offset_x": -13,
+        "offset_y": 91,
+        "center_in_image_x": 243.0,
+        "center_in_image_y": 347.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 800,
+        "image_height": 733
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_71_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 37.544297449957455,
+        "center_lon": 126.90529141400738,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 18,
+      "text": "마포구청역",
+      "lat": 37.5634871865932,
+      "lon": 126.903425598797,
+      "display_name": "마포구청역 6호선",
+      "image_center_x": 269.0,
+      "image_center_y": 187.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_18_src.png",
+      "src_offset": {
+        "offset_x": 13,
+        "offset_y": -69,
+        "center_in_image_x": 269.0,
+        "center_in_image_y": 187.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 800,
+        "image_height": 733
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_18_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 37.5634871865932,
+        "center_lon": 126.903425598797,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 27,
+      "text": "충정로역",
+      "lat": 37.55976328822766,
+      "lon": 126.96449207476172,
+      "display_name": "충정로역 2호선",
+      "image_center_x": 646.0,
+      "image_center_y": 247.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_27_src.png",
+      "src_offset": {
+        "offset_x": 390,
+        "offset_y": -9,
+        "center_in_image_x": 646.0,
+        "center_in_image_y": 247.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 800,
+        "image_height": 733
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_27_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 37.55976328822766,
+        "center_lon": 126.96449207476172,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 45,
+      "text": "63빌딩",
+      "lat": 37.5197,
+      "lon": 126.9404,
+      "display_name": "여의도 63빌딩",
+      "image_center_x": 466.0,
+      "image_center_y": 501.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_45_src.png",
+      "src_offset": {
+        "offset_x": 210,
+        "offset_y": 245,
+        "center_in_image_x": 466.0,
+        "center_in_image_y": 501.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 800,
+        "image_height": 733
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_45_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 37.5197,
+        "center_lon": 126.9404,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 41,
+      "text": "당산역",
+      "lat": 37.5347843171332,
+      "lon": 126.902611795523,
+      "display_name": "당산역 2호선",
+      "image_center_x": 212.0,
+      "image_center_y": 409.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_41_src.png",
+      "src_offset": {
+        "offset_x": -44,
+        "offset_y": 153,
+        "center_in_image_x": 212.0,
+        "center_in_image_y": 409.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 800,
+        "image_height": 733
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_41_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 37.5347843171332,
+        "center_lon": 126.902611795523,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 17,
+      "text": "덕수궁",
+      "lat": 37.5658,
+      "lon": 126.9748,
+      "display_name": "덕수궁 대한문",
+      "image_center_x": 696.0,
+      "image_center_y": 169.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_17_src.png",
+      "src_offset": {
+        "offset_x": 440,
+        "offset_y": -87,
+        "center_in_image_x": 696.0,
+        "center_in_image_y": 169.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 800,
+        "image_height": 733
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_17_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 37.5658,
+        "center_lon": 126.9748,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 9,
+      "text": "난지천공원",
+      "lat": 37.57213335842017,
+      "lon": 126.88740136782069,
+      "display_name": "난지천공원",
+      "image_center_x": 61.0,
+      "image_center_y": 119.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_9_src.png",
+      "src_offset": {
+        "offset_x": -195,
+        "offset_y": -137,
+        "center_in_image_x": 61.0,
+        "center_in_image_y": 119.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 800,
+        "image_height": 733
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_9_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 37.57213335842017,
+        "center_lon": 126.88740136782069,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 14,
+      "text": "광화문광장",
+      "lat": 37.5759,
+      "lon": 126.9769,
+      "display_name": "서울 동아국제마라톤 출발지, 광화문광장 세종대왕 동상 앞",
+      "image_center_x": 747.0,
+      "image_center_y": 123.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_14_src.png",
+      "src_offset": {
+        "offset_x": 491,
+        "offset_y": -133,
+        "center_in_image_x": 747.0,
+        "center_in_image_y": 123.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 800,
+        "image_height": 733
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_14_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 37.5759,
+        "center_lon": 126.9769,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    },
+    {
+      "idx": 72,
+      "text": "마포대교",
+      "lat": 37.5437,
+      "lon": 126.9476,
+      "display_name": "마포대교 중간점",
+      "image_center_x": 475.0,
+      "image_center_y": 419.0,
+      "src_patch": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_72_src.png",
+      "src_offset": {
+        "offset_x": 219,
+        "offset_y": 163,
+        "center_in_image_x": 475.0,
+        "center_in_image_y": 419.0,
+        "center_in_patch_x": 256,
+        "center_in_patch_y": 256,
+        "patch_size": 512,
+        "image_width": 800,
+        "image_height": 733
+      },
+      "ref_tile": "path-to-gpx\\output\\04.anchors\\patches\\062_anchor_72_ref.png",
+      "geotransform": {
+        "zoom": 16,
+        "center_lat": 37.5437,
+        "center_lon": 126.9476,
+        "center_pixel_x": 256.0,
+        "center_pixel_y": 256.0,
+        "patch_size": 512
+      }
+    }
+  ]
+}

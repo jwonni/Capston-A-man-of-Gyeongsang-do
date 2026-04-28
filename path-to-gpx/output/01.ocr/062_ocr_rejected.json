@@ -1,0 +1,380 @@
+[
+  {
+    "idx": 1,
+    "text": "서울하프마라톤 코스",
+    "confidence": 0.9499200031082986,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 2,
+    "text": "구용사거리",
+    "confidence": 0.4766054984123957,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 3,
+    "text": "디지털미디어시티",
+    "confidence": 0.696108396997277,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 4,
+    "text": "피니시라인이 눈앞",
+    "confidence": 0.9961513998839218,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 5,
+    "text": "오전 8시 출발",
+    "confidence": 0.8583777141927664,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 6,
+    "text": "입구교차로",
+    "confidence": 0.9981855444152591,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 7,
+    "text": "5k만 힘 내면",
+    "confidence": 0.8155879697606694,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 8,
+    "text": "병 뚫린 세중대로들",
+    "confidence": 0.18134178760266234,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 10,
+    "text": "월드컵",
+    "confidence": 0.9999471421913263,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 11,
+    "text": "완주 목표 달성!",
+    "confidence": 0.9734993190475584,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 12,
+    "text": "닫려붙시다",
+    "confidence": 0.7848339239901023,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 13,
+    "text": "경기장",
+    "confidence": 0.999968615630954,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 15,
+    "text": "2Okm",
+    "confidence": 0.9487891793251038,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 16,
+    "text": "하눈공원",
+    "confidence": 0.791120006901368,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 19,
+    "text": "서울",
+    "confidence": 0.7639794336938802,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 20,
+    "text": "'하프코스 finish",
+    "confidence": 0.7936994611282667,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 21,
+    "text": "시청",
+    "confidence": 0.9985884568343764,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 22,
+    "text": "상암 월드컵공원",
+    "confidence": 0.881509210944312,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 24,
+    "text": "평화광장",
+    "confidence": 0.9965655829156043,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 25,
+    "text": "15km",
+    "confidence": 0.9894521832466125,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 26,
+    "text": "내리막길",
+    "confidence": 0.9355119329315046,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 28,
+    "text": "합정역",
+    "confidence": 0.9972919324301255,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 29,
+    "text": "강바람 마주치는",
+    "confidence": 0.6772299724062915,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 30,
+    "text": "첫 난관 오르막",
+    "confidence": 0.9099847256598484,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 32,
+    "text": "고개 숙이고 보쪽 잠계",
+    "confidence": 0.8751142397340745,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 33,
+    "text": "공덕역",
+    "confidence": 0.9971424992107982,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 34,
+    "text": "두 번째 바람맞이",
+    "confidence": 0.9575883877222955,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 35,
+    "text": "한강",
+    "confidence": 0.94925672910878,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 36,
+    "text": "순복음교회",
+    "confidence": 0.9516990924861037,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 37,
+    "text": "급수대 Skm",
+    "confidence": 0.694975318557777,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 39,
+    "text": "1Okm",
+    "confidence": 0.8744279742240906,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 40,
+    "text": "상제 숙이고 보쪽 짧게",
+    "confidence": 0.30943562696353644,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 43,
+    "text": "LG트원타위",
+    "confidence": 0.35680727049080657,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 44,
+    "text": "IFC서울",
+    "confidence": 0.5490945389138758,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 46,
+    "text": "여의도",
+    "confidence": 0.9998848558008844,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 47,
+    "text": "교차로",
+    "confidence": 0.9647305135958084,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 48,
+    "text": "iOkm finish",
+    "confidence": 0.7062806251265459,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 49,
+    "text": "하프코스는 여의도",
+    "confidence": 0.9834725909830503,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 50,
+    "text": "여의도 공원",
+    "confidence": 0.9997540789098679,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 51,
+    "text": "공원부터가 고비",
+    "confidence": 0.9867566985762714,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 52,
+    "text": "ADm",
+    "confidence": 0.7400939464569092,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 53,
+    "text": "코스 고저도",
+    "confidence": 0.7063929474191295,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 54,
+    "text": "21.0J75km",
+    "confidence": 0.5611975332845499,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 55,
+    "text": "굉회문 광장",
+    "confidence": 0.18077256609988634,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 56,
+    "text": "충정로억",
+    "confidence": 0.3493884801864624,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 57,
+    "text": "공덕역",
+    "confidence": 0.9652015706388806,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 59,
+    "text": "여의도",
+    "confidence": 0.9993606383517321,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 60,
+    "text": "순목음교회",
+    "confidence": 0.6715715126335388,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 62,
+    "text": "합정역",
+    "confidence": 0.7882284754713771,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 64,
+    "text": "난지전",
+    "confidence": 0.9200007157286967,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 65,
+    "text": "상암",
+    "confidence": 0.29048156456128227,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 66,
+    "text": "교자로",
+    "confidence": 0.7273085617792768,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 67,
+    "text": "입구고차로",
+    "confidence": 0.6974411809943457,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 68,
+    "text": "공원   평화광장",
+    "confidence": 0.7083927988824598,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 69,
+    "text": "서소문로",
+    "confidence": 0.9987775087356567,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 70,
+    "text": "봄",
+    "confidence": 0.18009709809593577,
+    "reason": "below_confidence_or_not_whitelisted"
+  },
+  {
+    "idx": 63,
+    "text": "마포구청역 디지털미디어시터",
+    "matched_place": "마포구청역",
+    "confidence": 0.29154534740222593,
+    "reason": "duplicate_place_dedup (kept idx=18)"
+  },
+  {
+    "idx": 23,
+    "text": "충정로-마포대교",
+    "matched_place": "마포대교",
+    "confidence": 0.6771695653386529,
+    "reason": "duplicate_place_dedup (kept idx=72)"
+  },
+  {
+    "idx": 31,
+    "text": "마포대교",
+    "matched_place": "마포대교",
+    "confidence": 0.9077110886573792,
+    "reason": "duplicate_place_dedup (kept idx=72)"
+  },
+  {
+    "idx": 58,
+    "text": "마포대교",
+    "matched_place": "마포대교",
+    "confidence": 0.9068311452865601,
+    "reason": "duplicate_place_dedup (kept idx=72)"
+  },
+  {
+    "idx": 38,
+    "text": "양화대교",
+    "matched_place": "양화대교",
+    "confidence": 0.9979459054610598,
+    "reason": "duplicate_place_dedup (kept idx=71)"
+  },
+  {
+    "idx": 61,
+    "text": "당산역",
+    "matched_place": "당산역",
+    "confidence": 0.9793670476108959,
+    "reason": "duplicate_place_dedup (kept idx=41)"
+  }
+]

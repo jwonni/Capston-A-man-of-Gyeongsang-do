@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marathon Route Extraction</title>
+    <style>
+        :root {
+            --bg: #0a0f15;
+            --panel: #141c27;
+            --panel-2: #1a2331;
+            --line: rgba(255, 255, 255, 0.09);
+            --text: #ebf1fb;
+            --muted: #94a2b8;
+            --accent: #6ea7ff;
+            --accent-2: #4f7ed6;
+            --danger: #ff5d5d;
+            --success: #4ac27e;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 0%, rgba(110, 167, 255, 0.14), transparent 26%),
+                radial-gradient(circle at 90% 100%, rgba(79, 126, 214, 0.12), transparent 30%),
+                var(--bg);
+            font-family: "Segoe UI", "Apple SD Gothic Neo", sans-serif;
+            padding: 20px;
+        }
+
+        .app {
+            max-width: 1720px;
+            margin: 0 auto;
+            display: grid;
+            gap: 16px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(1.8rem, 2.4vw, 2.8rem);
+            letter-spacing: -0.03em;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            color: var(--muted);
+        }
+
+        .top-row {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(3, minmax(260px, 1fr));
+        }
+
+        .bottom-row {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: 1fr 1fr;
+            align-items: stretch;
+        }
+
+        .card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)), var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
+            min-height: 160px;
+        }
+
+        .card.disabled {
+            opacity: 0.45;
+            pointer-events: none;
+        }
+
+        .head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            color: white;
+            flex: 0 0 auto;
+        }
+
+        .title {
+            margin: 0;
+            font-size: 1.02rem;
+        }
+
+        .sub {
+            margin-top: 2px;
+            color: var(--muted);
+            font-size: 0.86rem;
+        }
+
+        .upload-box {
+            border: 1.5px dashed rgba(110, 167, 255, 0.58);
+            border-radius: 12px;
+            background: rgba(110, 167, 255, 0.05);
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .upload-box:hover {
+            background: rgba(110, 167, 255, 0.12);
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        .thumb {
+            margin-top: 10px;
+        }
+
+        .thumb img {
+            display: block;
+            width: 100%;
+            max-height: 220px;
+            object-fit: contain;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: #0a0f15;
+        }
+
+        .btn {
+            border: none;
+            color: white;
+            border-radius: 12px;
+            padding: 11px 14px;
+            font-weight: 700;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            transition: 0.18s ease;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.45;
+        }
+
+        .btn.success {
+            background: linear-gradient(135deg, #45be7d, #2a8d5c);
+        }
+
+        .btn.danger {
+            background: linear-gradient(135deg, #ff6d6d, #d65050);
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-row .btn {
+            flex: 1 1 160px;
+        }
+
+        .status {
+            margin-top: 8px;
+            color: #8bb8ff;
+            font-size: 0.9rem;
+        }
+
+        .error {
+            margin-top: 8px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 93, 93, 0.45);
+            background: rgba(255, 93, 93, 0.12);
+            color: #ffb8b8;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .stage4 {
+            display: grid;
+            gap: 12px;
+            min-height: 720px;
+        }
+
+        .viewer-meta {
+            color: var(--muted);
+            font-size: 0.88rem;
+            margin-bottom: 4px;
+        }
+
+        .viewport {
+            position: relative;
+            height: 520px;
+            border-radius: 14px;
+            overflow: hidden;
+            background:
+                linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.03) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.03) 75%),
+                #060a10;
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+            border: 1px solid rgba(255,255,255,0.08);
+            touch-action: none;
+        }
+
+        #viewerCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: grab;
+            image-rendering: pixelated;
+        }
+
+        #viewerCanvas.dragging {
+            cursor: grabbing;
+        }
+
+        .floating-zoom {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            z-index: 5;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(12, 18, 28, 0.85);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 8px;
+            backdrop-filter: blur(8px);
+        }
+
+        .floating-zoom button {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.06);
+            color: white;
+            font-size: 1.15rem;
+            cursor: pointer;
+        }
+
+        .floating-zoom .value {
+            min-width: 56px;
+            text-align: center;
+            color: #ffd9d9;
+            font-weight: 800;
+            font-size: 0.88rem;
+        }
+
+        .hover-info {
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+            z-index: 5;
+            background: rgba(12, 18, 28, 0.85);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 8px 10px;
+            font-size: 0.84rem;
+            color: #ffb7b7;
+            min-width: 210px;
+        }
+
+        .controls {
+            display: grid;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(8, 12, 20, 0.55);
+        }
+
+        .zoom-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .zoom-row label {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .zoom-row input[type="range"] {
+            width: min(420px, 100%);
+            accent-color: var(--danger);
+        }
+
+        .zoom-row .value {
+            color: #ffb7b7;
+            font-weight: 800;
+            min-width: 60px;
+        }
+
+        .points {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .point-box {
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 10px;
+            background: rgba(255,255,255,0.03);
+            min-height: 70px;
+        }
+
+        .point-box .label {
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-bottom: 6px;
+        }
+
+        .point-box .value {
+            font-weight: 700;
+            font-size: 0.92rem;
+        }
+
+        .point-box .value.start { color: #7fb6ff; }
+        .point-box .value.end { color: #ff7f7f; }
+
+        .stage5 {
+            display: grid;
+            gap: 12px;
+            align-content: start;
+            min-height: 720px;
+        }
+
+        .map-placeholder {
+            min-height: 360px;
+            border-radius: 12px;
+            border: 1px dashed rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.03);
+            color: var(--muted);
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 14px;
+            font-size: 0.92rem;
+        }
+
+        .spinner {
+            width: 15px;
+            height: 15px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: -3px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 1200px) {
+            .top-row {
+                grid-template-columns: 1fr;
+            }
+            .bottom-row {
+                grid-template-columns: 1fr;
+            }
+            .stage4, .stage5 {
+                min-height: initial;
+            }
+            .viewport {
+                height: 460px;
+            }
+        }
+
+        @media (max-width: 680px) {
+            body { padding: 12px; }
+            .points { grid-template-columns: 1fr; }
+            .viewport { height: 400px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div>
+            <h1>Marathon Route Extraction</h1>
+            <div class="subtitle">1-2-3 처리 후 4번에서 지정/다운로드, 5번은 GPX 변환 및 지도 시각화 영역</div>
+        </div>
+
+        <div class="top-row">
+            <section class="card" id="stage1Card">
+                <div class="head">
+                    <div class="badge">1</div>
+                    <div>
+                        <h2 class="title">이미지 업로드</h2>
+                        <div class="sub">파일 선택</div>
+                    </div>
+                </div>
+                <div id="uploadArea" class="upload-box">
+                    <div style="font-weight:700; margin-bottom:6px;">클릭 또는 드래그 앤 드롭</div>
+                    <small style="color: var(--muted);">JPG / PNG</small>
+                </div>
+                <input id="imageInput" type="file" accept="image/*">
+                <div class="thumb" id="previewContainer"></div>
+                <div class="error" id="error1"></div>
+            </section>
+
+            <section class="card disabled" id="stage2Card">
+                <div class="head">
+                    <div class="badge">2</div>
+                    <div>
+                        <h2 class="title">마스킹 실행</h2>
+                        <div class="sub">POST /api/predict</div>
+                    </div>
+                </div>
+                <button class="btn" id="predictBtn" disabled>마스킹 시작</button>
+                <div class="thumb" id="maskContainer"></div>
+                <div class="status" id="status2"></div>
+                <div class="error" id="error2"></div>
+            </section>
+
+            <section class="card disabled" id="stage3Card">
+                <div class="head">
+                    <div class="badge">3</div>
+                    <div>
+                        <h2 class="title">후처리</h2>
+                        <div class="sub">노이즈 제거 + 스켈레톤</div>
+                    </div>
+                </div>
+                <button class="btn" id="postprocessBtn" disabled>후처리 시작</button>
+                <div class="thumb" id="skeletonThumbContainer"></div>
+                <div class="status" id="status3"></div>
+                <div class="error" id="error3"></div>
+            </section>
+        </div>
+
+        <div class="bottom-row">
+            <section class="card stage4 disabled" id="stage4Card">
+                <div class="head">
+                    <div class="badge">4</div>
+                    <div>
+                        <h2 class="title">시작/끝 지점 지정 + 이미지 뷰어</h2>
+                        <div class="sub">Ctrl+Wheel 줌, 드래그 팬, 흰색 hover 빨간 하이라이트</div>
+                    </div>
+                </div>
+                <div class="viewer-meta" id="viewerMeta">대기 중</div>
+                <div class="viewport" id="viewerViewport">
+                    <canvas id="viewerCanvas"></canvas>
+                    <div class="floating-zoom">
+                        <button id="zoomOutBtn" type="button">-</button>
+                        <div class="value" id="zoomReadout">100%</div>
+                        <button id="zoomInBtn" type="button">+</button>
+                    </div>
+                    <div class="hover-info" id="hoverIndicator">흰색 픽셀 위로 이동하면 빨간색으로 강조됩니다.</div>
+                </div>
+                <div class="controls">
+                    <div class="zoom-row">
+                        <label for="stage4ZoomRange">확대/축소</label>
+                        <input id="stage4ZoomRange" type="range" min="0.5" max="8" step="0.1" value="1">
+                        <div class="value" id="stage4ZoomValue">100%</div>
+                    </div>
+                    <div class="points">
+                        <div class="point-box">
+                            <div class="label">시작점</div>
+                            <div class="value start" id="startPointText">미지정</div>
+                        </div>
+                        <div class="point-box">
+                            <div class="label">끝점</div>
+                            <div class="value end" id="endPointText">미지정</div>
+                        </div>
+                    </div>
+                    <div class="btn-row">
+                        <button class="btn danger" id="resetPointsBtn" disabled>시작/끝 초기화</button>
+                        <button class="btn success" id="downloadPixelBtn" disabled>픽셀 리스트 다운로드</button>
+                    </div>
+                </div>
+                <div class="status" id="status4"></div>
+                <div class="error" id="error4"></div>
+            </section>
+
+            <section class="card stage5 disabled" id="stage5Card">
+                <div class="head">
+                    <div class="badge">5</div>
+                    <div>
+                        <h2 class="title">GPX 변환</h2>
+                        <div class="sub">향후 지도 시각화 영역 포함</div>
+                    </div>
+                </div>
+                <button class="btn" id="convertGpxBtn" disabled>GPX 변환</button>
+                <button class="btn success" id="downloadGpxBtn" disabled style="display:none;">GPX 다운로드</button>
+                <div class="map-placeholder">여기에 변환된 GPX를 지도 시각화로 표시할 예정</div>
+                <div class="status" id="status5"></div>
+                <div class="error" id="error5"></div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const state = {
+            uploadedImage: null,
+            mask_b64: null,
+            skeleton_b64: null,
+            points: { start: null, end: null },
+            path: [],
+            gpxContent: null,
+            image: { source: null, width: 0, height: 0, ready: false },
+            view: {
+                scale: 1,
+                minScale: 0.5,
+                maxScale: 8,
+                offsetX: 0,
+                offsetY: 0,
+                isPanning: false,
+                panStartX: 0,
+                panStartY: 0,
+                pointerStartX: 0,
+                pointerStartY: 0,
+                dragMoved: false,
+                highlight: null,
+                fitScale: 1,
+            },
+        };
+
+        const uploadArea = document.getElementById('uploadArea');
+        const imageInput = document.getElementById('imageInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const predictBtn = document.getElementById('predictBtn');
+        const postprocessBtn = document.getElementById('postprocessBtn');
+        const maskContainer = document.getElementById('maskContainer');
+        const skeletonThumbContainer = document.getElementById('skeletonThumbContainer');
+        const stage2Card = document.getElementById('stage2Card');
+        const stage3Card = document.getElementById('stage3Card');
+        const stage4Card = document.getElementById('stage4Card');
+        const stage5Card = document.getElementById('stage5Card');
+        const viewerMeta = document.getElementById('viewerMeta');
+        const viewport = document.getElementById('viewerViewport');
+        const viewerCanvas = document.getElementById('viewerCanvas');
+        const zoomOutBtn = document.getElementById('zoomOutBtn');
+        const zoomInBtn = document.getElementById('zoomInBtn');
+        const zoomReadout = document.getElementById('zoomReadout');
+        const stage4ZoomRange = document.getElementById('stage4ZoomRange');
+        const stage4ZoomValue = document.getElementById('stage4ZoomValue');
+        const hoverIndicator = document.getElementById('hoverIndicator');
+        const startPointText = document.getElementById('startPointText');
+        const endPointText = document.getElementById('endPointText');
+        const resetPointsBtn = document.getElementById('resetPointsBtn');
+        const downloadPixelBtn = document.getElementById('downloadPixelBtn');
+        const convertGpxBtn = document.getElementById('convertGpxBtn');
+        const downloadGpxBtn = document.getElementById('downloadGpxBtn');
+
+        const ctx = viewerCanvas.getContext('2d');
+        const offscreen = document.createElement('canvas');
+        const offscreenCtx = offscreen.getContext('2d');
+        const interactionCanvas = document.createElement('canvas');
+        const interactionCtx = interactionCanvas.getContext('2d');
+
+        function setError(id, message) {
+            const el = document.getElementById(id);
+            el.textContent = message;
+            el.classList.add('show');
+        }
+
+        function clearError(id) {
+            const el = document.getElementById(id);
+            el.textContent = '';
+            el.classList.remove('show');
+        }
+
+        function setStatus(id, message) {
+            document.getElementById(id).textContent = message;
+        }
+
+        function clearStatus(id) {
+            document.getElementById(id).textContent = '';
+        }
+
+        function updatePointLabels() {
+            startPointText.textContent = state.points.start ? `[${state.points.start[0]}, ${state.points.start[1]}]` : '미지정';
+            endPointText.textContent = state.points.end ? `[${state.points.end[0]}, ${state.points.end[1]}]` : '미지정';
+        }
+
+        function resizeCanvasToDisplaySize() {
+            const rect = viewport.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            viewerCanvas.width = Math.round(rect.width * dpr);
+            viewerCanvas.height = Math.round(rect.height * dpr);
+            viewerCanvas.style.width = `${rect.width}px`;
+            viewerCanvas.style.height = `${rect.height}px`;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        function updateZoomLabels() {
+            const pct = Math.round(state.view.scale * 100);
+            zoomReadout.textContent = `${pct}%`;
+            stage4ZoomValue.textContent = `${pct}%`;
+            stage4ZoomRange.value = String(state.view.scale);
+        }
+
+        function getVisibleSize() {
+            const rect = viewport.getBoundingClientRect();
+            return { width: rect.width, height: rect.height };
+        }
+
+        function clampScale(scale) {
+            return Math.max(state.view.minScale, Math.min(state.view.maxScale, scale));
+        }
+
+        function clampOffset() {
+            if (!state.image.ready) return;
+            const { width: vw, height: vh } = getVisibleSize();
+            const imgW = state.image.width * state.view.scale;
+            const imgH = state.image.height * state.view.scale;
+            const minX = Math.min(0, vw - imgW);
+            const minY = Math.min(0, vh - imgH);
+            state.view.offsetX = Math.min(0, Math.max(minX, state.view.offsetX));
+            state.view.offsetY = Math.min(0, Math.max(minY, state.view.offsetY));
+            if (imgW <= vw) state.view.offsetX = (vw - imgW) / 2;
+            if (imgH <= vh) state.view.offsetY = (vh - imgH) / 2;
+        }
+
+        function setScaleAround(clientX, clientY, nextScale) {
+            if (!state.image.ready) return;
+            const rect = viewport.getBoundingClientRect();
+            const localX = clientX - rect.left;
+            const localY = clientY - rect.top;
+            const imgX = (localX - state.view.offsetX) / state.view.scale;
+            const imgY = (localY - state.view.offsetY) / state.view.scale;
+            state.view.scale = clampScale(nextScale);
+            state.view.offsetX = localX - imgX * state.view.scale;
+            state.view.offsetY = localY - imgY * state.view.scale;
+            clampOffset();
+            updateZoomLabels();
+            renderViewer();
+        }
+
+        function viewportToImage(vx, vy) {
+            return [
+                (vx - state.view.offsetX) / state.view.scale,
+                (vy - state.view.offsetY) / state.view.scale,
+            ];
+        }
+
+        function nearestWhitePixel(x, y, radius) {
+            if (!interactionCanvas._data) return null;
+            const startX = Math.max(0, Math.floor(x - radius));
+            const endX = Math.min(state.image.width - 1, Math.ceil(x + radius));
+            const startY = Math.max(0, Math.floor(y - radius));
+            const endY = Math.min(state.image.height - 1, Math.ceil(y + radius));
+            let best = null;
+            let bestDist = Infinity;
+
+            for (let py = startY; py <= endY; py++) {
+                for (let px = startX; px <= endX; px++) {
+                    const idx = (py * state.image.width + px) * 4;
+                    if (
+                        interactionCanvas._data[idx] > 240 &&
+                        interactionCanvas._data[idx + 1] > 240 &&
+                        interactionCanvas._data[idx + 2] > 240
+                    ) {
+                        const dist = Math.hypot(px - x, py - y);
+                        if (dist < bestDist) {
+                            bestDist = dist;
+                            best = [px, py];
+                        }
+                    }
+                }
+            }
+            return best;
+        }
+
+        function drawViewer() {
+            const { width: vw, height: vh } = getVisibleSize();
+            ctx.clearRect(0, 0, vw, vh);
+
+            if (!state.image.ready) {
+                ctx.fillStyle = 'rgba(255,255,255,0.12)';
+                ctx.font = '600 18px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.fillText('후처리 완료 후 스켈레톤 이미지가 표시됩니다.', vw / 2, vh / 2);
+                return;
+            }
+
+            ctx.save();
+            ctx.imageSmoothingEnabled = false;
+            ctx.translate(state.view.offsetX, state.view.offsetY);
+            ctx.scale(state.view.scale, state.view.scale);
+            ctx.drawImage(offscreen, 0, 0);
+
+            if (state.view.highlight) {
+                const [hx, hy] = state.view.highlight;
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.48)';
+                ctx.fillRect(hx, hy, 1, 1);
+            }
+
+            if (state.points.start) {
+                const [sx, sy] = state.points.start;
+                ctx.beginPath();
+                ctx.fillStyle = '#4294ff';
+                ctx.arc(sx + 0.5, sy + 0.5, 4 / state.view.scale, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            if (state.points.end) {
+                const [ex, ey] = state.points.end;
+                ctx.beginPath();
+                ctx.fillStyle = '#ff4b4b';
+                ctx.arc(ex + 0.5, ey + 0.5, 4 / state.view.scale, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        function renderViewer() {
+            resizeCanvasToDisplaySize();
+            drawViewer();
+        }
+
+        function fitViewer() {
+            if (!state.image.ready) {
+                renderViewer();
+                return;
+            }
+            const rect = viewport.getBoundingClientRect();
+            const fitScale = Math.min(rect.width / state.image.width, rect.height / state.image.height) * 0.92;
+            state.view.fitScale = Math.max(0.2, fitScale);
+            state.view.scale = state.view.fitScale;
+            const imgW = state.image.width * state.view.scale;
+            const imgH = state.image.height * state.view.scale;
+            state.view.offsetX = (rect.width - imgW) / 2;
+            state.view.offsetY = (rect.height - imgH) / 2;
+            clampOffset();
+            updateZoomLabels();
+            renderViewer();
+        }
+
+        function syncInteractionBuffer() {
+            interactionCanvas.width = state.image.width;
+            interactionCanvas.height = state.image.height;
+            interactionCtx.clearRect(0, 0, state.image.width, state.image.height);
+            interactionCtx.drawImage(offscreen, 0, 0);
+            interactionCanvas._data = interactionCtx.getImageData(0, 0, state.image.width, state.image.height).data;
+        }
+
+        async function loadViewerImage(dataUrl) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    state.image.source = img;
+                    state.image.width = img.naturalWidth;
+                    state.image.height = img.naturalHeight;
+                    state.image.ready = true;
+                    offscreen.width = img.naturalWidth;
+                    offscreen.height = img.naturalHeight;
+                    offscreenCtx.imageSmoothingEnabled = false;
+                    offscreenCtx.clearRect(0, 0, img.naturalWidth, img.naturalHeight);
+                    offscreenCtx.drawImage(img, 0, 0);
+                    syncInteractionBuffer();
+                    fitViewer();
+                    resolve();
+                };
+                img.src = dataUrl;
+            });
+        }
+
+        async function computePath() {
+            if (!state.skeleton_b64 || !state.points.start || !state.points.end) {
+                return;
+            }
+            const response = await fetch('/api/extract_path', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    skeleton_b64: state.skeleton_b64,
+                    start: state.points.start,
+                    end: state.points.end,
+                    path: [],
+                }),
+            });
+            if (!response.ok) {
+                let detail = `HTTP ${response.status}`;
+                try {
+                    const errData = await response.json();
+                    if (typeof errData?.detail === 'string') {
+                        detail = `${response.status}: ${errData.detail}`;
+                    } else if (Array.isArray(errData?.detail)) {
+                        detail = `${response.status}: ${errData.detail.map((d) => d.msg || JSON.stringify(d)).join(', ')}`;
+                    }
+                } catch (_) {
+                    // keep default detail
+                }
+                throw new Error(detail);
+            }
+            const data = await response.json();
+            state.path = Array.isArray(data.path) ? data.path : [];
+            if (!state.path.length) {
+                throw new Error(data.message || '경로 추출 실패');
+            }
+        }
+
+        uploadArea.addEventListener('click', () => imageInput.click());
+
+        uploadArea.addEventListener('dragover', (event) => {
+            event.preventDefault();
+        });
+
+        uploadArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            if (event.dataTransfer.files.length > 0) {
+                imageInput.files = event.dataTransfer.files;
+                handleImageUpload();
+            }
+        });
+
+        imageInput.addEventListener('change', handleImageUpload);
+
+        function handleImageUpload() {
+            const file = imageInput.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                state.uploadedImage = event.target.result;
+                previewContainer.innerHTML = `<img src="${state.uploadedImage}" alt="uploaded">`;
+                stage2Card.classList.remove('disabled');
+                predictBtn.disabled = false;
+                clearError('error1');
+                clearStatus('status2');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        predictBtn.addEventListener('click', async () => {
+            clearError('error2');
+            clearStatus('status2');
+            if (!state.uploadedImage) {
+                setError('error2', '이미지를 먼저 업로드하세요.');
+                return;
+            }
+
+            predictBtn.disabled = true;
+            predictBtn.innerHTML = '<span class="spinner"></span>마스킹 중...';
+            try {
+                const blob = await fetch(state.uploadedImage).then((r) => r.blob());
+                const formData = new FormData();
+                formData.append('file', blob, 'image.png');
+
+                const response = await fetch('/api/predict', {
+                    method: 'POST',
+                    body: formData,
+                });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+
+                state.mask_b64 = data.mask_b64;
+                maskContainer.innerHTML = `<img src="${data.mask_b64}" alt="mask">`;
+                stage3Card.classList.remove('disabled');
+                postprocessBtn.disabled = false;
+                setStatus('status2', '마스킹 완료');
+            } catch (error) {
+                setError('error2', `마스킹 실패: ${error.message}`);
+            } finally {
+                predictBtn.disabled = false;
+                predictBtn.textContent = '마스킹 시작';
+            }
+        });
+
+        postprocessBtn.addEventListener('click', async () => {
+            clearError('error3');
+            clearStatus('status3');
+            if (!state.mask_b64) {
+                setError('error3', '먼저 마스킹을 실행하세요.');
+                return;
+            }
+
+            postprocessBtn.disabled = true;
+            postprocessBtn.innerHTML = '<span class="spinner"></span>처리 중...';
+            try {
+                const response = await fetch('/api/postprocess', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mask_b64: state.mask_b64, min_component_area: 500 }),
+                });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+
+                state.skeleton_b64 = data.skeleton_b64;
+                skeletonThumbContainer.innerHTML = `<img src="${data.skeleton_b64}" alt="skeleton">`;
+                await loadViewerImage(data.skeleton_b64);
+                viewerMeta.textContent = `스켈레톤 ${state.image.width}x${state.image.height}`;
+
+                stage4Card.classList.remove('disabled');
+                resetPointsBtn.disabled = false;
+                setStatus('status3', '후처리 완료');
+            } catch (error) {
+                setError('error3', `후처리 실패: ${error.message}`);
+            } finally {
+                postprocessBtn.disabled = false;
+                postprocessBtn.textContent = '후처리 시작';
+            }
+        });
+
+        viewerCanvas.addEventListener('wheel', (event) => {
+            if (!event.ctrlKey) return;
+            event.preventDefault();
+            const delta = event.deltaY > 0 ? -0.12 : 0.12;
+            setScaleAround(event.clientX, event.clientY, state.view.scale + delta);
+        }, { passive: false });
+
+        viewerCanvas.addEventListener('mousedown', (event) => {
+            if (event.button !== 0 || !state.image.ready) return;
+            state.view.isPanning = true;
+            state.view.dragMoved = false;
+            state.view.panStartX = state.view.offsetX;
+            state.view.panStartY = state.view.offsetY;
+            state.view.pointerStartX = event.clientX;
+            state.view.pointerStartY = event.clientY;
+            viewerCanvas.classList.add('dragging');
+        });
+
+        window.addEventListener('mousemove', (event) => {
+            const rect = viewerCanvas.getBoundingClientRect();
+            const inside = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
+
+            if (state.view.isPanning) {
+                const dx = event.clientX - state.view.pointerStartX;
+                const dy = event.clientY - state.view.pointerStartY;
+                if (Math.hypot(dx, dy) > 2) state.view.dragMoved = true;
+                state.view.offsetX = state.view.panStartX + dx;
+                state.view.offsetY = state.view.panStartY + dy;
+                clampOffset();
+                renderViewer();
+                return;
+            }
+
+            if (!inside || !state.image.ready) {
+                state.view.highlight = null;
+                hoverIndicator.textContent = '흰색 픽셀 위로 이동하면 빨간색으로 강조됩니다.';
+                renderViewer();
+                return;
+            }
+
+            const vx = event.clientX - rect.left;
+            const vy = event.clientY - rect.top;
+            const [ix, iy] = viewportToImage(vx, vy);
+            const hit = nearestWhitePixel(ix, iy, 24);
+            if (hit) {
+                state.view.highlight = hit;
+                hoverIndicator.textContent = `흰색 픽셀 감지: [${hit[0]}, ${hit[1]}]`;
+            } else {
+                state.view.highlight = null;
+                hoverIndicator.textContent = '흰색 픽셀 위로 이동하면 빨간색으로 강조됩니다.';
+            }
+            renderViewer();
+        });
+
+        window.addEventListener('mouseup', () => {
+            state.view.isPanning = false;
+            viewerCanvas.classList.remove('dragging');
+        });
+
+        viewerCanvas.addEventListener('click', async (event) => {
+            if (!state.image.ready || state.view.dragMoved) {
+                state.view.dragMoved = false;
+                return;
+            }
+            clearError('error4');
+            clearStatus('status4');
+
+            const rect = viewerCanvas.getBoundingClientRect();
+            const vx = event.clientX - rect.left;
+            const vy = event.clientY - rect.top;
+            const [ix, iy] = viewportToImage(vx, vy);
+            const hit = nearestWhitePixel(ix, iy, 10);
+            if (!hit) {
+                setError('error4', '흰색 픽셀 10px 이내를 클릭하세요.');
+                return;
+            }
+
+            if (!state.points.start) {
+                state.points.start = [hit[0], hit[1]];
+                setStatus('status4', '시작점 지정 완료');
+            } else if (!state.points.end) {
+                state.points.end = [hit[0], hit[1]];
+                setStatus('status4', '경로 계산 중...');
+                try {
+                    await computePath();
+                    setStatus('status4', `시작/끝점 지정 완료 (경로 픽셀 ${state.path.length}개)`);
+                    downloadPixelBtn.disabled = false;
+                    stage5Card.classList.remove('disabled');
+                    convertGpxBtn.disabled = false;
+                } catch (error) {
+                    setError('error4', `경로 추출 실패: ${error.message}`);
+                }
+            }
+
+            updatePointLabels();
+            renderViewer();
+        });
+
+        zoomOutBtn.addEventListener('click', () => {
+            const rect = viewport.getBoundingClientRect();
+            setScaleAround(rect.left + rect.width / 2, rect.top + rect.height / 2, state.view.scale - 0.2);
+        });
+
+        zoomInBtn.addEventListener('click', () => {
+            const rect = viewport.getBoundingClientRect();
+            setScaleAround(rect.left + rect.width / 2, rect.top + rect.height / 2, state.view.scale + 0.2);
+        });
+
+        stage4ZoomRange.addEventListener('input', (event) => {
+            state.view.scale = clampScale(parseFloat(event.target.value));
+            clampOffset();
+            updateZoomLabels();
+            renderViewer();
+        });
+
+        resetPointsBtn.addEventListener('click', () => {
+            state.points.start = null;
+            state.points.end = null;
+            state.path = [];
+            stage5Card.classList.add('disabled');
+            downloadPixelBtn.disabled = true;
+            convertGpxBtn.disabled = true;
+            downloadGpxBtn.disabled = true;
+            downloadGpxBtn.style.display = 'none';
+            clearStatus('status4');
+            clearError('error4');
+            updatePointLabels();
+            renderViewer();
+        });
+
+        downloadPixelBtn.addEventListener('click', () => {
+            clearError('error4');
+            if (!state.points.start || !state.points.end) {
+                setError('error4', '시작/끝점을 모두 지정하세요.');
+                return;
+            }
+            if (!state.path.length) {
+                setError('error4', '경로 픽셀이 비어 있습니다. 점을 다시 지정해 주세요.');
+                return;
+            }
+            const payload = {
+                start: state.points.start,
+                end: state.points.end,
+                path: state.path,
+            };
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'pixel_list.json';
+            link.click();
+            URL.revokeObjectURL(url);
+        });
+
+        convertGpxBtn.addEventListener('click', async () => {
+            clearError('error5');
+            clearStatus('status5');
+            if (!state.path.length) {
+                setError('error5', '먼저 4번에서 경로를 확정하세요.');
+                return;
+            }
+            convertGpxBtn.disabled = true;
+            convertGpxBtn.innerHTML = '<span class="spinner"></span>변환 중...';
+            try {
+                const response = await fetch('/api/convert_gpx', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        start: state.points.start,
+                        end: state.points.end,
+                        path: state.path,
+                    }),
+                });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                state.gpxContent = data.gpx_content;
+                downloadGpxBtn.style.display = 'block';
+                downloadGpxBtn.disabled = false;
+                setStatus('status5', 'GPX 변환 완료');
+            } catch (error) {
+                setError('error5', `GPX 변환 실패: ${error.message}`);
+            } finally {
+                convertGpxBtn.disabled = false;
+                convertGpxBtn.textContent = 'GPX 변환';
+            }
+        });
+
+        downloadGpxBtn.addEventListener('click', () => {
+            if (!state.gpxContent) return;
+            const blob = new Blob([state.gpxContent], { type: 'application/gpx+xml' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'route.gpx';
+            link.click();
+            URL.revokeObjectURL(url);
+        });
+
+        window.addEventListener('resize', () => {
+            clampOffset();
+            renderViewer();
+        });
+
+        updatePointLabels();
+        updateZoomLabels();
+        renderViewer();
+    </script>
+</body>
+</html>

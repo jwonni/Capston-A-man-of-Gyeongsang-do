@@ -1,0 +1,19 @@
+# Python cache/artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+
+# Runtime/editor artifacts
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.vscode/
+
+# Local outputs
+outputs/
+*.log

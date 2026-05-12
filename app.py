@@ -15,9 +15,9 @@ from fastapi.responses import FileResponse, JSONResponse
 from PIL import Image
 from pydantic import BaseModel
 
+from src.config import Config
 from src.gpx_conversion.gpx_converter import convert_pixel_path_to_gpx
 from src.marathon_route_extraction.component_filter import remove_small_components
-from src.marathon_route_extraction.config import Config
 from src.marathon_route_extraction.model import load_model, predict_mask
 from src.marathon_route_extraction.path_extractor import extract_ordered_path, zhang_suen_thinning
 

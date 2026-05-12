@@ -8,16 +8,16 @@ FastAPI backend + single-page HTML frontend for marathon route mask extraction.
 capstone-project/
 ├── app.py                              # FastAPI entrypoint
 ├── requirements.txt                    # Python dependencies
+├── src/
+│   ├── config.py                       # Runtime config shared by the project
 ├── scripts/
 │   └── visualize_component_filter.py   # Optional debug visualization utility
-├── src/
 │   ├── __init__.py
 │   ├── gpx_conversion/
 │   │   └── gpx_converter.py            # Pixel path -> GPX conversion
 │   └── marathon_route_extraction/
 │       ├── anchor_filter.py            # OCR anchor filtering
 │       ├── component_filter.py         # Connected-component filtering
-│       ├── config.py                   # Runtime config
 │       ├── model.py                    # U-Net model/inference
 │       └── path_extractor.py           # Skeleton + ordered path extraction
 ├── static/
@@ -66,5 +66,5 @@ python scripts/visualize_component_filter.py --input-mask sample_route.png --min
 
 ## Notes
 
-- If startup fails with address-in-use on port 8010, change `PORT` in `src/marathon_route_extraction/config.py`.
+- If startup fails with address-in-use on port 8010, change `PORT` in `src/config.py`.
 - GPX conversion now lives in `src/gpx_conversion/gpx_converter.py`.

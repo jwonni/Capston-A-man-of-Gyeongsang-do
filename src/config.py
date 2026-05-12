@@ -50,7 +50,7 @@ class Config:
 
     # ── 카카오 Local API ─────────────────────────────────────────────────────────
     # 카카오 REST API 앱 키 (https://developers.kakao.com)
-    KAKAO_API_KEY = ""                  # 배포 시 환경변수 KAKAO_API_KEY로 주입
+    KAKAO_API_KEY = "4d43c604d0b8b2d23d960ca86a486e20"                  # 배포 시 환경변수 KAKAO_API_KEY로 주입
     # MAD 이상치 제거 임계값 (중앙값에서 MAD의 몇 배 이상 떨어지면 이상치)
     KAKAO_MAD_THRESH = 3.0
     # 동적 bbox 재검색 시 인라이어 경계에 추가할 경위도 여백

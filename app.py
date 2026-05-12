@@ -87,6 +87,7 @@ class ConvertGPXRequest(BaseModel):
     start: list[int]
     end: list[int]
     path: list[list[int]]
+    homography_params: dict | None = None  # /api/georeference 응답값 전달 시 실제 지리좌표 GPX 생성
 
 
 # ── Endpoints ─────────────────────────────────────────────────────────────────
@@ -216,18 +217,28 @@ async def extract_path(req: PointsRequest):
 async def convert_gpx(req: ConvertGPXRequest):
     """
     Convert pixel path to GPX format.
-    
+
     Input:
         - start: [x, y]
         - end: [x, y]
         - path: [[x, y], ...]
-    
+        - homography_params: (optional) /api/georeference 응답의 homography_params.
+          제공 시 실제 위도/경도 GPX를 생성하고, 없으면 픽셀 좌표를 그대로 사용한다.
+
     Returns:
         - gpx_content: GPX file content as string
     """
     try:
-        gpx_content = convert_pixel_path_to_gpx(req.start, req.end, req.path)
-        
+        pixel_to_geo = None
+        if req.homography_params:
+            from src.georeferencing.homography import HomographyTransform
+            tf = HomographyTransform.from_dict(req.homography_params)
+            pixel_to_geo = tf.pixel_to_geo
+
+        gpx_content = convert_pixel_path_to_gpx(
+            req.start, req.end, req.path, pixel_to_geo=pixel_to_geo
+        )
+
         return JSONResponse({
             "status": "success",
             "gpx_content": gpx_content,
@@ -235,6 +246,96 @@ async def convert_gpx(req: ConvertGPXRequest):
     except Exception as e:
         print(f"[error] convert_gpx: {e}\n{traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/georeference")
+async def georeference(file: UploadFile = File(...)):
+    """
+    마라톤 이미지에서 텍스트 OCR → 카카오 API → 픽셀↔지리좌표 변환 행렬 계산.
+
+    환경변수 KAKAO_API_KEY 또는 Config.KAKAO_API_KEY 설정이 필요하다.
+
+    Returns:
+        - anchors: 앵커 목록 (텍스트, 픽셀 좌표, 위도/경도, 재투영 오차)
+        - homography_params: /api/convert_gpx 에 전달할 변환 행렬 파라미터
+        - mean_reprojection_error_px: 평균 재투영 오차 (픽셀)
+    """
+    import os
+    import tempfile
+
+    try:
+        from src.georeferencing.text_detector import run_hisam
+        from src.georeferencing.ocr import run_ocr
+        from src.georeferencing.anchor_builder import build_raw_anchors
+        from src.georeferencing.homography import (
+            HomographyTransform, mad_outlier_removal, iterative_outlier_removal,
+        )
+    except ImportError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=f"지리좌표 모듈 로드 실패 (Hi-SAM / Qwen 설치 필요): {exc}",
+        )
+
+    if not Config.KAKAO_API_KEY:
+        raise HTTPException(
+            status_code=400,
+            detail="환경변수 KAKAO_API_KEY가 설정되지 않았습니다.",
+        )
+
+    contents = await file.read()
+    suffix = Path(file.filename).suffix if file.filename else ".jpg"
+
+    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
+        tmp.write(contents)
+        tmp_path = tmp.name
+
+    try:
+        word_regions, _mask = run_hisam(tmp_path)
+        ocr_results = run_ocr(tmp_path, word_regions)
+        raw_anchors = build_raw_anchors(ocr_results, Config.KAKAO_API_KEY)
+
+        if len(raw_anchors) < 4:
+            raise HTTPException(
+                status_code=422,
+                detail=f"유효 앵커 부족: {len(raw_anchors)}개 (최소 4개 필요)",
+            )
+
+        anchors = mad_outlier_removal(raw_anchors, thresh=Config.KAKAO_MAD_THRESH)
+        anchors = iterative_outlier_removal(
+            anchors,
+            max_error_px=Config.HOMOGRAPHY_MAX_ERROR_PX,
+            min_anchors=Config.HOMOGRAPHY_MIN_ANCHORS,
+        )
+
+        tf = HomographyTransform(anchors)
+        errors = tf.reprojection_errors(anchors)
+        mean_err = sum(errors) / len(errors)
+
+        return JSONResponse({
+            "status": "success",
+            "num_anchors": len(anchors),
+            "mean_reprojection_error_px": round(mean_err, 2),
+            "anchors": [
+                {
+                    "text": a[4],
+                    "place": a[5],
+                    "pixel_x": int(a[0]),
+                    "pixel_y": int(a[1]),
+                    "lat": a[2],
+                    "lng": a[3],
+                    "reprojection_error_px": round(e, 2),
+                }
+                for a, e in zip(anchors, errors)
+            ],
+            "homography_params": tf.to_dict(),
+        })
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"[error] georeference: {e}\n{traceback.format_exc()}")
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        os.unlink(tmp_path)
 
 
 @app.get("/api/health")

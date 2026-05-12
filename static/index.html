@@ -60,7 +60,7 @@
         .bottom-row {
             display: grid;
             gap: 14px;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             align-items: stretch;
         }
 
@@ -385,6 +385,12 @@
             to { transform: rotate(360deg); }
         }
 
+        @media (max-width: 1400px) {
+            .bottom-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         @media (max-width: 1200px) {
             .top-row {
                 grid-template-columns: 1fr;
@@ -509,15 +515,29 @@
                 <div class="head">
                     <div class="badge">5</div>
                     <div>
+                        <h2 class="title">지리좌표 변환</h2>
+                        <div class="sub">Hi-SAM → Qwen OCR → 카카오 API → 호모그래피</div>
+                    </div>
+                </div>
+                <button class="btn" id="georefBtn" disabled>OCR + 좌표 변환 시작</button>
+                <div class="status" id="status5"></div>
+                <div id="georefResult" style="display:none; margin-top:10px;"></div>
+                <div class="error" id="error5"></div>
+            </section>
+
+            <section class="card stage5 disabled" id="stage6Card">
+                <div class="head">
+                    <div class="badge">6</div>
+                    <div>
                         <h2 class="title">GPX 변환</h2>
-                        <div class="sub">향후 지도 시각화 영역 포함</div>
+                        <div class="sub">지리좌표 변환 완료 시 실제 위도/경도로 생성</div>
                     </div>
                 </div>
                 <button class="btn" id="convertGpxBtn" disabled>GPX 변환</button>
                 <button class="btn success" id="downloadGpxBtn" disabled style="display:none;">GPX 다운로드</button>
                 <div class="map-placeholder">여기에 변환된 GPX를 지도 시각화로 표시할 예정</div>
-                <div class="status" id="status5"></div>
-                <div class="error" id="error5"></div>
+                <div class="status" id="status6"></div>
+                <div class="error" id="error6"></div>
             </section>
         </div>
     </div>
@@ -529,6 +549,7 @@
             skeleton_b64: null,
             points: { start: null, end: null },
             path: [],
+            homography_params: null,
             gpxContent: null,
             image: { source: null, width: 0, height: 0, ready: false },
             view: {
@@ -558,7 +579,6 @@
         const stage2Card = document.getElementById('stage2Card');
         const stage3Card = document.getElementById('stage3Card');
         const stage4Card = document.getElementById('stage4Card');
-        const stage5Card = document.getElementById('stage5Card');
         const viewerMeta = document.getElementById('viewerMeta');
         const viewport = document.getElementById('viewerViewport');
         const viewerCanvas = document.getElementById('viewerCanvas');
@@ -572,6 +592,10 @@
         const endPointText = document.getElementById('endPointText');
         const resetPointsBtn = document.getElementById('resetPointsBtn');
         const downloadPixelBtn = document.getElementById('downloadPixelBtn');
+        const georefBtn = document.getElementById('georefBtn');
+        const georefResult = document.getElementById('georefResult');
+        const stage5Card = document.getElementById('stage5Card');
+        const stage6Card = document.getElementById('stage6Card');
         const convertGpxBtn = document.getElementById('convertGpxBtn');
         const downloadGpxBtn = document.getElementById('downloadGpxBtn');
 
@@ -1014,6 +1038,8 @@
                     setStatus('status4', `시작/끝점 지정 완료 (경로 픽셀 ${state.path.length}개)`);
                     downloadPixelBtn.disabled = false;
                     stage5Card.classList.remove('disabled');
+                    georefBtn.disabled = false;
+                    stage6Card.classList.remove('disabled');
                     convertGpxBtn.disabled = false;
                 } catch (error) {
                     setError('error4', `경로 추출 실패: ${error.message}`);
@@ -1045,13 +1071,21 @@
             state.points.start = null;
             state.points.end = null;
             state.path = [];
+            state.homography_params = null;
             stage5Card.classList.add('disabled');
+            stage6Card.classList.add('disabled');
+            georefBtn.disabled = true;
             downloadPixelBtn.disabled = true;
             convertGpxBtn.disabled = true;
             downloadGpxBtn.disabled = true;
             downloadGpxBtn.style.display = 'none';
+            georefResult.style.display = 'none';
             clearStatus('status4');
+            clearStatus('status5');
+            clearStatus('status6');
             clearError('error4');
+            clearError('error5');
+            clearError('error6');
             updatePointLabels();
             renderViewer();
         });
@@ -1080,33 +1114,80 @@
             URL.revokeObjectURL(url);
         });
 
-        convertGpxBtn.addEventListener('click', async () => {
+        georefBtn.addEventListener('click', async () => {
             clearError('error5');
             clearStatus('status5');
+            if (!state.uploadedImage) {
+                setError('error5', '이미지가 없습니다.');
+                return;
+            }
+            georefBtn.disabled = true;
+            georefBtn.innerHTML = '<span class="spinner"></span>OCR 분석 중... (수 분 소요)';
+            try {
+                const blob = await fetch(state.uploadedImage).then(r => r.blob());
+                const formData = new FormData();
+                formData.append('file', blob, 'image.jpg');
+                const response = await fetch('/api/georeference', {
+                    method: 'POST',
+                    body: formData,
+                });
+                if (!response.ok) {
+                    const err = await response.json().catch(() => ({}));
+                    throw new Error(err.detail || `HTTP ${response.status}`);
+                }
+                const data = await response.json();
+                state.homography_params = data.homography_params;
+                georefResult.style.display = 'block';
+                georefResult.innerHTML = `
+                    <div style="font-size:0.88rem; color:var(--success);">
+                        ✔ 앵커 ${data.num_anchors}개 | 평균 재투영 오차 ${data.mean_reprojection_error_px}px
+                    </div>
+                    <div style="margin-top:6px; font-size:0.82rem; color:var(--muted);">
+                        ${data.anchors.map(a =>
+                            `<span style="display:inline-block;margin:2px 4px;">${a.text} (${a.reprojection_error_px}px)</span>`
+                        ).join('')}
+                    </div>`;
+                setStatus('status5', '지리좌표 변환 완료 — GPX에 실제 위도/경도가 적용됩니다');
+            } catch (error) {
+                setError('error5', `지리좌표 변환 실패: ${error.message}`);
+            } finally {
+                georefBtn.disabled = false;
+                georefBtn.textContent = 'OCR + 좌표 변환 시작';
+            }
+        });
+
+        convertGpxBtn.addEventListener('click', async () => {
+            clearError('error6');
+            clearStatus('status6');
             if (!state.path.length) {
-                setError('error5', '먼저 4번에서 경로를 확정하세요.');
+                setError('error6', '먼저 4번에서 경로를 확정하세요.');
                 return;
             }
             convertGpxBtn.disabled = true;
             convertGpxBtn.innerHTML = '<span class="spinner"></span>변환 중...';
             try {
+                const body = {
+                    start: state.points.start,
+                    end: state.points.end,
+                    path: state.path,
+                };
+                if (state.homography_params) {
+                    body.homography_params = state.homography_params;
+                }
                 const response = await fetch('/api/convert_gpx', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        start: state.points.start,
-                        end: state.points.end,
-                        path: state.path,
-                    }),
+                    body: JSON.stringify(body),
                 });
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();
                 state.gpxContent = data.gpx_content;
                 downloadGpxBtn.style.display = 'block';
                 downloadGpxBtn.disabled = false;
-                setStatus('status5', 'GPX 변환 완료');
+                const geoNote = state.homography_params ? '실제 위도/경도' : '픽셀 좌표';
+                setStatus('status6', `GPX 변환 완료 (${geoNote})`);
             } catch (error) {
-                setError('error5', `GPX 변환 실패: ${error.message}`);
+                setError('error6', `GPX 변환 실패: ${error.message}`);
             } finally {
                 convertGpxBtn.disabled = false;
                 convertGpxBtn.textContent = 'GPX 변환';

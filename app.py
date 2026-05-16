@@ -78,10 +78,11 @@ class PostprocessRequest(BaseModel):
     circ_thresh: float = 0.5
     skel_thresh: int = 400
     max_distance: float = 150.0
-    min_fragment_size: int = 10
+    min_fragment_size: int = 0
     line_thickness: int = 2
-    morph_close_size: int = 25
+    morph_close_size: int = 10
     final_size_thresh: int = 0
+    spur_length: int = 20
 
 
 class PointsRequest(BaseModel):
@@ -172,6 +173,7 @@ async def postprocess(req: PostprocessRequest):
             line_thickness=req.line_thickness,
             morph_close_size=req.morph_close_size,
             final_size_thresh=req.final_size_thresh,
+            spur_length=req.spur_length,
         )
         skeleton_img = Image.fromarray(skeleton_arr, mode="L")
 

@@ -8,18 +8,26 @@ FastAPI backend + single-page HTML frontend for marathon route mask extraction.
 capstone-project/
 ├── app.py                              # FastAPI entrypoint
 ├── requirements.txt                    # Python dependencies
+├── Hi-SAM/                             # Hi-SAM text detection library
+├── docs/
+│   ├── HISAM_CHECKPOINT_DOWNLOAD.md    # Hi-SAM checkpoint download guide
+│   └── SETUP_GEOREF.md                 # Georeferencing setup guide
+├── scripts/
+│   └── visualize_component_filter.py   # Debug visualization utility
 ├── src/
 │   ├── config.py                       # Runtime config shared by the project
-├── scripts/
-│   └── visualize_component_filter.py   # Optional debug visualization utility
-│   ├── __init__.py
+│   ├── georeferencing/
+│   │   ├── anchor_builder.py           # Anchor point construction
+│   │   ├── homography.py               # Pixel ↔ GPS homography
+│   │   ├── ocr.py                      # OCR pipeline
+│   │   └── text_detector.py            # Hi-SAM text detection
 │   ├── gpx_conversion/
-│   │   └── gpx_converter.py            # Pixel path -> GPX conversion
+│   │   └── gpx_converter.py            # Pixel path → GPX conversion
 │   └── marathon_route_extraction/
-│       ├── anchor_filter.py            # OCR anchor filtering
-│       ├── component_filter.py         # Connected-component filtering
-│       ├── model.py                    # U-Net model/inference
-│       └── path_extractor.py           # Skeleton + ordered path extraction
+│       ├── component_filter.py         # Connected-component filtering (legacy)
+│       ├── model.py                    # U-Net model / inference
+│       ├── path_extractor.py           # Skeleton + ordered path extraction
+│       └── postprocess.py              # 4-step post-processing pipeline
 ├── static/
 │   └── index.html                      # 5-stage demo UI
 └── weights/

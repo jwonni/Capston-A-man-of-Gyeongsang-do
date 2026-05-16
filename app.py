@@ -17,9 +17,9 @@ from pydantic import BaseModel
 
 from src.config import Config
 from src.gpx_conversion.gpx_converter import convert_pixel_path_to_gpx
-from src.marathon_route_extraction.component_filter import remove_small_components
 from src.marathon_route_extraction.model import load_model, predict_mask
-from src.marathon_route_extraction.path_extractor import extract_ordered_path, zhang_suen_thinning
+from src.marathon_route_extraction.path_extractor import extract_ordered_path
+from src.marathon_route_extraction.postprocess import postprocess_mask
 
 # ── FastAPI App Setup ─────────────────────────────────────────────────────────
 
@@ -74,7 +74,14 @@ def _decode_mask(mask_b64: str) -> np.ndarray:
 
 class PostprocessRequest(BaseModel):
     mask_b64: str
-    min_component_area: int = 500
+    area_thresh: int = 250
+    circ_thresh: float = 0.5
+    skel_thresh: int = 400
+    max_distance: float = 150.0
+    min_fragment_size: int = 10
+    line_thickness: int = 2
+    morph_close_size: int = 25
+    final_size_thresh: int = 0
 
 
 class PointsRequest(BaseModel):
@@ -141,28 +148,33 @@ async def predict(file: UploadFile = File(...)):
 @app.post("/api/postprocess")
 async def postprocess(req: PostprocessRequest):
     """
-    Perform post-processing: noise removal + skeletonization.
-    
-    Input:
-        - mask_b64: base64-encoded mask image
-        - min_area: minimum component area (default 500)
-    
+    Perform post-processing using the 4-step marathon path pipeline, then skeletonize.
+
+    Steps:
+        1. Main path selection (largest connected component)
+        2. Shape-based noise filtering (area × circularity × skeleton_length)
+        3. Fragment connection (iterative endpoint-based merging)
+        4. Residual fragment removal
+
     Returns:
-        - skeleton_b64: skeletonized mask image
+        - skeleton_b64: skeletonized result image
     """
     try:
-        # Decode mask
         mask_arr = _decode_mask(req.mask_b64)
-        
-        # Apply component filtering from component_filter.py
-        binary = mask_arr > 127
-        cleaned = remove_small_components(binary, min_area=req.min_component_area)
-        
-        # Skeletonization
-        skeleton = zhang_suen_thinning(cleaned)
-        skeleton_arr = (skeleton * 255).astype(np.uint8)
+
+        skeleton_arr = postprocess_mask(
+            mask_arr,
+            area_thresh=req.area_thresh,
+            circ_thresh=req.circ_thresh,
+            skel_thresh=req.skel_thresh,
+            max_distance=req.max_distance,
+            min_fragment_size=req.min_fragment_size,
+            line_thickness=req.line_thickness,
+            morph_close_size=req.morph_close_size,
+            final_size_thresh=req.final_size_thresh,
+        )
         skeleton_img = Image.fromarray(skeleton_arr, mode="L")
-        
+
         return JSONResponse({
             "status": "success",
             "skeleton_b64": _b64(skeleton_img),
@@ -280,6 +292,16 @@ async def georeference(file: UploadFile = File(...)):
         raise HTTPException(
             status_code=400,
             detail="환경변수 KAKAO_API_KEY가 설정되지 않았습니다.",
+        )
+
+    # Check Hi-SAM checkpoint exists
+    if not Config.HISAM_CHECKPOINT.exists():
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                f"Hi-SAM 체크포인트를 찾을 수 없습니다: {Config.HISAM_CHECKPOINT}\n"
+                "docs/HISAM_CHECKPOINT_DOWNLOAD.md 에서 다운로드 방법을 확인하세요."
+            ),
         )
 
     contents = await file.read()

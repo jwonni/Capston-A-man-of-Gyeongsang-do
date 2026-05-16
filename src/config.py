@@ -21,6 +21,7 @@ class Config:
 
     # ── Hi-SAM 텍스트 분할 ───────────────────────────────────────────────────────
     # Hi-SAM 저장소 루트 (git clone 경로)
+    # Point to the cloned Hi-SAM repo root (contains the `hi_sam` package).
     HISAM_REPO_DIR = BASE_DIR / "Hi-SAM"
     # 체크포인트 파일 경로
     HISAM_CHECKPOINT = BASE_DIR / "Hi-SAM" / "pretrained_checkpoint" / "hi_sam_l.pth"
@@ -39,44 +40,29 @@ class Config:
     HISAM_UPSCALE = 2
 
     # ── Qwen2.5-VL OCR ──────────────────────────────────────────────────────────
-    # Hugging Face 모델 ID (Qwen2.5-VL 7B Instruct)
     QWEN_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"
-    # 크롭 OCR 최대 생성 토큰 (단어 수준이므로 짧게)
     QWEN_MAX_NEW_TOKENS_CROP = 32
-    # 카테고리 분류 최대 생성 토큰 (JSON 출력용)
     QWEN_MAX_NEW_TOKENS_CATEGORIZE = 256
-    # 빈 결과(텍스트 없는 크롭) 제외 여부
     QWEN_DROP_EMPTY = True
 
     # ── 카카오 Local API ─────────────────────────────────────────────────────────
-    # 카카오 REST API 앱 키 (https://developers.kakao.com)
-    KAKAO_API_KEY = "4d43c604d0b8b2d23d960ca86a486e20"                  # 배포 시 환경변수 KAKAO_API_KEY로 주입
-    # MAD 이상치 제거 임계값 (중앙값에서 MAD의 몇 배 이상 떨어지면 이상치)
+    KAKAO_API_KEY = "4d43c604d0b8b2d23d960ca86a486e20"
     KAKAO_MAD_THRESH = 3.0
-    # 동적 bbox 재검색 시 인라이어 경계에 추가할 경위도 여백
     KAKAO_BBOX_MARGIN = 0.01
 
     # ── 앵커 후보 규칙 기반 필터 ─────────────────────────────────────────────────
-    # 앵커로 사용하기 너무 모호한 단어 목록 (정확 매칭)
     ANCHOR_BLACKLIST = [
         "아파트", "오피스텔", "빌딩", "사옥", "타워", "상가",
         "고등학교", "초등학교", "중학교",
-        "스",                                    # OCR 오류 단편
+        "스",
     ]
-    # 이 키워드가 포함된 텍스트는 앵커 우선 채택 (부분 일치)
     ANCHOR_WHITELIST = [
-        "역",                                    # 지하철역
-        "국회", "공원", "병원", "학교", "박물관",
-        "IFC", "KBS", "KRX", "IBK",
-        "콘래드", "파크원", "페어몬트", "켄싱턴", "CCMM",
+        "역", "국회", "공원", "병원", "학교", "박물관",
     ]
-    # 앵커 텍스트 최소 길이 (이 미만이면 제외)
     ANCHOR_MIN_TEXT_LEN = 3
 
     # ── 호모그래피 재투영 오차 기반 이상치 제거 ──────────────────────────────────
-    # 재투영 오차(픽셀)가 이 값을 초과하면 해당 앵커 제거
     HOMOGRAPHY_MAX_ERROR_PX = 10.0
-    # 앵커가 이 수 이하로 줄어들면 강제 중단 (호모그래피 최소 요구 4개)
     HOMOGRAPHY_MIN_ANCHORS = 6
 
     # ── 웹 서버 ─────────────────────────────────────────────────────────────────

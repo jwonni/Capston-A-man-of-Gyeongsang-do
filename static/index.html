@@ -457,7 +457,7 @@
                     <div class="badge">3</div>
                     <div>
                         <h2 class="title">후처리</h2>
-                        <div class="sub">노이즈 제거 + 스켈레톤</div>
+                        <div class="sub">노이즈 제거 + 끊어진 경로 잇기 + 스켈레톤</div>
                     </div>
                 </div>
                 <button class="btn" id="postprocessBtn" disabled>후처리 시작</button>
@@ -929,7 +929,7 @@
                 const response = await fetch('/api/postprocess', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ mask_b64: state.mask_b64, min_component_area: 500 }),
+                    body: JSON.stringify({ mask_b64: state.mask_b64 }),
                 });
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();

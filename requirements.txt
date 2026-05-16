@@ -1,3 +1,17 @@
+fastapi>=0.85.0
+uvicorn[standard]>=0.18.0
+numpy>=1.23.0
+Pillow>=9.0.0
+opencv-python>=4.6.0
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.30.0
+accelerate>=0.18.0
+safetensors>=0.3.0
+scipy>=1.9.0
+# Optional / environment-specific (see docs/SETUP_GEOREF.md)
+# qwen_vl_utils
+# hi_sam
 fastapi>=0.95.0
 uvicorn>=0.20.0
 pillow>=9.0.0

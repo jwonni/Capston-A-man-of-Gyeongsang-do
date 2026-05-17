@@ -129,10 +129,17 @@ def predict_mask(
     """
     Run U-Net inference on a PIL image.
 
+    The model always runs at image_size × image_size internally, but the output
+    mask is upscaled back to the original image resolution with NEAREST
+    interpolation so that all downstream pixel coordinates stay in the original
+    image coordinate space.
+
     Returns:
-        processed_img: the image resized to (image_size, image_size) for display
-        mask_pil:      binary mask (L-mode, values 0 or 255) at the same size
+        image_pil: the original input image (RGB, original resolution)
+        mask_pil:  binary mask (L-mode, values 0 or 255) at original resolution
     """
+    orig_size = image_pil.size  # (W, H) — preserved for upscaling
+
     processed = image_pil.resize((image_size, image_size), Image.Resampling.BILINEAR)
     arr = np.asarray(processed, dtype=np.float32) / 255.0
     tensor = torch.from_numpy(arr).permute(2, 0, 1).unsqueeze(0).to(device)
@@ -141,8 +148,12 @@ def predict_mask(
         logits = model(tensor)
         probs  = torch.sigmoid(logits).squeeze().cpu().numpy()
 
-    binary   = probs > threshold
-    cleaned  = apply_postprocess(binary, opening_iterations, closing_iterations, min_component_area)
-    mask_arr = cleaned.astype(np.uint8) * 255
-    mask_pil = Image.fromarray(mask_arr, mode="L")
-    return processed, mask_pil
+    binary  = probs > threshold
+    cleaned = apply_postprocess(binary, opening_iterations, closing_iterations, min_component_area)
+
+    # Upscale binary mask to original resolution.
+    # NEAREST keeps edges crisp (no gray fringe from interpolation).
+    mask_pil = Image.fromarray(cleaned.astype(np.uint8) * 255, mode="L").resize(
+        orig_size, Image.Resampling.NEAREST
+    )
+    return image_pil, mask_pil

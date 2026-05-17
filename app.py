@@ -12,7 +12,7 @@ import torch
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
-from PIL import Image
+from PIL import Image, ImageDraw
 from pydantic import BaseModel
 
 from src.config import Config
@@ -70,6 +70,52 @@ def _decode_mask(mask_b64: str) -> np.ndarray:
     return np.asarray(img, dtype=np.uint8)
 
 
+# ── DEBUG ──────────────────────────────────────────────────────────────────────
+def _debug_path_overlay(
+    skeleton_arr: np.ndarray,
+    path: list,
+    start_xy: tuple[int, int],
+    end_xy: tuple[int, int],
+    bg_img: Image.Image | None = None,
+) -> str:
+    """
+    Overlay the extracted pixel path on the marathon image (or skeleton as fallback).
+
+    bg_img must be the same resolution as skeleton_arr (both 512×512 from the
+    predict pipeline) so that path coordinates map 1-to-1 without any scaling.
+
+    red squares (3×3) = extracted BFS path
+    blue circle       = start point
+    green circle      = end point
+    """
+    h, w = skeleton_arr.shape
+
+    if bg_img is not None:
+        # Resize to skeleton resolution in case sizes differ (safety guard).
+        base = bg_img.convert("RGB").resize((w, h), Image.Resampling.BILINEAR)
+        rgb = np.asarray(base, dtype=np.uint8).copy()
+    else:
+        gray = (skeleton_arr // 4).astype(np.uint8)
+        rgb = np.stack([gray, gray, gray], axis=-1)
+
+    img = Image.fromarray(rgb, mode="RGB")
+    draw = ImageDraw.Draw(img)
+
+    # Draw path as 3×3 red squares so individual pixels are visible on the map.
+    for x, y in (path or []):
+        ix, iy = int(x), int(y)
+        if 0 <= iy < h and 0 <= ix < w:
+            draw.rectangle([ix - 1, iy - 1, ix + 1, iy + 1], fill=(255, 50, 50))
+
+    r = 7
+    sx, sy = int(start_xy[0]), int(start_xy[1])
+    ex, ey = int(end_xy[0]), int(end_xy[1])
+    draw.ellipse([sx - r, sy - r, sx + r, sy + r], fill=(60, 120, 255))   # blue = start
+    draw.ellipse([ex - r, ey - r, ex + r, ey + r], fill=(50, 220, 60))    # green = end
+    return _b64(img)
+# ── END DEBUG ──────────────────────────────────────────────────────────────────
+
+
 # ── Request/Response Models ───────────────────────────────────────────────────
 
 class PostprocessRequest(BaseModel):
@@ -87,8 +133,9 @@ class PostprocessRequest(BaseModel):
 
 class PointsRequest(BaseModel):
     skeleton_b64: str | None = None
-    start: list[float]  # [x, y]
-    end: list[float]    # [x, y]
+    start: list[float]   # [x, y]
+    end: list[float]     # [x, y]
+    input_img_b64: str | None = None  # ── DEBUG: 512×512 resized marathon image for overlay
 
 
 class ConvertGPXRequest(BaseModel):
@@ -125,7 +172,7 @@ async def predict(file: UploadFile = File(...)):
         device = get_device()
         
         # Predict mask
-        input_img, mask_pil = predict_mask(
+        _, mask_pil = predict_mask(
             model=model,
             image_pil=image_pil,
             device=device,
@@ -136,9 +183,10 @@ async def predict(file: UploadFile = File(...)):
             closing_iterations=0,
         )
         
+        # input_img is now the original-resolution image; the browser already
+        # holds it in state.uploadedImage, so we only return the mask.
         return JSONResponse({
             "status": "success",
-            "input_img_b64": _b64(input_img),
             "mask_b64": _b64(mask_pil),
         })
     except Exception as e:
@@ -162,18 +210,25 @@ async def postprocess(req: PostprocessRequest):
     """
     try:
         mask_arr = _decode_mask(req.mask_b64)
+        h, w = mask_arr.shape
+
+        # All threshold parameters were designed for 512×512 model output.
+        # Scale them to the actual (original-resolution) mask so behaviour is
+        # consistent regardless of how large the uploaded image is.
+        _ls = (h * w) ** 0.5 / 512.0   # linear scale  (for lengths/distances/kernels)
+        _as = (h * w) / (512.0 * 512.0) # area scale    (for pixel-area thresholds)
 
         skeleton_arr = postprocess_mask(
             mask_arr,
-            area_thresh=req.area_thresh,
+            area_thresh=max(1, int(req.area_thresh * _as)),
             circ_thresh=req.circ_thresh,
-            skel_thresh=req.skel_thresh,
-            max_distance=req.max_distance,
-            min_fragment_size=req.min_fragment_size,
-            line_thickness=req.line_thickness,
-            morph_close_size=req.morph_close_size,
-            final_size_thresh=req.final_size_thresh,
-            spur_length=req.spur_length,
+            skel_thresh=max(1, int(req.skel_thresh * _ls)),
+            max_distance=req.max_distance * _ls,
+            min_fragment_size=int(req.min_fragment_size * _as) if req.min_fragment_size > 0 else 0,
+            line_thickness=max(1, round(req.line_thickness * _ls)),
+            morph_close_size=max(1, round(req.morph_close_size * _ls)) if req.morph_close_size > 0 else 0,
+            final_size_thresh=int(req.final_size_thresh * _as) if req.final_size_thresh > 0 else 0,
+            spur_length=max(1, int(req.spur_length * _ls)),
         )
         skeleton_img = Image.fromarray(skeleton_arr, mode="L")
 
@@ -206,21 +261,37 @@ async def extract_path(req: PointsRequest):
             raise ValueError("skeleton_b64 is required")
 
         skeleton_arr = _decode_mask(req.skeleton_b64)
-        ordered = extract_ordered_path(
-            skeleton_arr,
-            (int(req.start[0]), int(req.start[1])),
-            (int(req.end[0]), int(req.end[1])),
-        )
+        start_xy = (int(req.start[0]), int(req.start[1]))
+        end_xy   = (int(req.end[0]),   int(req.end[1]))
+        ordered = extract_ordered_path(skeleton_arr, start_xy, end_xy)
+
+        # ── DEBUG ──────────────────────────────────────────────────────────────
+        # Decode the 512×512 marathon image so the overlay shares the same
+        # coordinate space as the skeleton and no scaling is needed.
+        bg_img: Image.Image | None = None
+        if req.input_img_b64:
+            _, _data = req.input_img_b64.split(",", 1)
+            bg_img = Image.open(io.BytesIO(base64.b64decode(_data))).convert("RGB")
+        # ── END DEBUG ──────────────────────────────────────────────────────────
+
         if ordered is None:
+            # ── DEBUG ──────────────────────────────────────────────────────────
+            debug_b64 = _debug_path_overlay(skeleton_arr, [], start_xy, end_xy, bg_img)
+            # ── END DEBUG ──────────────────────────────────────────────────────
             return JSONResponse({
                 "status": "failed",
                 "path": [],
                 "message": "No connected path found between start and end.",
+                "debug_overlay_b64": debug_b64,  # ── DEBUG ──
             })
 
+        # ── DEBUG ──────────────────────────────────────────────────────────────
+        debug_b64 = _debug_path_overlay(skeleton_arr, ordered, start_xy, end_xy, bg_img)
+        # ── END DEBUG ──────────────────────────────────────────────────────────
         return JSONResponse({
             "status": "success",
             "path": [[int(x), int(y)] for x, y in ordered],
+            "debug_overlay_b64": debug_b64,  # ── DEBUG ──
         })
     except Exception as e:
         print(f"[error] extract_path: {e}\n{traceback.format_exc()}")

@@ -12,6 +12,7 @@ from collections import deque
 from typing import Optional
 
 import numpy as np
+from skimage.morphology import skeletonize as _skeletonize
 
 _OFFSETS_8 = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
 
@@ -143,7 +144,10 @@ def extract_ordered_path(
         List of (x, y) tuples ordered start → end, or None if no path is found.
     """
     binary   = mask_arr > 127
-    skeleton = zhang_suen_thinning(binary)
+    # postprocess_mask already returns a skimage skeleton; re-running the slow
+    # pure-Python zhang_suen_thinning on it breaks junctions and takes minutes.
+    # Use the same skimage routine for speed and consistency.
+    skeleton = _skeletonize(binary)
     graph    = _skeleton_to_graph(skeleton)
 
     # start_xy / end_xy are (x=col, y=row); graph keys are (row, col)

@@ -507,6 +507,15 @@
                         <button class="btn success" id="downloadPixelBtn" disabled>픽셀 리스트 다운로드</button>
                     </div>
                 </div>
+                <!-- ── DEBUG ──────────────────────────────────────────────── -->
+                <div id="debugOverlaySection" style="display:none; margin-top:12px;">
+                    <div style="color:var(--muted); font-size:0.82rem; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                        <span style="background:#ff5d5d; padding:2px 6px; border-radius:4px; font-size:0.72rem; font-weight:700; color:#fff;">DEBUG</span>
+                        추출 경로 오버레이 &nbsp;·&nbsp; 빨간=BFS 경로 &nbsp;·&nbsp; 파란=시작 &nbsp;·&nbsp; 초록=끝
+                    </div>
+                    <img id="debugOverlayImg" style="width:100%; max-height:440px; object-fit:contain; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:#060a10;" alt="debug overlay">
+                </div>
+                <!-- ── END DEBUG ──────────────────────────────────────────── -->
                 <div class="status" id="status4"></div>
                 <div class="error" id="error4"></div>
             </section>
@@ -826,6 +835,7 @@
                     start: state.points.start,
                     end: state.points.end,
                     path: [],
+                    input_img_b64: state.uploadedImage ?? null,  // ── DEBUG: original image already in browser
                 }),
             });
             if (!response.ok) {
@@ -844,6 +854,12 @@
             }
             const data = await response.json();
             state.path = Array.isArray(data.path) ? data.path : [];
+            // ── DEBUG ─────────────────────────────────────────────────────────
+            if (data.debug_overlay_b64) {
+                document.getElementById('debugOverlayImg').src = data.debug_overlay_b64;
+                document.getElementById('debugOverlaySection').style.display = 'block';
+            }
+            // ── END DEBUG ─────────────────────────────────────────────────────
             if (!state.path.length) {
                 throw new Error(data.message || '경로 추출 실패');
             }
@@ -1080,6 +1096,10 @@
             downloadGpxBtn.disabled = true;
             downloadGpxBtn.style.display = 'none';
             georefResult.style.display = 'none';
+            // ── DEBUG ─────────────────────────────────────────────────────────
+            document.getElementById('debugOverlaySection').style.display = 'none';
+            document.getElementById('debugOverlayImg').src = '';
+            // ── END DEBUG ─────────────────────────────────────────────────────
             clearStatus('status4');
             clearStatus('status5');
             clearStatus('status6');

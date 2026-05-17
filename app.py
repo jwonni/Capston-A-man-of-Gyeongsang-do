@@ -129,6 +129,7 @@ class PostprocessRequest(BaseModel):
     morph_close_size: int = 10
     final_size_thresh: int = 0
     spur_length: int = 20
+    skel_morph_close: int = 0
 
 
 class PointsRequest(BaseModel):
@@ -229,6 +230,7 @@ async def postprocess(req: PostprocessRequest):
             morph_close_size=max(1, round(req.morph_close_size * _ls)) if req.morph_close_size > 0 else 0,
             final_size_thresh=int(req.final_size_thresh * _as) if req.final_size_thresh > 0 else 0,
             spur_length=max(1, int(req.spur_length * _ls)),
+            skel_morph_close=max(1, round(req.skel_morph_close * _ls)) if req.skel_morph_close > 0 else 0,
         )
         skeleton_img = Image.fromarray(skeleton_arr, mode="L")
 

@@ -22,8 +22,23 @@ from PIL import Image, ImageDraw
 from pydantic import BaseModel
 
 from src.config import Config
+from src.config import (
+    AREA_THRESH,
+    CIRC_THRESH,
+    SKEL_THRESH,
+    MAX_DISTANCE,
+    MIN_FRAGMENT_SIZE,
+    LINE_THICKNESS,
+    MORPH_CLOSE_SIZE,
+    FINAL_SIZE_THRESH,
+    SPUR_LENGTH,
+    SKEL_MORPH_CLOSE,
+)
 from src.gpx_conversion.gpx_converter import convert_pixel_path_to_gpx
-from src.marathon_route_extraction.model import load_model, predict_mask
+if Config.MODEL_TYPE == "segformer_unet_b2":
+    from src.marathon_route_extraction.segformer_unet_b2 import load_model, predict_mask
+else:
+    from src.marathon_route_extraction.unet import load_model, predict_mask
 from src.marathon_route_extraction.path_extractor import extract_ordered_path
 from src.marathon_route_extraction.postprocess import postprocess_mask
 
@@ -126,16 +141,17 @@ def _debug_path_overlay(
 
 class PostprocessRequest(BaseModel):
     mask_b64: str
-    area_thresh: int = 250
-    circ_thresh: float = 0.5
-    skel_thresh: int = 400
-    max_distance: float = 150.0
-    min_fragment_size: int = 0
-    line_thickness: int = 2
-    morph_close_size: int = 10
-    final_size_thresh: int = 0
-    spur_length: int = 20
-    skel_morph_close: int = 0
+    # Use centralized defaults from src.config (module-level imports)
+    area_thresh: int = AREA_THRESH
+    circ_thresh: float = CIRC_THRESH
+    skel_thresh: int = SKEL_THRESH
+    max_distance: float = MAX_DISTANCE
+    min_fragment_size: int = MIN_FRAGMENT_SIZE
+    line_thickness: int = LINE_THICKNESS
+    morph_close_size: int = MORPH_CLOSE_SIZE
+    final_size_thresh: int = FINAL_SIZE_THRESH
+    spur_length: int = SPUR_LENGTH
+    skel_morph_close: int = SKEL_MORPH_CLOSE
 
 
 class PointsRequest(BaseModel):
@@ -225,7 +241,10 @@ async def postprocess(req: PostprocessRequest):
         _ls = (h * w) ** 0.5 / 512.0   # linear scale  (for lengths/distances/kernels)
         _as = (h * w) / (512.0 * 512.0) # area scale    (for pixel-area thresholds)
 
-        skeleton_arr = postprocess_mask(
+        # postprocess_mask now returns a tuple of intermediate results
+        # (main_mask, noise_mask, filtered_mask, connected_mask,
+        #  final_mask, skeleton_mask, features, noise_labels, connect_log)
+        res = postprocess_mask(
             mask_arr,
             area_thresh=max(1, int(req.area_thresh * _as)),
             circ_thresh=req.circ_thresh,
@@ -238,6 +257,11 @@ async def postprocess(req: PostprocessRequest):
             spur_length=max(1, int(req.spur_length * _ls)),
             skel_morph_close=max(1, round(req.skel_morph_close * _ls)) if req.skel_morph_close > 0 else 0,
         )
+        # Extract skeleton mask from returned tuple (6th element)
+        if isinstance(res, tuple) or isinstance(res, list):
+            skeleton_arr = res[5]
+        else:
+            skeleton_arr = res
         skeleton_img = Image.fromarray(skeleton_arr, mode="L")
 
         return JSONResponse({

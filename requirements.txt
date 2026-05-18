@@ -1,34 +1,33 @@
+# Core web API
 python-dotenv>=1.0.0
 fastapi>=0.95.0
 uvicorn[standard]>=0.20.0
 pydantic>=2.0.0
 python-multipart>=0.0.5
 
+# Numerical / image processing
 numpy>=1.21.0
 Pillow>=9.0.0
 opencv-python>=4.8.0
 scipy>=1.9.0
 scikit-image>=0.20.0
+shapely>=2.0.0
+pyclipper>=1.3.0
 
+# Model runtime
 torch>=2.0.0
 torchvision>=0.15.0
 
-# Hi-SAM 텍스트 탐지 의존성
-# 1) 저장소 클론:
-#    git clone https://github.com/ymy-k/Hi-SAM.git Hi-SAM
-# 2) 아래 패키지 설치 (Hi-SAM/requirements.txt 대신 이걸 사용 — Polygon3/apache_beam은 Python 3.13 비호환):
-#    pip install einops timm pycocotools absl-py python-Levenshtein tqdm
-# 3) 체크포인트 다운로드 → Hi-SAM/pretrained_checkpoint/ 에 배치:
-#    curl -L -o Hi-SAM/pretrained_checkpoint/sam_vit_l_0b3195.pth https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth
-#    curl -L -o Hi-SAM/pretrained_checkpoint/hi_sam_l.pth https://huggingface.co/GoGiants1/Hi-SAM/resolve/main/hi_sam_l.pth
-shapely>=2.0.0
-pyclipper>=1.3.0
+# Hi-SAM / OCR support
 einops>=0.6.1
 timm>=0.9.0
 pycocotools>=2.0
 absl-py>=1.0
 python-Levenshtein>=0.12
 
-# PaddleOCR (CPU 전용 — Hi-SAM torch와 CUDA 충돌 방지)
+# PaddleOCR (CPU only - avoid CUDA conflicts with Hi-SAM / torch)
 paddlepaddle>=3.0,<3.3
 paddleocr>=3.4,<3.5
+
+# Hi-SAM repository uses its own requirements. Do not install apache_beam or Polygon3
+# unless you are running upstream Hi-SAM scripts directly.

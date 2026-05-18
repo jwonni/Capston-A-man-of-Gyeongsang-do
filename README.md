@@ -58,7 +58,7 @@ pip install -r requirements.txt
 
 ### 2. 경로 추출 모델 가중치 다운로드 (SegFormer-UNet B2)
 
-U-Net과 SegFormer-UNet-B2 가중치는 아래 Google Drive에서 받습니다.
+U-Net과 SegFormer-UNet-B2 가중치는 아래 Google Drive에서 다운
 
 - 다운로드 링크: https://drive.google.com/drive/folders/1TKDRnaR8HlrcM2B8wclnDiv_GN5hD2gW?usp=sharing
 
@@ -67,10 +67,9 @@ Drive에 저장된 파일명이 아래와 같다면:
 - `model_best.pt`
 - `model_last.pt`
 
-프로젝트에서는 아래처럼 이름을 바꿔 `weights/` 폴더에 두세요.
+프로젝트에서는 아래처럼 이름을 바꿔 `weights/` 폴더에 저장
 
-- `model_best.pt` -> `segformer_unet_b2_best.pt` (기본 실행 시 사용)
-- `model_last.pt` -> `segformer_unet_b2_last.pt` (선택/백업용)
+- 각각 `model_best.pt` -> `segformer_unet_b2_best.pt` 과 `unet_best.pt`으로 변경
 
 ### 3. Hi-SAM 설정 (지리좌표 변환 사용 시)
 

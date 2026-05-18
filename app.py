@@ -158,6 +158,9 @@ class PointsRequest(BaseModel):
     skeleton_b64: str | None = None
     start: list[float]   # [x, y]
     end: list[float]     # [x, y]
+    tau: float = 3.0
+    angle_thresh: float = 20.0
+    min_dist: float = 8.0
     input_img_b64: str | None = None  # ── DEBUG: 512×512 resized marathon image for overlay
 
 
@@ -295,7 +298,12 @@ async def extract_path(req: PointsRequest):
         skeleton_arr = _decode_mask(req.skeleton_b64)
         start_xy = (int(req.start[0]), int(req.start[1]))
         end_xy   = (int(req.end[0]),   int(req.end[1]))
-        ordered = extract_ordered_path(skeleton_arr, start_xy, end_xy)
+        ordered = extract_ordered_path(
+            skeleton_arr, start_xy, end_xy,
+            tau=req.tau,
+            angle_thresh=req.angle_thresh,
+            min_dist=req.min_dist,
+        )
 
         # ── DEBUG ──────────────────────────────────────────────────────────────
         # Decode the 512×512 marathon image so the overlay shares the same

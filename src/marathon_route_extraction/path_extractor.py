@@ -14,6 +14,15 @@ from typing import Optional
 import numpy as np
 from skimage.morphology import skeletonize as _skeletonize
 
+# 그래프 단순화
+from .graph_simplifier import (
+    Graph,
+    simplify_graph,
+    find_nearest_node,
+    restore_detailed_path,
+    extract_keypoints,
+)
+
 _OFFSETS_8 = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
 
 
@@ -131,6 +140,9 @@ def extract_ordered_path(
     mask_arr: np.ndarray,
     start_xy: tuple[int, int],
     end_xy: tuple[int, int],
+    tau: float = 3.0,
+    angle_thresh: float = 20.0,
+    min_dist: float = 8.0,
 ) -> Optional[list[tuple[int, int]]]:
     """
     Skeletonize mask_arr and return an ordered pixel list from start to end.
@@ -148,11 +160,10 @@ def extract_ordered_path(
     # pure-Python zhang_suen_thinning on it breaks junctions and takes minutes.
     # Use the same skimage routine for speed and consistency.
     skeleton = _skeletonize(binary)
-    graph    = _skeleton_to_graph(skeleton)
+    graph = simplify_graph(skeleton, tau)  # 그래프 단순화
 
-    # start_xy / end_xy are (x=col, y=row); graph keys are (row, col)
-    start_yx = _find_nearest_skeleton_point(skeleton, start_xy[0], start_xy[1])
-    end_yx   = _find_nearest_skeleton_point(skeleton, end_xy[0],   end_xy[1])
+    start_yx = find_nearest_node(graph, cy=start_xy[1], cx=start_xy[0])
+    end_yx   = find_nearest_node(graph, cy=end_xy[1],   cx=end_xy[0])
 
     if start_yx is None or end_yx is None:
         return None
@@ -160,6 +171,8 @@ def extract_ordered_path(
     path_yx = _bfs_path(graph, start_yx, end_yx)
     if path_yx is None:
         return None
+    detailed_yx  = restore_detailed_path(graph, path_yx)
+    keypoints_yx = extract_keypoints(detailed_yx, graph, angle_thresh, min_dist)
 
     # Convert (row, col) → (x, y)
-    return [(x, y) for y, x in path_yx]
+    return [(x, y) for y, x in keypoints_yx]

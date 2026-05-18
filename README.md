@@ -69,7 +69,7 @@ Drive에 저장된 파일명이 아래와 같다면:
 
 프로젝트에서는 아래처럼 이름을 바꿔 `weights/` 폴더에 저장
 
-- 각각 `model_best.pt` -> `segformer_unet_b2_best.pt` 과 `unet_best.pt`으로 변경
+- 각각 `model_best.pt` -> `segformer_unet_b2_best.pt`와 `unet_best.pt`으로 변경
 
 ### 3. Hi-SAM 설정 (지리좌표 변환 사용 시)
 

@@ -37,13 +37,15 @@ FastAPI 백엔드 + 단일 페이지 HTML 프론트엔드로 마라톤 코스 �
 │   │   └── gpx_converter.py            # 픽셀 경로 → GPX 변환
 │   └── marathon_route_extraction/
 │       ├── component_filter.py         # 연결 성분 필터링
-│       ├── model.py                    # U-Net 모델 / 추론
 │       ├── path_extractor.py           # 스켈레톤 → 순서 있는 경로 추출
-│       └── postprocess.py              # 4단계 후처리 파이프라인
+│       ├── postprocess.py              # 4단계 후처리 파이프라인
+│       ├── segformer_unet_b2.py        # SegFormer-UNet B2 모델 / 추론
+│       └── unet.py                     # U-Net 모델 / 추론
 ├── static/
 │   └── index.html                      # 5단계 데모 UI
 └── weights/
-    └── model_best.pt                   # 학습된 U-Net 가중치
+    ├── segformer_unet_b2_best.pt       # SegFormer-UNet B2 가중치
+    └── unet_best.pt                    # U-Net 가중치
 ```
 
 ## 설치 및 실행
@@ -54,7 +56,23 @@ FastAPI 백엔드 + 단일 페이지 HTML 프론트엔드로 마라톤 코스 �
 pip install -r requirements.txt
 ```
 
-### 2. Hi-SAM 설정 (지리좌표 변환 사용 시)
+### 2. 경로 추출 모델 가중치 다운로드 (SegFormer-UNet B2)
+
+U-Net과 SegFormer-UNet-B2 가중치는 아래 Google Drive에서 받습니다.
+
+- 다운로드 링크: https://drive.google.com/drive/folders/1TKDRnaR8HlrcM2B8wclnDiv_GN5hD2gW?usp=sharing
+
+Drive에 저장된 파일명이 아래와 같다면:
+
+- `model_best.pt`
+- `model_last.pt`
+
+프로젝트에서는 아래처럼 이름을 바꿔 `weights/` 폴더에 두세요.
+
+- `model_best.pt` -> `segformer_unet_b2_best.pt` (기본 실행 시 사용)
+- `model_last.pt` -> `segformer_unet_b2_last.pt` (선택/백업용)
+
+### 3. Hi-SAM 설정 (지리좌표 변환 사용 시)
 
 ```bash
 # 저장소 클론
@@ -68,7 +86,7 @@ curl -L -o Hi-SAM/pretrained_checkpoint/sam_vit_l_0b3195.pth https://dl.fbaipubl
 curl -L -o Hi-SAM/pretrained_checkpoint/hi_sam_l.pth https://huggingface.co/GoGiants1/Hi-SAM/resolve/main/hi_sam_l.pth
 ```
 
-### 3. 환경변수 설정
+### 4. 환경변수 설정
 
 ```bash
 cp .env.example .env
@@ -79,18 +97,18 @@ cp .env.example .env
 KAKAO_API_KEY=여기에_카카오_API_키_입력
 ```
 
-### 4. 서버 실행
+### 5. 서버 실행
 
 ```bash
 python app.py
 ```
 
-### 5. 브라우저 접속
+### 6. 브라우저 접속
 
 ```
 http://localhost:8010
 ```
-
+ 
 ## API 엔드포인트
 
 | 메서드 | 경로 | 설명 |
@@ -101,6 +119,16 @@ http://localhost:8010
 | `POST` | `/api/georeference` | Hi-SAM + PaddleOCR + 카카오 API → 호모그래피 계산 |
 | `POST` | `/api/convert_gpx` | 픽셀 경로 → GPX 파일 변환 |
 | `GET`  | `/api/health` | 서버 상태 확인 |
+
+## 경로 추출 파이프라인 (`/api/predict` → `/api/postprocess` → `/api/extract_path`)
+
+```
+경로 추출 모델 (SegFormer-UNet B2 / UNet)
+  ↓ 마라톤 경로 이미지 입력
+경로 마스크 추출
+  ↓ 후처리 (노이즈 제거 + fragment 연결 + 스켈레톤화)
+경로 픽셀 좌표 추출 (start → end)
+```
 
 ## 지리좌표 변환 파이프라인 (`/api/georeference`)
 

@@ -17,6 +17,7 @@ venv/
 # Local outputs
 outputs/
 *.log
-
-
 .env
+
+# model weights
+weights/

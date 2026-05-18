@@ -1,28 +1,34 @@
-fastapi>=0.85.0
-uvicorn[standard]>=0.18.0
-numpy>=1.23.0
-Pillow>=9.0.0
-opencv-python>=4.6.0
-torch>=2.0.0
-torchvision>=0.15.0
-transformers>=4.30.0
-accelerate>=0.18.0
-safetensors>=0.3.0
-scipy>=1.9.0
-# Optional / environment-specific (see docs/SETUP_GEOREF.md)
-# qwen_vl_utils
-# hi_sam
+python-dotenv>=1.0.0
 fastapi>=0.95.0
-uvicorn>=0.20.0
-pillow>=9.0.0
-numpy>=1.21.0
+uvicorn[standard]>=0.20.0
 pydantic>=2.0.0
 python-multipart>=0.0.5
-torch>=2.0.0
-opencv-python>=4.8.0
-requests>=2.28.0
 
-# ── 지리좌표 파이프라인 (선택) ─────────────────────────────────────────────────
-# Hi-SAM 텍스트 탐지 + Qwen2.5-VL OCR 사용 시 설치
-# pip install timm==0.9.16 pyclipper shapely
-# pip install "transformers>=4.50.0" accelerate qwen-vl-utils
+numpy>=1.21.0
+Pillow>=9.0.0
+opencv-python>=4.8.0
+scipy>=1.9.0
+scikit-image>=0.20.0
+
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Hi-SAM 텍스트 탐지 의존성
+# 1) 저장소 클론:
+#    git clone https://github.com/ymy-k/Hi-SAM.git Hi-SAM
+# 2) 아래 패키지 설치 (Hi-SAM/requirements.txt 대신 이걸 사용 — Polygon3/apache_beam은 Python 3.13 비호환):
+#    pip install einops timm pycocotools absl-py python-Levenshtein tqdm
+# 3) 체크포인트 다운로드 → Hi-SAM/pretrained_checkpoint/ 에 배치:
+#    curl -L -o Hi-SAM/pretrained_checkpoint/sam_vit_l_0b3195.pth https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth
+#    curl -L -o Hi-SAM/pretrained_checkpoint/hi_sam_l.pth https://huggingface.co/GoGiants1/Hi-SAM/resolve/main/hi_sam_l.pth
+shapely>=2.0.0
+pyclipper>=1.3.0
+einops>=0.6.1
+timm>=0.9.0
+pycocotools>=2.0
+absl-py>=1.0
+python-Levenshtein>=0.12
+
+# PaddleOCR (CPU 전용 — Hi-SAM torch와 CUDA 충돌 방지)
+paddlepaddle>=3.0,<3.3
+paddleocr>=3.4,<3.5

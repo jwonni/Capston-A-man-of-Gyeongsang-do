@@ -1,5 +1,5 @@
 """
-Hi-SAM 텍스트 영역 탐지 래퍼.
+Hi-SAM 텍스트 영역 탐지 래퍼 (polygon JSON 출력).
 
 Hi-SAM 저장소가 Config.HISAM_REPO_DIR에 존재해야 하며,
 체크포인트가 Config.HISAM_CHECKPOINT 경로에 있어야 한다.
@@ -7,6 +7,7 @@ Hi-SAM 저장소가 Config.HISAM_REPO_DIR에 존재해야 하며,
 from __future__ import annotations
 
 import gc
+import json
 import os
 import sys
 from types import SimpleNamespace
@@ -14,18 +15,74 @@ from types import SimpleNamespace
 import cv2
 import numpy as np
 import torch
+from shapely.geometry import Polygon
+
+try:
+    import pyclipper
+except ModuleNotFoundError:
+    raise ImportError("pyclipper가 필요합니다: pip install pyclipper")
 
 from src.config import Config
 
 
-def run_hisam(image_path: str) -> tuple[list[dict], np.ndarray]:
-    """Hi-SAM으로 이미지에서 단어 영역 및 픽셀 마스크 추출.
+def unclip(p: np.ndarray, unclip_ratio: float = 3.5) -> list:
+    """polygon을 unclip_ratio 비율만큼 바깥으로 확장한다."""
+    poly = Polygon(p)
+    distance = poly.area * unclip_ratio / max(poly.length, 1e-6)
+    offset = pyclipper.PyclipperOffset()
+    offset.AddPath(p.astype(np.int32), pyclipper.JT_ROUND, pyclipper.ET_CLOSEDPOLYGON)
+    return np.array(offset.Execute(distance))
+
+
+def mask_to_polygon_list(
+    mask: np.ndarray,
+    img_h: int,
+    img_w: int,
+    min_area: int = 32,
+) -> list[np.ndarray]:
+    """binary mask → 유효 polygon 목록."""
+    mask = mask.astype(np.uint8)
+    polygons: list[np.ndarray] = []
+    contours, _ = cv2.findContours(mask, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+
+    for cont in contours:
+        epsilon = 0.002 * cv2.arcLength(cont, True)
+        approx  = cv2.approxPolyDP(cont, epsilon, True)
+        points  = approx.reshape((-1, 2))
+        if points.shape[0] < 4:
+            continue
+        try:
+            pts = unclip(points)
+            if len(pts) != 1:
+                continue
+            pts = pts[0].astype(np.int32)
+        except Exception:
+            pts = points.astype(np.int32)
+        if len(pts) < 4:
+            continue
+        if Polygon(pts).area < min_area:
+            continue
+        pts[:, 0] = np.clip(pts[:, 0], 0, img_w - 1)
+        pts[:, 1] = np.clip(pts[:, 1], 0, img_h - 1)
+        polygons.append(pts)
+
+    return polygons
+
+
+def run_hisam_to_json(image_path: str, json_path: str | None = None) -> dict:
+    """Hi-SAM으로 이미지에서 word polygon JSON payload를 반환한다.
+
+    Args:
+        image_path: 원본 이미지 경로
+        json_path:  결과 JSON 저장 경로 (None이면 저장 생략)
 
     Returns:
-        word_regions: [{cx, cy, bbox:[x1,y1,x2,y2]}, ...]  (읽기 순서 정렬)
-        combined_mask: (H, W) uint8  — 전체 텍스트 영역 합산 마스크
+        {image_path, image_width, image_height, num_words,
+         words: [{id, vertices}, ...]}
     """
-    hisam_dir = str(Config.HISAM_REPO_DIR)
+    hisam_dir    = str(Config.HISAM_REPO_DIR)
+    original_cwd = os.getcwd()
+
     if hisam_dir not in sys.path:
         sys.path.insert(0, hisam_dir)
 
@@ -33,17 +90,16 @@ def run_hisam(image_path: str) -> tuple[list[dict], np.ndarray]:
     from hi_sam.modeling.auto_mask_generator import AutoMaskGenerator
 
     args = SimpleNamespace(
-        checkpoint=str(Config.HISAM_CHECKPOINT),
-        model_type=Config.HISAM_MODEL_TYPE,
-        device=str(Config.DEVICE),
-        hier_det=True,
-        input_size=[1024, 1024],
-        attn_layers=1,
-        prompt_len=12,
-        layout_thresh=0.5,
+        checkpoint   = str(Config.HISAM_CHECKPOINT),
+        model_type   = Config.HISAM_MODEL_TYPE,
+        device       = str(Config.DEVICE),
+        hier_det     = True,
+        input_size   = [1024, 1024],
+        attn_layers  = 1,
+        prompt_len   = 12,
+        layout_thresh= 0.5,
     )
 
-    original_cwd = os.getcwd()
     try:
         os.chdir(hisam_dir)
         hisam = model_registry[Config.HISAM_MODEL_TYPE](args)
@@ -53,16 +109,18 @@ def run_hisam(image_path: str) -> tuple[list[dict], np.ndarray]:
             efficient_hisam=(Config.HISAM_MODEL_TYPE in ["vit_s", "vit_t"]),
         )
         image_bgr = cv2.imread(image_path)
+        if image_bgr is None:
+            raise RuntimeError(f"이미지를 읽을 수 없습니다: {image_path}")
         image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
         img_h, img_w = image_rgb.shape[:2]
         amg.set_image(image_rgb)
         with torch.inference_mode():
-            masks, _scores, _ = amg.predict(
-                from_low_res=False,
-                fg_points_num=Config.HISAM_TOTAL_POINTS,
-                batch_points_num=Config.HISAM_BATCH_POINTS,
-                score_thresh=Config.HISAM_SCORE_THRESH,
-                nms_thresh=Config.HISAM_NMS_THRESH,
+            masks, _scores, _affinity = amg.predict(
+                from_low_res    = False,
+                fg_points_num   = Config.HISAM_TOTAL_POINTS,
+                batch_points_num= Config.HISAM_BATCH_POINTS,
+                score_thresh    = Config.HISAM_SCORE_THRESH,
+                nms_thresh      = Config.HISAM_NMS_THRESH,
             )
     finally:
         os.chdir(original_cwd)
@@ -70,40 +128,33 @@ def run_hisam(image_path: str) -> tuple[list[dict], np.ndarray]:
     if masks is None:
         raise RuntimeError("Hi-SAM 마스크 예측 실패")
 
-    word_masks = masks[:, 0, :, :]
+    word_masks = masks[:, 0, :, :].astype(np.uint8)
 
-    combined = np.zeros((img_h, img_w), dtype=np.uint8)
+    all_word_polygons: list[dict] = []
     for wm in word_masks:
-        combined = np.logical_or(combined, wm > 0)
-    combined_mask = combined.astype(np.uint8) * 255
+        for poly in mask_to_polygon_list(wm, img_h, img_w,
+                                         min_area=Config.HISAM_MIN_POLYGON_AREA):
+            all_word_polygons.append({
+                "id":       len(all_word_polygons),
+                "vertices": poly.tolist(),
+            })
 
-    # centroid 계산 시 Y축 오프셋 (텍스트 baseline → 중간 보정)
-    Y_OFFSET = -13
-    word_regions = []
-    for wm in word_masks:
-        mask_u8 = (wm > 0).astype(np.uint8)
-        ys, xs  = np.where(mask_u8 > 0)
-        if len(xs) == 0:
-            continue
-        M = cv2.moments(mask_u8)
-        if M["m00"] == 0:
-            continue
-        cx = int(M["m10"] / M["m00"])
-        cy = int(M["m01"] / M["m00"]) + Y_OFFSET
-        x1 = max(0,     int(xs.min()) - Config.HISAM_CROP_X_MARGIN)
-        y1 = max(0,     int(ys.min()) - Config.HISAM_CROP_Y_MARGIN)
-        x2 = min(img_w, int(xs.max()) + Config.HISAM_CROP_X_MARGIN)
-        y2 = min(img_h, int(ys.max()) + Config.HISAM_CROP_Y_MARGIN)
-        if (x2 - x1) < 10 or (y2 - y1) < 5:
-            continue
-        word_regions.append({"cx": cx, "cy": cy, "bbox": [x1, y1, x2, y2]})
+    payload = {
+        "image_path":   image_path,
+        "image_width":  img_w,
+        "image_height": img_h,
+        "num_words":    len(all_word_polygons),
+        "words":        all_word_polygons,
+    }
 
-    # 위→아래, 왼→오른 읽기 순서 정렬
-    word_regions.sort(key=lambda r: (r["cy"] // 30, r["cx"]))
+    if json_path is not None:
+        os.makedirs(os.path.dirname(json_path), exist_ok=True)
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
 
     del hisam, amg
     gc.collect()
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
 
-    return word_regions, combined_mask
+    return payload

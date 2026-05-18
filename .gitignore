@@ -17,3 +17,6 @@ venv/
 # Local outputs
 outputs/
 *.log
+
+
+.env

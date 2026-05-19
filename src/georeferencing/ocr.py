@@ -161,8 +161,13 @@ def load_paddle_ocr() -> Any:
     global _paddle_ocr
     if _paddle_ocr is None:
         os.environ.setdefault("PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK", "True")
+        os.environ["FLAGS_use_mkldnn"] = "0"
+        os.environ["FLAGS_enable_pir_api"] = "0"
         import paddle
-        paddle.set_flags({"FLAGS_use_mkldnn": False})
+        paddle.set_flags({
+            "FLAGS_use_mkldnn": False,
+            "FLAGS_enable_pir_api": False,
+        })
         paddle.device.set_device(Config.PADDLE_DEVICE)
         from paddleocr import PaddleOCR
         _paddle_ocr = PaddleOCR(

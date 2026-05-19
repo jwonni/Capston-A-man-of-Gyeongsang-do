@@ -176,3 +176,63 @@ def extract_ordered_path(
 
     # Convert (row, col) → (x, y)
     return [(x, y) for y, x in keypoints_yx]
+
+
+def auto_extract_ordered_path(mask_arr: np.ndarray) -> Optional[dict]:
+    """
+    Automatically extract an ordered path without manual start/end selection.
+
+    Direction heuristic (reproducible):
+      vertical span ≥ horizontal span  → bottom-to-top
+        start = bottommost degree-1 endpoint, end = topmost
+      otherwise                         → left-to-right
+        start = leftmost  degree-1 endpoint, end = rightmost
+
+    Falls back to extreme skeleton pixels when no degree-1 endpoints exist.
+
+    Returns:
+        {"start": [x, y], "end": [x, y], "path": [[x, y], ...]}
+        or None if no path can be found.
+    """
+    binary   = mask_arr > 127
+    skeleton = _skeletonize(binary)
+    graph    = _skeleton_to_graph(skeleton)
+
+    pts = np.argwhere(skeleton)          # each row: [row=y, col=x]
+    if len(pts) == 0:
+        return None
+
+    endpoints = [n for n in graph if len(graph[n]) == 1]
+
+    y_vals = pts[:, 0]
+    x_vals = pts[:, 1]
+    v_span = int(y_vals.max()) - int(y_vals.min())
+    h_span = int(x_vals.max()) - int(x_vals.min())
+
+    if v_span >= h_span:
+        # bottom-to-top: start = max-y endpoint, end = min-y endpoint
+        if len(endpoints) >= 2:
+            start_yx = max(endpoints, key=lambda p: p[0])
+            end_yx   = min(endpoints, key=lambda p: p[0])
+        else:
+            start_yx = tuple(int(v) for v in pts[int(np.argmax(y_vals))])
+            end_yx   = tuple(int(v) for v in pts[int(np.argmin(y_vals))])
+    else:
+        # left-to-right: start = min-x endpoint, end = max-x endpoint
+        if len(endpoints) >= 2:
+            start_yx = min(endpoints, key=lambda p: p[1])
+            end_yx   = max(endpoints, key=lambda p: p[1])
+        else:
+            start_yx = tuple(int(v) for v in pts[int(np.argmin(x_vals))])
+            end_yx   = tuple(int(v) for v in pts[int(np.argmax(x_vals))])
+
+    path_yx = _bfs_path(graph, start_yx, end_yx)
+    if path_yx is None:
+        return None
+
+    path_xy = [(int(x), int(y)) for y, x in path_yx]
+    return {
+        "start": [path_xy[0][0], path_xy[0][1]],
+        "end":   [path_xy[-1][0], path_xy[-1][1]],
+        "path":  path_xy,
+    }

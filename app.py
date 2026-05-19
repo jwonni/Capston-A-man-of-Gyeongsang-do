@@ -236,29 +236,22 @@ async def postprocess(req: PostprocessRequest):
     """
     try:
         mask_arr = _decode_mask(req.mask_b64)
-        h, w = mask_arr.shape
-
-        # All threshold parameters were designed for 512×512 model output.
-        # Scale them to the actual (original-resolution) mask so behaviour is
-        # consistent regardless of how large the uploaded image is.
-        _ls = (h * w) ** 0.5 / 512.0   # linear scale  (for lengths/distances/kernels)
-        _as = (h * w) / (512.0 * 512.0) # area scale    (for pixel-area thresholds)
 
         # postprocess_mask now returns a tuple of intermediate results
         # (main_mask, noise_mask, filtered_mask, connected_mask,
         #  final_mask, skeleton_mask, features, noise_labels, connect_log)
         res = postprocess_mask(
             mask_arr,
-            area_thresh=max(1, int(req.area_thresh * _as)),
+            area_thresh=req.area_thresh,
             circ_thresh=req.circ_thresh,
-            skel_thresh=max(1, int(req.skel_thresh * _ls)),
-            max_distance=req.max_distance * _ls,
-            min_fragment_size=int(req.min_fragment_size * _as) if req.min_fragment_size > 0 else 0,
-            line_thickness=max(1, round(req.line_thickness * _ls)),
-            morph_close_size=max(1, round(req.morph_close_size * _ls)) if req.morph_close_size > 0 else 0,
-            final_size_thresh=int(req.final_size_thresh * _as) if req.final_size_thresh > 0 else 0,
-            spur_length=max(1, int(req.spur_length * _ls)),
-            skel_morph_close=max(1, round(req.skel_morph_close * _ls)) if req.skel_morph_close > 0 else 0,
+            skel_thresh=req.skel_thresh,
+            max_distance=req.max_distance,
+            min_fragment_size=req.min_fragment_size,
+            line_thickness=req.line_thickness,
+            morph_close_size=req.morph_close_size if req.morph_close_size > 0 else 0,
+            final_size_thresh=req.final_size_thresh,
+            spur_length=req.spur_length,
+            skel_morph_close=req.skel_morph_close,
         )
         # Extract skeleton mask from returned tuple (6th element)
         if isinstance(res, tuple) or isinstance(res, list):

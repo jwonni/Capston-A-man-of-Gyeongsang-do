@@ -39,7 +39,7 @@ if Config.MODEL_TYPE == "segformer_unet_b2":
     from src.marathon_route_extraction.segformer_unet_b2 import load_model, predict_mask
 else:
     from src.marathon_route_extraction.unet import load_model, predict_mask
-from src.marathon_route_extraction.path_extractor import extract_ordered_path
+from src.marathon_route_extraction.path_extractor import extract_ordered_path, auto_extract_ordered_path
 from src.marathon_route_extraction.postprocess import postprocess_mask
 
 # ── FastAPI App Setup ─────────────────────────────────────────────────────────
@@ -112,8 +112,9 @@ def _debug_path_overlay(
     h, w = skeleton_arr.shape
 
     if bg_img is not None:
-        # Resize to skeleton resolution in case sizes differ (safety guard).
-        base = bg_img.convert("RGB").resize((w, h), Image.Resampling.BILINEAR)
+        # Convert to grayscale first to make the path more visible
+        gray = bg_img.convert("L")
+        base = gray.convert("RGB").resize((w, h), Image.Resampling.BILINEAR)
         rgb = np.asarray(base, dtype=np.uint8).copy()
     else:
         gray = (skeleton_arr // 4).astype(np.uint8)
@@ -159,6 +160,11 @@ class PointsRequest(BaseModel):
     start: list[float]   # [x, y]
     end: list[float]     # [x, y]
     input_img_b64: str | None = None  # ── DEBUG: 512×512 resized marathon image for overlay
+
+
+class AutoExtractRequest(BaseModel):
+    skeleton_b64: str
+    input_img_b64: str | None = None
 
 
 class ConvertGPXRequest(BaseModel):
@@ -320,6 +326,50 @@ async def extract_path(req: PointsRequest):
         })
     except Exception as e:
         print(f"[error] extract_path: {e}\n{traceback.format_exc()}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/auto_extract_path")
+async def auto_extract_path_endpoint(req: AutoExtractRequest):
+    """
+    Automatically determine start/end from skeleton topology and extract ordered path.
+
+    Direction heuristic: vertical span ≥ horizontal span → bottom-to-top,
+    otherwise left-to-right. Returns the same JSON format as /api/extract_path.
+    """
+    try:
+        skeleton_arr = _decode_mask(req.skeleton_b64)
+        result = auto_extract_ordered_path(skeleton_arr)
+
+        if result is None:
+            return JSONResponse({
+                "status": "failed",
+                "path": [],
+                "message": "스켈레톤에서 경로를 찾을 수 없습니다.",
+            })
+
+        bg_img: Image.Image | None = None
+        if req.input_img_b64:
+            _, _data = req.input_img_b64.split(",", 1)
+            bg_img = Image.open(io.BytesIO(base64.b64decode(_data))).convert("RGB")
+
+        overlay_b64 = _debug_path_overlay(
+            skeleton_arr,
+            result["path"],
+            tuple(result["start"]),
+            tuple(result["end"]),
+            bg_img,
+        )
+
+        return JSONResponse({
+            "status": "success",
+            "start": result["start"],
+            "end":   result["end"],
+            "path":  [[int(x), int(y)] for x, y in result["path"]],
+            "overlay_b64": overlay_b64,
+        })
+    except Exception as e:
+        print(f"[error] auto_extract_path: {e}\n{traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=str(e))
 
 

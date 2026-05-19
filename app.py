@@ -2,6 +2,7 @@
 FastAPI server — Marathon Route Segmentation Web App
 """
 
+import json
 import os
 import logging
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -15,7 +16,7 @@ from pathlib import Path
 
 import numpy as np
 import torch
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 from PIL import Image, ImageDraw
@@ -34,7 +35,7 @@ from src.config import (
     SPUR_LENGTH,
     SKEL_MORPH_CLOSE,
 )
-from src.gpx_conversion.gpx_converter import convert_pixel_path_to_gpx
+from src.gpx_conversion.gpx_converter import convert_pixel_path_to_gpx, fix_white_line_path
 if Config.MODEL_TYPE == "segformer_unet_b2":
     from src.marathon_route_extraction.segformer_unet_b2 import load_model, predict_mask
 else:
@@ -175,6 +176,7 @@ class ConvertGPXRequest(BaseModel):
     end: list[int]
     path: list[list[int]]
     homography_params: dict | None = None  # /api/georeference 응답값 전달 시 실제 지리좌표 GPX 생성
+    category_pixels: dict | None = None   # /api/run_ocr 응답의 category_pixels (방향 보정 + 왕복 판단)
 
 
 # ── Endpoints ─────────────────────────────────────────────────────────────────
@@ -397,6 +399,18 @@ async def convert_gpx(req: ConvertGPXRequest):
         - gpx_content: GPX file content as string
     """
     try:
+        start = req.start
+        end   = req.end
+        path  = req.path
+
+        # OCR 카테고리가 있으면 방향 보정 + 왕복 판단 적용
+        if req.category_pixels:
+            white_line = {"start": start, "end": end, "path": path}
+            fixed = fix_white_line_path(white_line, req.category_pixels)
+            start = fixed["start"]
+            end   = fixed["end"]
+            path  = fixed["path"]
+
         pixel_to_geo = None
         if req.homography_params:
             from src.georeferencing.homography import HomographyTransform
@@ -404,7 +418,7 @@ async def convert_gpx(req: ConvertGPXRequest):
             pixel_to_geo = tf.pixel_to_geo
 
         gpx_content = convert_pixel_path_to_gpx(
-            req.start, req.end, req.path, pixel_to_geo=pixel_to_geo
+            start, end, path, pixel_to_geo=pixel_to_geo
         )
 
         return JSONResponse({
@@ -512,7 +526,7 @@ async def georeference(file: UploadFile = File(...)):
         # Stage 4: 1차 재투영 오차 정제
         anchors_pass1 = iterative_outlier_removal(
             anchors_after_mad,
-            max_error_px=Config.HOMOGRAPHY_MAX_ERROR_PX,
+            max_error_px=Config.HOMOGRAPHY_MAX_ERROR_PX_PASS1,
             min_anchors=Config.HOMOGRAPHY_MIN_ANCHORS,
         )
 
@@ -543,19 +557,45 @@ async def georeference(file: UploadFile = File(...)):
         errors   = tf.reprojection_errors(anchors_final)
         mean_err = sum(errors) / len(errors)
 
+        # 앵커 오버레이 이미지 생성 (숫자 원 + 오차 텍스트)
+        anchor_overlay_b64 = None
+        try:
+            overlay_img = Image.open(tmp_path).convert("RGB")
+            overlay_drw = ImageDraw.Draw(overlay_img)
+            for idx, (a, e) in enumerate(zip(anchors_final, errors), start=1):
+                px, py = int(a[0]), int(a[1])
+                r = 10
+                overlay_drw.ellipse(
+                    [px - r, py - r, px + r, py + r],
+                    fill=(0, 100, 220), outline=(255, 255, 255), width=2,
+                )
+                num_str = str(idx)
+                overlay_drw.text((px - 4, py - 7), num_str, fill=(255, 255, 255))
+                overlay_drw.text((px + r + 4, py - 7), f"+/-{e:.1f}px", fill=(220, 50, 50))
+            buf = io.BytesIO()
+            overlay_img.save(buf, format="JPEG", quality=82)
+            anchor_overlay_b64 = (
+                "data:image/jpeg;base64,"
+                + base64.b64encode(buf.getvalue()).decode()
+            )
+        except Exception as ov_err:
+            logger.warning("[georeference] anchor overlay 생성 실패: %s", ov_err)
+
         return JSONResponse({
-            "status":                    "success",
-            "num_anchors":               len(anchors_final),
+            "status":                     "success",
+            "num_anchors":                len(anchors_final),
             "mean_reprojection_error_px": round(mean_err, 2),
-            "applied_offset":            [round(offset_dx, 3), round(offset_dy, 3)],
+            "applied_offset":             [round(offset_dx, 3), round(offset_dy, 3)],
+            "ocr_results":                ocr_results,
+            "anchor_overlay_b64":         anchor_overlay_b64,
             "anchors": [
                 {
-                    "text":                 a[4],
-                    "place":                a[5],
-                    "pixel_x":              int(a[0]),
-                    "pixel_y":              int(a[1]),
-                    "lat":                  a[2],
-                    "lng":                  a[3],
+                    "text":                  a[4],
+                    "place":                 a[5],
+                    "pixel_x":               int(a[0]),
+                    "pixel_y":               int(a[1]),
+                    "lat":                   a[2],
+                    "lng":                   a[3],
                     "reprojection_error_px": round(e, 2),
                 }
                 for a, e in zip(anchors_final, errors)
@@ -572,6 +612,226 @@ async def georeference(file: UploadFile = File(...)):
             os.unlink(tmp_path)
         if crop_dir and os.path.exists(crop_dir):
             shutil.rmtree(crop_dir, ignore_errors=True)
+
+
+@app.post("/api/run_ocr")
+async def run_ocr_endpoint(file: UploadFile = File(...)):
+    """
+    Stage 5 전용: Hi-SAM + PaddleOCR 실행.
+
+    Returns:
+        - num_texts: 인식된 텍스트 수
+        - ocr_results: [{text, x, y, confidence, num_segments}, ...]
+    """
+    import shutil
+    import tempfile
+
+    try:
+        from src.georeferencing.text_detector import run_hisam_to_json
+        from src.georeferencing.ocr import run_ocr, classify_ocr_to_categories
+    except ImportError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=f"지리좌표 모듈 로드 실패 (Hi-SAM / PaddleOCR 설치 필요): {exc}",
+        )
+
+    if not Config.HISAM_CHECKPOINT.exists():
+        raise HTTPException(
+            status_code=503,
+            detail=f"Hi-SAM 체크포인트 없음: {Config.HISAM_CHECKPOINT}",
+        )
+
+    contents = await file.read()
+    suffix   = Path(file.filename).suffix if file.filename else ".jpg"
+    tmp_path = crop_dir = None
+
+    try:
+        with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
+            tmp.write(contents)
+            tmp_path = tmp.name
+        crop_dir = tempfile.mkdtemp(prefix="paddle_crops_")
+
+        logger = logging.getLogger("run_ocr")
+        logger.info("[run_ocr] Hi-SAM 추론 시작")
+        hisam_payload = run_hisam_to_json(tmp_path)
+        logger.info("[run_ocr] Hi-SAM 완료: polygon %d개", hisam_payload.get("num_words", 0))
+
+        ocr_results = run_ocr(hisam_payload, crop_dir)
+        logger.info("[run_ocr] OCR 완료: %d개 텍스트", len(ocr_results))
+
+        category_pixels = classify_ocr_to_categories(ocr_results)
+        logger.info("[run_ocr] 카테고리 분류: start_finish=%d  turning_point=%d",
+                    len(category_pixels["start_finish"]),
+                    len(category_pixels["turning_point"]))
+
+        return JSONResponse({
+            "status":          "success",
+            "num_texts":       len(ocr_results),
+            "ocr_results":     ocr_results,
+            "category_pixels": category_pixels,
+        })
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"[error] run_ocr: {e}\n{traceback.format_exc()}")
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if tmp_path and os.path.exists(tmp_path):
+            os.unlink(tmp_path)
+        if crop_dir and os.path.exists(crop_dir):
+            shutil.rmtree(crop_dir, ignore_errors=True)
+
+
+@app.post("/api/run_georeference")
+async def run_georeference_endpoint(
+    file: UploadFile = File(...),
+    ocr_results_json: str = Form(...),
+):
+    """
+    Stage 6 전용: OCR 결과를 받아 카카오 API + 호모그래피 계산.
+
+    Input (multipart/form-data):
+        - file: 원본 이미지 (마커 검출용)
+        - ocr_results_json: /api/run_ocr 응답의 ocr_results를 JSON 직렬화한 문자열
+
+    Returns:
+        - anchors, homography_params, anchor_overlay_b64, mean_reprojection_error_px
+    """
+    import shutil
+    import tempfile
+
+    import cv2
+
+    try:
+        ocr_results = json.loads(ocr_results_json)
+    except Exception:
+        raise HTTPException(status_code=400, detail="ocr_results_json 파싱 실패")
+
+    try:
+        from src.georeferencing.anchor_builder import build_anchors, is_good_anchor
+        from src.georeferencing.homography import (
+            HomographyTransform,
+            iterative_outlier_removal,
+            progressive_offset_calibration,
+        )
+    except ImportError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=f"지리좌표 모듈 로드 실패: {exc}",
+        )
+
+    api_key = os.environ.get("KAKAO_API_KEY", Config.KAKAO_API_KEY)
+    if not api_key:
+        raise HTTPException(status_code=400, detail="환경변수 KAKAO_API_KEY가 설정되지 않았습니다.")
+
+    contents = await file.read()
+    suffix   = Path(file.filename).suffix if file.filename else ".jpg"
+    tmp_path = None
+
+    try:
+        with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
+            tmp.write(contents)
+            tmp_path = tmp.name
+
+        logger = logging.getLogger("run_georeference")
+
+        # 앵커 후보 선별 → 카카오 병렬 검색 → MAD 필터
+        candidates = [r for r in ocr_results if is_good_anchor(r.get("text", ""))]
+        logger.info("[run_geo] 앵커 후보: %d개 / OCR %d개", len(candidates), len(ocr_results))
+        for c in candidates:
+            logger.info("[run_geo]   후보: text=%r  conf=%.3f", c.get("text"), float(c.get("confidence", 0) or 0))
+        if len(candidates) < 4:
+            raise HTTPException(
+                status_code=422,
+                detail=f"앵커 후보 부족: {len(candidates)}개 (최소 4개 필요)",
+            )
+        anchors_after_mad = build_anchors(candidates, api_key)
+
+        # 1차 재투영 오차 정제
+        anchors_pass1 = iterative_outlier_removal(
+            anchors_after_mad,
+            max_error_px=Config.HOMOGRAPHY_MAX_ERROR_PX_PASS1,
+            min_anchors=Config.HOMOGRAPHY_MIN_ANCHORS,
+        )
+
+        # Hough Circle 마커 오프셋 캘리브레이션
+        img_bgr = cv2.imread(tmp_path)
+        if img_bgr is not None:
+            (offset_dx, offset_dy), _ = progressive_offset_calibration(
+                anchors_pass1, img_bgr,
+                consistency_px=Config.CALIB_CONSISTENCY_PX,
+                min_samples=Config.CALIB_MIN_SAMPLES,
+                visualize=False,
+            )
+        else:
+            offset_dx, offset_dy = 0.0, 0.0
+
+        # 오프셋 적용 → 2차 재투영 오차 정제 → 최종 호모그래피
+        anchors_corrected = [
+            (a[0] + offset_dx, a[1] + offset_dy, a[2], a[3], a[4], a[5])
+            for a in anchors_after_mad
+        ]
+        anchors_final = iterative_outlier_removal(
+            anchors_corrected,
+            max_error_px=Config.HOMOGRAPHY_MAX_ERROR_PX,
+            min_anchors=Config.HOMOGRAPHY_MIN_ANCHORS,
+        )
+
+        tf       = HomographyTransform(anchors_final)
+        errors   = tf.reprojection_errors(anchors_final)
+        mean_err = sum(errors) / len(errors)
+
+        # 앵커 오버레이 이미지 생성
+        anchor_overlay_b64 = None
+        try:
+            overlay_img = Image.open(tmp_path).convert("RGB")
+            overlay_drw = ImageDraw.Draw(overlay_img)
+            for idx, (a, e) in enumerate(zip(anchors_final, errors), start=1):
+                px, py = int(a[0]), int(a[1])
+                r = 10
+                overlay_drw.ellipse(
+                    [px - r, py - r, px + r, py + r],
+                    fill=(0, 100, 220), outline=(255, 255, 255), width=2,
+                )
+                overlay_drw.text((px - 4, py - 7), str(idx), fill=(255, 255, 255))
+                overlay_drw.text((px + r + 4, py - 7), f"+/-{e:.1f}px", fill=(220, 50, 50))
+            buf = io.BytesIO()
+            overlay_img.save(buf, format="JPEG", quality=82)
+            anchor_overlay_b64 = (
+                "data:image/jpeg;base64,"
+                + base64.b64encode(buf.getvalue()).decode()
+            )
+        except Exception as ov_err:
+            logger.warning("anchor overlay 생성 실패: %s", ov_err)
+
+        return JSONResponse({
+            "status":                     "success",
+            "num_anchors":                len(anchors_final),
+            "mean_reprojection_error_px": round(mean_err, 2),
+            "applied_offset":             [round(offset_dx, 3), round(offset_dy, 3)],
+            "anchor_overlay_b64":         anchor_overlay_b64,
+            "anchors": [
+                {
+                    "text":                  a[4],
+                    "place":                 a[5],
+                    "pixel_x":               int(a[0]),
+                    "pixel_y":               int(a[1]),
+                    "lat":                   a[2],
+                    "lng":                   a[3],
+                    "reprojection_error_px": round(e, 2),
+                }
+                for a, e in zip(anchors_final, errors)
+            ],
+            "homography_params": tf.to_dict(),
+        })
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"[error] run_georeference: {e}\n{traceback.format_exc()}")
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if tmp_path and os.path.exists(tmp_path):
+            os.unlink(tmp_path)
 
 
 @app.get("/api/health")

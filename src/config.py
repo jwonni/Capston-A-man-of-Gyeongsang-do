@@ -102,8 +102,9 @@ class Config:
     ]
 
     # ── 호모그래피 재투영 오차 기반 이상치 제거 ──────────────────────────────────
-    HOMOGRAPHY_MAX_ERROR_PX = 10.0
-    HOMOGRAPHY_MIN_ANCHORS  = 6
+    HOMOGRAPHY_MAX_ERROR_PX        = 10.0  # 2차 정제 (오프셋 보정 후)
+    HOMOGRAPHY_MAX_ERROR_PX_PASS1  = 7.0   # 1차 정제 (오프셋 보정 전)
+    HOMOGRAPHY_MIN_ANCHORS         = 6
 
     # ── 마커 오프셋 캘리브레이션 ──────────────────────────────────────────────────
     CALIB_CONSISTENCY_PX = 3.0

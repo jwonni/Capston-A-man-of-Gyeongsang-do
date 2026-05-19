@@ -410,3 +410,41 @@ def run_ocr(json_data: dict, out_dir: str) -> list[dict]:
                  r.get("text"), float(r.get("confidence", 0) or 0),
                  r.get("x"), r.get("y"))
     return merged
+
+
+# ── OCR 카테고리 분류 ──────────────────────────────────────────────────────────
+
+_START_FINISH_KEYWORDS = {
+    "출발", "출발점", "출발선", "도착", "도착점", "도착선",
+    "start", "finish", "goal", "s/f", "결승",
+}
+_TURNING_POINT_KEYWORDS = {
+    "반환점", "반환", "환점",
+    "turn", "u-turn", "u turn", "turning",
+}
+
+
+def classify_ocr_to_categories(ocr_results: list[dict]) -> dict:
+    """OCR 결과를 start_finish / turning_point 카테고리로 분류한다.
+
+    Args:
+        ocr_results: run_ocr() 반환값 [{text, x, y, confidence, ...}, ...]
+
+    Returns:
+        {"start_finish": [...], "turning_point": [...]}
+        각 원소는 {text, x, y} 형태.
+    """
+    start_finish:  list[dict] = []
+    turning_point: list[dict] = []
+
+    for r in ocr_results:
+        text = (r.get("text") or "").strip().lower()
+        if not text:
+            continue
+        entry = {"x": r["x"], "y": r["y"], "text": r.get("text", "")}
+        if any(kw in text for kw in _START_FINISH_KEYWORDS):
+            start_finish.append(entry)
+        elif any(kw in text for kw in _TURNING_POINT_KEYWORDS):
+            turning_point.append(entry)
+
+    return {"start_finish": start_finish, "turning_point": turning_point}

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marathon Route Extraction</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         :root {
             --bg:       #f0f4f8;
@@ -40,15 +42,8 @@
         }
 
         /* ── Header ─────────────────────────────────────────────────────── */
-        .app-header h1 {
-            font-size: clamp(1.6rem, 2.2vw, 2.4rem);
-            letter-spacing: -0.03em;
-        }
-        .app-header .subtitle {
-            margin-top: 6px;
-            color: var(--muted);
-            font-size: 0.92rem;
-        }
+        .app-header h1 { font-size: clamp(1.6rem, 2.2vw, 2.4rem); letter-spacing: -0.03em; }
+        .app-header .subtitle { margin-top: 6px; color: var(--muted); font-size: 0.92rem; }
 
         /* ── Main 2-column grid ─────────────────────────────────────────── */
         .main-grid {
@@ -59,11 +54,7 @@
         }
 
         /* ── Left column ────────────────────────────────────────────────── */
-        .left-col {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .left-col { display: flex; flex-direction: column; gap: 12px; }
 
         /* Upload area */
         .upload-area {
@@ -81,10 +72,7 @@
             justify-content: center;
             gap: 6px;
         }
-        .upload-area:hover,
-        .upload-area.drag-over {
-            background: rgba(59,130,246,0.09);
-        }
+        .upload-area:hover, .upload-area.drag-over { background: rgba(59,130,246,0.09); }
         .upload-area.has-image {
             border-style: solid;
             border-color: rgba(22,163,74,0.5);
@@ -92,22 +80,14 @@
             justify-content: stretch;
         }
         .upload-area.has-image img {
-            display: block;
-            width: 100%;
-            flex: 1;
-            min-height: 0;
-            object-fit: contain;
-            border-radius: 8px;
+            display: block; width: 100%; flex: 1; min-height: 0;
+            object-fit: contain; border-radius: 8px;
         }
         .upload-title { font-weight: 700; font-size: 0.95rem; }
         .upload-hint  { color: var(--muted); font-size: 0.82rem; }
 
         /* Pipeline stages */
-        .pipeline {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
+        .pipeline { display: flex; flex-direction: column; gap: 0; }
 
         .stage-card {
             background: var(--panel);
@@ -122,34 +102,22 @@
         .stage-card.error   { border-color: rgba(239,68,68,0.45); }
 
         .stage-connector {
-            width: 2px;
-            height: 10px;
-            background: var(--line);
-            margin: 0 auto;
+            width: 2px; height: 10px;
+            background: var(--line); margin: 0 auto;
         }
 
-        .stage-head {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .stage-head { display: flex; align-items: center; gap: 10px; }
 
         .stage-badge {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            font-weight: 800;
-            font-size: 0.82rem;
-            flex: 0 0 auto;
+            width: 28px; height: 28px; border-radius: 50%;
+            display: grid; place-items: center;
+            font-weight: 800; font-size: 0.82rem; flex: 0 0 auto;
             transition: background 0.2s, color 0.2s;
         }
         .stage-badge.pending { background: rgba(0,0,0,0.07); color: var(--muted); }
         .stage-badge.running { background: var(--accent); color: #fff; animation: pulse 1.2s ease infinite; }
         .stage-badge.success { background: var(--success); color: #fff; }
         .stage-badge.error   { background: var(--danger);  color: #fff; }
-        .stage-badge.placeholder { background: rgba(0,0,0,0.05); color: rgba(0,0,0,0.25); }
 
         @keyframes pulse {
             0%,100% { box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
@@ -159,110 +127,102 @@
         .stage-info { flex: 1; min-width: 0; }
         .stage-name { font-weight: 700; font-size: 0.9rem; }
         .stage-status {
-            font-size: 0.8rem;
-            color: var(--muted);
-            margin-top: 1px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            font-size: 0.8rem; color: var(--muted); margin-top: 1px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .stage-status.running-text { color: var(--accent); }
         .stage-status.success-text { color: var(--success); }
         .stage-status.error-text   { color: var(--danger); }
 
-        .stage-body {
-            margin-top: 10px;
-        }
+        .stage-body { margin-top: 10px; }
         .stage-body img {
-            display: block;
-            width: 100%;
-            max-height: 110px;
-            object-fit: contain;
-            border-radius: 8px;
-            border: 1px solid rgba(0,0,0,0.08);
-            background: #f1f5f9;
-        }
-        .stage-card.image-stage .stage-body {
-            min-height: 350px;
-        }
-        .stage-card.image-stage .stage-body img {
-            max-height: 350px;
+            display: block; width: 100%; max-height: 110px;
+            object-fit: contain; border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.08); background: #f1f5f9;
         }
 
         #stage2 .stage-body,
         #stage3 .stage-body,
-        #stage4 .stage-body {
-            min-height: 350px;
-        }
-
+        #stage4 .stage-body { min-height: 350px; }
         #stage2 .stage-body img,
         #stage3 .stage-body img,
-        #stage4 .stage-body img {
-            max-height: 350px;
-        }
+        #stage4 .stage-body img { max-height: 350px; }
 
-        .stage-placeholder {
-            height: 48px;
-            border-radius: 8px;
-            border: 1px dashed rgba(0,0,0,0.12);
-            background: rgba(0,0,0,0.02);
-            display: grid;
-            place-items: center;
-            color: rgba(0,0,0,0.3);
-            font-size: 0.82rem;
-        }
+        /* Stage 6: anchor overlay image */
+        #stage6 .stage-body { min-height: 260px; }
+        #stage6 .stage-body img { max-height: 240px; margin-bottom: 8px; }
 
         .stage-error-msg {
-            margin-top: 6px;
-            padding: 6px 9px;
-            border-radius: 8px;
-            border: 1px solid rgba(239,68,68,0.35);
-            background: rgba(239,68,68,0.07);
-            color: #b91c1c;
-            font-size: 0.82rem;
-            display: none;
+            margin-top: 6px; padding: 6px 9px;
+            border-radius: 8px; border: 1px solid rgba(239,68,68,0.35);
+            background: rgba(239,68,68,0.07); color: #b91c1c;
+            font-size: 0.82rem; display: none;
         }
         .stage-error-msg.show { display: block; }
 
-        /* ── Right column ───────────────────────────────────────────────── */
-        .right-col {
-            position: sticky;
-            top: 20px;
+        /* ── OCR list ───────────────────────────────────────────────────── */
+        .ocr-list {
+            display: flex; flex-direction: column; gap: 3px;
+            max-height: 190px; overflow-y: auto; padding-right: 4px;
         }
+        .ocr-item {
+            display: flex; align-items: center; gap: 8px;
+            padding: 4px 8px; border-radius: 6px;
+            background: rgba(0,0,0,0.025);
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+        .ocr-text {
+            font-weight: 600; font-size: 0.85rem; flex: 1;
+            min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .ocr-coord { color: var(--muted); font-size: 0.74rem; flex: 0 0 auto; }
+        .ocr-more  { text-align: center; color: var(--muted); font-size: 0.78rem; padding: 4px; }
+
+        /* ── Anchor list ────────────────────────────────────────────────── */
+        .anchor-list {
+            display: flex; flex-direction: column; gap: 4px;
+            max-height: 160px; overflow-y: auto; padding-right: 4px;
+        }
+        .anchor-item {
+            display: flex; align-items: center; gap: 8px;
+            padding: 5px 8px; border-radius: 6px;
+            background: rgba(59,130,246,0.04);
+            border: 1px solid rgba(59,130,246,0.12);
+        }
+        .anchor-num {
+            width: 22px; height: 22px; border-radius: 50%;
+            background: var(--accent); color: #fff;
+            font-size: 0.72rem; font-weight: 800;
+            display: grid; place-items: center; flex: 0 0 auto;
+        }
+        .anchor-info { flex: 1; min-width: 0; }
+        .anchor-name { font-weight: 600; font-size: 0.83rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .anchor-coords { color: var(--muted); font-size: 0.72rem; }
+        .anchor-error  { color: var(--danger); font-size: 0.78rem; font-weight: 700; flex: 0 0 auto; }
+
+        /* ── Right column ───────────────────────────────────────────────── */
+        .right-col { position: sticky; top: 20px; }
 
         .gpx-panel {
             background: var(--panel);
             border: 1px solid var(--line);
-            border-radius: 18px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
+            border-radius: 18px; padding: 16px;
+            display: flex; flex-direction: column; gap: 14px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
         .gpx-panel-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
+            display: flex; align-items: center;
+            justify-content: space-between; gap: 10px;
         }
-        .gpx-panel-header h2 {
-            font-size: 1.05rem;
-            font-weight: 700;
-        }
+        .gpx-panel-header h2 { font-size: 1.05rem; font-weight: 700; }
 
         .btn {
-            border: none;
-            color: #fff;
-            border-radius: 10px;
-            padding: 9px 16px;
-            font-weight: 700;
-            font-size: 0.88rem;
+            border: none; color: #fff; border-radius: 10px;
+            padding: 9px 16px; font-weight: 700; font-size: 0.88rem;
             cursor: pointer;
             background: linear-gradient(135deg, var(--accent), var(--accent-2));
-            transition: transform 0.15s, opacity 0.15s;
-            white-space: nowrap;
+            transition: transform 0.15s, opacity 0.15s; white-space: nowrap;
         }
         .btn:hover:not(:disabled) { transform: translateY(-1px); }
         .btn:disabled { opacity: 0.38; cursor: not-allowed; }
@@ -270,9 +230,7 @@
 
         /* GPX viewer */
         .gpx-viewer {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
+            position: relative; border-radius: 12px; overflow: hidden;
             background:
                 linear-gradient(45deg,  rgba(0,0,0,0.03) 25%, transparent 25%),
                 linear-gradient(-45deg, rgba(0,0,0,0.03) 25%, transparent 25%),
@@ -283,66 +241,43 @@
             background-position: 0 0, 0 10px, 10px -10px, -10px 0;
             border: 1px solid rgba(0,0,0,0.08);
             min-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
         }
 
         .gpx-placeholder {
-            text-align: center;
-            color: var(--muted);
-            font-size: 0.92rem;
-            line-height: 1.6;
-            padding: 20px;
+            text-align: center; color: var(--muted); font-size: 0.92rem;
+            line-height: 1.6; padding: 20px;
         }
-        .gpx-placeholder-icon {
-            font-size: 2.4rem;
-            margin-bottom: 10px;
-            opacity: 0.5;
-        }
+        .gpx-placeholder-icon { font-size: 2.4rem; margin-bottom: 10px; opacity: 0.5; }
 
         #gpxOverlayImg {
+            display: none; width: 100%; height: 100%;
+            object-fit: contain; border-radius: 12px;
+        }
+
+        #leafletMapContainer {
             display: none;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 12px;
+            width: 100%; height: 400px;
+            border-radius: 12px; overflow: hidden;
         }
 
         /* GPX stats */
-        .gpx-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-        }
+        .gpx-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
         .stat-box {
-            background: rgba(0,0,0,0.03);
-            border: 1px solid var(--line);
-            border-radius: 10px;
-            padding: 10px 12px;
+            background: rgba(0,0,0,0.03); border: 1px solid var(--line);
+            border-radius: 10px; padding: 10px 12px;
         }
-        .stat-label {
-            color: var(--muted);
-            font-size: 0.75rem;
-            margin-bottom: 3px;
-        }
-        .stat-value {
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
+        .stat-label { color: var(--muted); font-size: 0.75rem; margin-bottom: 3px; }
+        .stat-value { font-weight: 700; font-size: 0.9rem; }
         .stat-value.start-color { color: #1d4ed8; }
         .stat-value.end-color   { color: #dc2626; }
+        .stat-value.geo-color   { color: var(--success); }
 
         /* Spinner */
         .spinner {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border: 2px solid rgba(59,130,246,0.25);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            margin-right: 6px;
-            vertical-align: -2px;
+            display: inline-block; width: 12px; height: 12px;
+            border: 2px solid rgba(59,130,246,0.25); border-top-color: var(--accent);
+            border-radius: 50%; margin-right: 6px; vertical-align: -2px;
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -367,17 +302,15 @@
         <!-- ── Left column ──────────────────────────────────────────────── -->
         <div class="left-col">
 
-            <!-- Upload area -->
             <div class="upload-area" id="uploadArea">
                 <div class="upload-title">클릭하거나 이미지를 드롭하세요</div>
                 <div class="upload-hint">JPG / PNG</div>
             </div>
             <input type="file" id="imageInput" accept="image/*" style="display:none">
 
-            <!-- Pipeline stages -->
             <div class="pipeline">
 
-                <!-- Stage 1: 이미지 입력 -->
+                <!-- Stage 1 -->
                 <div class="stage-card" id="stage1">
                     <div class="stage-head">
                         <div class="stage-badge pending" id="badge1">1</div>
@@ -392,8 +325,8 @@
 
                 <div class="stage-connector"></div>
 
-                <!-- Stage 2: 경로 추출 (predict) -->
-                <div class="stage-card image-stage" id="stage2">
+                <!-- Stage 2 -->
+                <div class="stage-card" id="stage2">
                     <div class="stage-head">
                         <div class="stage-badge pending" id="badge2">2</div>
                         <div class="stage-info">
@@ -407,8 +340,8 @@
 
                 <div class="stage-connector"></div>
 
-                <!-- Stage 3: 후처리 (postprocess + auto extract path) -->
-                <div class="stage-card image-stage" id="stage3">
+                <!-- Stage 3 -->
+                <div class="stage-card" id="stage3">
                     <div class="stage-head">
                         <div class="stage-badge pending" id="badge3">3</div>
                         <div class="stage-info">
@@ -422,8 +355,8 @@
 
                 <div class="stage-connector"></div>
 
-                <!-- Stage 4: 경로 오버레이 -->
-                <div class="stage-card image-stage" id="stage4">
+                <!-- Stage 4 -->
+                <div class="stage-card" id="stage4">
                     <div class="stage-head">
                         <div class="stage-badge pending" id="badge4">4</div>
                         <div class="stage-info">
@@ -437,34 +370,32 @@
 
                 <div class="stage-connector"></div>
 
-                <!-- Stage 5: OCR 추출 (placeholder) -->
+                <!-- Stage 5: OCR 추출 -->
                 <div class="stage-card" id="stage5">
                     <div class="stage-head">
-                        <div class="stage-badge placeholder" id="badge5">5</div>
+                        <div class="stage-badge pending" id="badge5">5</div>
                         <div class="stage-info">
                             <div class="stage-name">OCR 추출</div>
-                            <div class="stage-status" id="status5">향후 구현 예정</div>
+                            <div class="stage-status" id="status5">대기 중</div>
                         </div>
                     </div>
-                    <div class="stage-body">
-                        <div class="stage-placeholder">Hi-SAM + PaddleOCR 텍스트 인식 영역</div>
-                    </div>
+                    <div class="stage-body" id="body5"></div>
+                    <div class="stage-error-msg" id="error5"></div>
                 </div>
 
                 <div class="stage-connector"></div>
 
-                <!-- Stage 6: 좌표 변환 (placeholder) -->
+                <!-- Stage 6: 좌표 변환 -->
                 <div class="stage-card" id="stage6">
                     <div class="stage-head">
-                        <div class="stage-badge placeholder" id="badge6">6</div>
+                        <div class="stage-badge pending" id="badge6">6</div>
                         <div class="stage-info">
                             <div class="stage-name">좌표 변환</div>
-                            <div class="stage-status" id="status6">향후 구현 예정</div>
+                            <div class="stage-status" id="status6">대기 중</div>
                         </div>
                     </div>
-                    <div class="stage-body">
-                        <div class="stage-placeholder">카카오 API + 호모그래피 변환 영역</div>
-                    </div>
+                    <div class="stage-body" id="body6"></div>
+                    <div class="stage-error-msg" id="error6"></div>
                 </div>
 
             </div><!-- .pipeline -->
@@ -485,6 +416,7 @@
                         <div>이미지를 업로드하면<br>경로가 시각화됩니다</div>
                     </div>
                     <img id="gpxOverlayImg" alt="경로 시각화">
+                    <div id="leafletMapContainer"></div>
                 </div>
 
                 <div class="gpx-stats" id="gpxStats" style="display:none">
@@ -500,6 +432,14 @@
                         <div class="stat-label">끝점</div>
                         <div class="stat-value end-color" id="statEnd">—</div>
                     </div>
+                    <div class="stat-box" id="statAnchorBox" style="display:none">
+                        <div class="stat-label">앵커 수</div>
+                        <div class="stat-value geo-color" id="statAnchors">—</div>
+                    </div>
+                    <div class="stat-box" id="statErrBox" style="display:none">
+                        <div class="stat-label">평균 재투영 오차</div>
+                        <div class="stat-value" id="statError">—</div>
+                    </div>
                 </div>
 
             </div><!-- .gpx-panel -->
@@ -510,44 +450,41 @@
 
 <script>
     const state = {
-        uploadedImage:    null,   // base64 data URL
-        mask_b64:         null,
-        skeleton_b64:     null,
-        start:            null,   // [x, y]
-        end:              null,   // [x, y]
-        path:             [],
+        uploadedImage:     null,
+        mask_b64:          null,
+        skeleton_b64:      null,
+        start:             null,
+        end:               null,
+        path:              [],
         homography_params: null,
-        gpxContent:       null,
-        pipelineRunning:  false,
+        gpxContent:        null,
+        pipelineRunning:   false,
+        leafletMap:        null,
+        ocrResults:        [],
     };
 
     // ── DOM refs ──────────────────────────────────────────────────────────────
-    const uploadArea     = document.getElementById('uploadArea');
-    const imageInput     = document.getElementById('imageInput');
-    const downloadGpxBtn = document.getElementById('downloadGpxBtn');
-    const gpxPlaceholder = document.getElementById('gpxPlaceholder');
-    const gpxOverlayImg  = document.getElementById('gpxOverlayImg');
-    const gpxStats       = document.getElementById('gpxStats');
+    const uploadArea         = document.getElementById('uploadArea');
+    const imageInput         = document.getElementById('imageInput');
+    const downloadGpxBtn     = document.getElementById('downloadGpxBtn');
+    const gpxPlaceholder     = document.getElementById('gpxPlaceholder');
+    const gpxOverlayImg      = document.getElementById('gpxOverlayImg');
+    const leafletMapContainer = document.getElementById('leafletMapContainer');
+    const gpxStats           = document.getElementById('gpxStats');
 
     // ── Stage helpers ─────────────────────────────────────────────────────────
     function setStage(n, stateClass, statusText, isRunning = false) {
         const card   = document.getElementById(`stage${n}`);
         const badge  = document.getElementById(`badge${n}`);
         const status = document.getElementById(`status${n}`);
-
         card.className  = `stage-card ${stateClass}`;
         badge.className = `stage-badge ${stateClass}`;
-
-        if (stateClass === 'success') badge.textContent = '✓';
-        else if (stateClass === 'error') badge.textContent = '✗';
-        else badge.textContent = String(n);
-
+        if      (stateClass === 'success') badge.textContent = '✓';
+        else if (stateClass === 'error')   badge.textContent = '✗';
+        else                               badge.textContent = String(n);
         status.className = `stage-status ${stateClass}-text`;
-        if (isRunning) {
-            status.innerHTML = `<span class="spinner"></span>${statusText}`;
-        } else {
-            status.textContent = statusText;
-        }
+        if (isRunning) status.innerHTML = `<span class="spinner"></span>${statusText}`;
+        else           status.textContent = statusText;
     }
 
     function setStageBody(n, html) {
@@ -569,91 +506,166 @@
         return `<img src="${src}" alt="${alt}">`;
     }
 
+    function escHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // ── OCR / anchor renderers ────────────────────────────────────────────────
+    function renderOcrTable(results) {
+        if (!results || results.length === 0)
+            return '<div style="color:var(--muted);font-size:0.82rem;padding:8px;">OCR 결과 없음</div>';
+        const rows = results.slice(0, 120).map(r => {
+            return `<div class="ocr-item">
+                <span class="ocr-text">${escHtml(r.text)}</span>
+                <span class="ocr-coord">(${r.x},${r.y})</span>
+            </div>`;
+        }).join('');
+        const more = results.length > 120
+            ? `<div class="ocr-more">+ ${results.length - 120}개 더</div>` : '';
+        return `<div class="ocr-list">${rows}${more}</div>`;
+    }
+
+    function renderAnchorList(anchors) {
+        if (!anchors || anchors.length === 0) return '';
+        const rows = anchors.map((a, i) => `
+            <div class="anchor-item">
+                <div class="anchor-num">${i + 1}</div>
+                <div class="anchor-info">
+                    <div class="anchor-name">${escHtml(a.text)}</div>
+                    <div class="anchor-coords">${a.lat.toFixed(5)}°N, ${a.lng.toFixed(5)}°E</div>
+                </div>
+                <div class="anchor-error">±${a.reprojection_error_px}px</div>
+            </div>`).join('');
+        return `<div class="anchor-list">${rows}</div>`;
+    }
+
+    // ── Right-panel: path overlay & Leaflet map ───────────────────────────────
+    function showOverlay(src) {
+        gpxPlaceholder.style.display  = 'none';
+        leafletMapContainer.style.display = 'none';
+        gpxOverlayImg.src             = src;
+        gpxOverlayImg.style.display   = 'block';
+    }
+
+    function showGpxOnLeaflet(gpxContent) {
+        const parser = new DOMParser();
+        const doc    = parser.parseFromString(gpxContent, 'application/xml');
+        const latlngs = Array.from(doc.querySelectorAll('trkpt'))
+            .map(pt => [parseFloat(pt.getAttribute('lat')), parseFloat(pt.getAttribute('lon'))])
+            .filter(([lat, lng]) =>
+                !isNaN(lat) && !isNaN(lng) &&
+                lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180);
+
+        if (latlngs.length < 2) return;
+
+        // Destroy previous map
+        if (state.leafletMap) { state.leafletMap.remove(); state.leafletMap = null; }
+
+        gpxPlaceholder.style.display      = 'none';
+        gpxOverlayImg.style.display       = 'none';
+        leafletMapContainer.style.display = 'block';
+
+        const map = L.map('leafletMapContainer').setView(latlngs[0], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }).addTo(map);
+
+        const poly = L.polyline(latlngs, { color: '#ef4444', weight: 3, opacity: 0.85 }).addTo(map);
+
+        L.circleMarker(latlngs[0], {
+            radius: 8, fillColor: '#1d4ed8', color: '#fff', weight: 2, fillOpacity: 1,
+        }).addTo(map).bindPopup('출발점');
+
+        L.circleMarker(latlngs[latlngs.length - 1], {
+            radius: 8, fillColor: '#dc2626', color: '#fff', weight: 2, fillOpacity: 1,
+        }).addTo(map).bindPopup('도착점');
+
+        map.fitBounds(poly.getBounds(), { padding: [20, 20] });
+        state.leafletMap = map;
+
+        // Update stats with real coordinates
+        const s = latlngs[0], e = latlngs[latlngs.length - 1];
+        document.getElementById('statStart').textContent = `${s[0].toFixed(5)}°N`;
+        document.getElementById('statEnd').textContent   = `${e[0].toFixed(5)}°N`;
+    }
+
+    function resetRightPanel() {
+        if (state.leafletMap) { state.leafletMap.remove(); state.leafletMap = null; }
+        leafletMapContainer.style.display = 'none';
+        gpxOverlayImg.style.display       = 'none';
+        gpxOverlayImg.src                 = '';
+        gpxPlaceholder.style.display      = 'flex';
+        gpxStats.style.display            = 'none';
+        document.getElementById('statAnchorBox').style.display = 'none';
+        document.getElementById('statErrBox').style.display    = 'none';
+        downloadGpxBtn.disabled = true;
+        state.gpxContent        = null;
+        state.homography_params = null;
+    }
+
     // ── Upload handling ───────────────────────────────────────────────────────
     uploadArea.addEventListener('click', () => imageInput.click());
-
-    uploadArea.addEventListener('dragover', e => {
-        e.preventDefault();
-        uploadArea.classList.add('drag-over');
-    });
+    uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
     uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag-over'));
     uploadArea.addEventListener('drop', e => {
-        e.preventDefault();
-        uploadArea.classList.remove('drag-over');
+        e.preventDefault(); uploadArea.classList.remove('drag-over');
         if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
     });
-    imageInput.addEventListener('change', () => {
-        if (imageInput.files[0]) handleFile(imageInput.files[0]);
-    });
+    imageInput.addEventListener('change', () => { if (imageInput.files[0]) handleFile(imageInput.files[0]); });
 
     function handleFile(file) {
         if (state.pipelineRunning) return;
         const reader = new FileReader();
         reader.onload = e => {
             state.uploadedImage = e.target.result;
-
-            // Show image in upload area
             uploadArea.classList.add('has-image');
             uploadArea.innerHTML = `<img src="${state.uploadedImage}" alt="업로드 이미지">`;
-
-            // Reset right panel
-            gpxPlaceholder.style.display = 'flex';
-            gpxOverlayImg.style.display  = 'none';
-            gpxStats.style.display       = 'none';
-            downloadGpxBtn.disabled      = true;
-            state.gpxContent             = null;
-
-            // Reset stage 1
+            resetRightPanel();
             setStage(1, 'success', '업로드 완료');
             clearStageError(1);
-
-            // Reset stages 2-4
-            for (let i = 2; i <= 4; i++) {
+            for (let i = 2; i <= 6; i++) {
                 setStage(i, 'pending', '대기 중');
                 clearStageError(i);
                 setStageBody(i, '');
             }
-
             runPipeline();
         };
         reader.readAsDataURL(file);
     }
 
-    // ── Pipeline ──────────────────────────────────────────────────────────────
+    // ── API helper ────────────────────────────────────────────────────────────
     async function apiPost(url, body, isFormData = false) {
         const opts = { method: 'POST' };
-        if (isFormData) {
-            opts.body = body;
-        } else {
-            opts.headers = { 'Content-Type': 'application/json' };
-            opts.body    = JSON.stringify(body);
-        }
+        if (isFormData) { opts.body = body; }
+        else { opts.headers = { 'Content-Type': 'application/json' }; opts.body = JSON.stringify(body); }
         const r = await fetch(url, opts);
         if (!r.ok) {
             let detail = `HTTP ${r.status}`;
-            try {
-                const err = await r.json();
-                if (typeof err?.detail === 'string') detail = err.detail;
-            } catch (_) {}
+            try { const err = await r.json(); if (typeof err?.detail === 'string') detail = err.detail; } catch (_) {}
             throw new Error(detail);
         }
         return r.json();
     }
 
+    // ── Pipeline ──────────────────────────────────────────────────────────────
     async function runPipeline() {
         state.pipelineRunning = true;
+
+        // ── Stages 1-4 ───────────────────────────────────────────────────────
         try {
-            // Stage 2: predict (경로 추출)
+            // Stage 2: predict
             setStage(2, 'running', '모델 추론 중...', true);
-            const blob2    = await fetch(state.uploadedImage).then(r => r.blob());
-            const form2    = new FormData();
+            const blob2 = await fetch(state.uploadedImage).then(r => r.blob());
+            const form2 = new FormData();
             form2.append('file', blob2, 'image.png');
             const d2       = await apiPost('/api/predict', form2, true);
             state.mask_b64 = d2.mask_b64;
             setStage(2, 'success', '경로 추출 완료');
             setStageBody(2, thumbHtml(state.mask_b64, '마스크'));
 
-            // Stage 3: postprocess (후처리)
+            // Stage 3: postprocess + auto extract
             setStage(3, 'running', '후처리 중...', true);
             const d3a          = await apiPost('/api/postprocess', { mask_b64: state.mask_b64 });
             state.skeleton_b64 = d3a.skeleton_b64;
@@ -664,36 +676,35 @@
                 input_img_b64: state.uploadedImage,
             });
             if (d3b.status !== 'success') throw new Error(d3b.message || '경로 추출 실패');
-
             state.start = d3b.start;
             state.end   = d3b.end;
             state.path  = d3b.path;
-
             setStage(3, 'success', '후처리 완료');
             setStageBody(3, thumbHtml(state.skeleton_b64, '스켈레톤'));
 
-            // Stage 4: 경로 오버레이
+            // Stage 4: overlay
             setStage(4, 'success', `경로 오버레이 · ${state.path.length.toLocaleString()}픽셀`);
             setStageBody(4, thumbHtml(d3b.overlay_b64, '경로 오버레이'));
 
-            // GPX 생성
-            const d6 = await apiPost('/api/convert_gpx', {
-                start: state.start,
-                end:   state.end,
-                path:  state.path,
-            });
-            state.gpxContent        = d6.gpx_content;
-            downloadGpxBtn.disabled = false;
+            // Show path overlay in right panel
+            showOverlay(d3b.overlay_b64);
 
-            // Stats
+            // Generate pixel-only GPX (usable without georeference)
+            const d_gpx0 = await apiPost('/api/convert_gpx', {
+                start:           state.start,
+                end:             state.end,
+                path:            state.path,
+                category_pixels: state.categoryPixels || null,
+            });
+            state.gpxContent        = d_gpx0.gpx_content;
+            downloadGpxBtn.disabled = false;
             document.getElementById('statPoints').textContent = state.path.length.toLocaleString();
             document.getElementById('statStart').textContent  = `[${state.start[0]}, ${state.start[1]}]`;
-            document.getElementById('statEnd').textContent    = `[${state.end[0]},   ${state.end[1]}]`;
+            document.getElementById('statEnd').textContent    = `[${state.end[0]}, ${state.end[1]}]`;
             gpxStats.style.display = 'grid';
 
         } catch (err) {
-            // Mark the furthest running stage as error
-            ['4','3','2','1'].forEach(n => {
+            ['4', '3', '2', '1'].forEach(n => {
                 const badge = document.getElementById(`badge${n}`);
                 if (badge && badge.className.includes('running')) {
                     setStage(Number(n), 'error', '실패');
@@ -701,16 +712,78 @@
                 }
             });
             console.error('[pipeline]', err);
+            state.pipelineRunning = false;
+            return;
+        }
+
+        // ── Stage 5: Hi-SAM + OCR (non-fatal) ────────────────────────────────
+        const imageBlob = await fetch(state.uploadedImage).then(r => r.blob());
+
+        try {
+            setStage(5, 'running', 'Hi-SAM + OCR 분석 중...', true);
+            const formOcr = new FormData();
+            formOcr.append('file', imageBlob, 'image.png');
+            const d_ocr = await apiPost('/api/run_ocr', formOcr, true);
+
+            state.ocrResults     = d_ocr.ocr_results     || [];
+            state.categoryPixels = d_ocr.category_pixels || {};
+            setStage(5, 'success', `${d_ocr.num_texts}개 텍스트 인식`);
+            setStageBody(5, renderOcrTable(state.ocrResults));
+
+        } catch (ocrErr) {
+            setStage(5, 'error', 'OCR 실패');
+            setStageError(5, ocrErr.message);
+            setStage(6, 'pending', '대기 중 (OCR 실패로 건너뜀)');
+            console.warn('[ocr]', ocrErr);
+            state.pipelineRunning = false;
+            return;
+        }
+
+        // ── Stage 6: Kakao API + 호모그래피 (non-fatal) ───────────────────────
+        try {
+            setStage(6, 'running', '카카오 API + 지리참조 중...', true);
+            const formGeo = new FormData();
+            formGeo.append('file', imageBlob, 'image.png');
+            formGeo.append('ocr_results_json', JSON.stringify(state.ocrResults));
+            const d_geo = await apiPost('/api/run_georeference', formGeo, true);
+
+            state.homography_params = d_geo.homography_params;
+            const anchors = d_geo.anchors || [];
+
+            setStage(6, 'success',
+                `앵커 ${d_geo.num_anchors}개 · 평균 오차 ${d_geo.mean_reprojection_error_px}px`);
+            let body6 = '';
+            if (d_geo.anchor_overlay_b64)
+                body6 += `<img src="${d_geo.anchor_overlay_b64}" alt="앵커 오버레이">`;
+            body6 += renderAnchorList(anchors);
+            setStageBody(6, body6);
+
+            // Regenerate GPX with real geo coordinates
+            const d_gpx2 = await apiPost('/api/convert_gpx', {
+                start:             state.start,
+                end:               state.end,
+                path:              state.path,
+                homography_params: state.homography_params,
+                category_pixels:   state.categoryPixels || null,
+            });
+            state.gpxContent = d_gpx2.gpx_content;
+
+            // Show route on Leaflet map
+            showGpxOnLeaflet(state.gpxContent);
+
+            // Update extra stats
+            document.getElementById('statAnchors').textContent     = `${d_geo.num_anchors}개`;
+            document.getElementById('statAnchorBox').style.display = '';
+            document.getElementById('statError').textContent       = `${d_geo.mean_reprojection_error_px}px`;
+            document.getElementById('statErrBox').style.display    = '';
+
+        } catch (geoErr) {
+            setStage(6, 'error', '지리참조 실패');
+            setStageError(6, geoErr.message);
+            console.warn('[georeference]', geoErr);
         } finally {
             state.pipelineRunning = false;
         }
-    }
-
-    // ── Right panel ───────────────────────────────────────────────────────────
-    function showOverlay(src) {
-        gpxPlaceholder.style.display = 'none';
-        gpxOverlayImg.src            = src;
-        gpxOverlayImg.style.display  = 'block';
     }
 
     // ── GPX download ──────────────────────────────────────────────────────────
@@ -719,9 +792,7 @@
         const blob = new Blob([state.gpxContent], { type: 'application/gpx+xml' });
         const url  = URL.createObjectURL(blob);
         const a    = document.createElement('a');
-        a.href     = url;
-        a.download = 'route.gpx';
-        a.click();
+        a.href = url; a.download = 'route.gpx'; a.click();
         URL.revokeObjectURL(url);
     });
 </script>

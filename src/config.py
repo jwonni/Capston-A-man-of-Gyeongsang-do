@@ -53,10 +53,11 @@ class Config:
     HISAM_CHECKPOINT = BASE_DIR / "Hi-SAM" / "pretrained_checkpoint" / "hi_sam_l.pth"
     HISAM_MODEL_TYPE = "vit_l"          # vit_t / vit_s / vit_b / vit_l / vit_h
 
-    HISAM_TOTAL_POINTS = 3000
-    HISAM_BATCH_POINTS = 64
-    HISAM_SCORE_THRESH = 0.4
-    HISAM_NMS_THRESH   = 0.6
+    HISAM_TOTAL_POINTS  = 600
+    HISAM_BATCH_POINTS  = 64
+    HISAM_SCORE_THRESH  = 0.4
+    HISAM_PRE_NMS_TOP_K = 500
+    HISAM_NMS_THRESH    = 0.6
     HISAM_MIN_POLYGON_AREA = 32
 
     # 크롭 마진 (픽셀): polygon bbox 확장 시 상하좌우 여백

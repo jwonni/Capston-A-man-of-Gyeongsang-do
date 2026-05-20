@@ -6,8 +6,8 @@ Hi-SAM 저장소가 Config.HISAM_REPO_DIR에 존재해야 하며,
 """
 from __future__ import annotations
 
-import gc
 import json
+import logging
 import os
 import sys
 from types import SimpleNamespace
@@ -23,6 +23,50 @@ except ModuleNotFoundError:
     raise ImportError("pyclipper가 필요합니다: pip install pyclipper")
 
 from src.config import Config
+
+logger = logging.getLogger(__name__)
+
+# 모듈 레벨에서 한 번만 로드 (요청마다 재로드 방지)
+_amg = None
+
+
+def _get_amg():
+    global _amg
+    if _amg is not None:
+        return _amg
+
+    hisam_dir = str(Config.HISAM_REPO_DIR)
+    if hisam_dir not in sys.path:
+        sys.path.insert(0, hisam_dir)
+
+    from hi_sam.modeling.build import model_registry
+    from hi_sam.modeling.auto_mask_generator import AutoMaskGenerator
+
+    args = SimpleNamespace(
+        checkpoint   = str(Config.HISAM_CHECKPOINT),
+        model_type   = Config.HISAM_MODEL_TYPE,
+        device       = str(Config.DEVICE),
+        hier_det     = True,
+        input_size   = [1024, 1024],
+        attn_layers  = 1,
+        prompt_len   = 12,
+        layout_thresh= 0.5,
+    )
+
+    original_cwd = os.getcwd()
+    try:
+        os.chdir(hisam_dir)
+        hisam = model_registry[Config.HISAM_MODEL_TYPE](args)
+        hisam.eval().to(Config.DEVICE)
+        _amg = AutoMaskGenerator(
+            hisam,
+            efficient_hisam=(Config.HISAM_MODEL_TYPE in ["vit_s", "vit_t"]),
+        )
+    finally:
+        os.chdir(original_cwd)
+
+    logger.info("Hi-SAM 모델 로드 완료 (device=%s)", Config.DEVICE)
+    return _amg
 
 
 def unclip(p: np.ndarray, unclip_ratio: float = 3.5) -> list:
@@ -80,40 +124,21 @@ def run_hisam_to_json(image_path: str, json_path: str | None = None) -> dict:
         {image_path, image_width, image_height, num_words,
          words: [{id, vertices}, ...]}
     """
-    hisam_dir    = str(Config.HISAM_REPO_DIR)
-    original_cwd = os.getcwd()
+    amg = _get_amg()
 
-    if hisam_dir not in sys.path:
-        sys.path.insert(0, hisam_dir)
+    image_bgr = cv2.imread(image_path)
+    if image_bgr is None:
+        raise RuntimeError(f"이미지를 읽을 수 없습니다: {image_path}")
+    image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
+    img_h, img_w = image_rgb.shape[:2]
 
-    from hi_sam.modeling.build import model_registry
-    from hi_sam.modeling.auto_mask_generator import AutoMaskGenerator
+    use_fp16 = Config.DEVICE.type == "cuda"
+    autocast_ctx = torch.autocast(device_type="cuda", dtype=torch.float16) if use_fp16 else torch.autocast(device_type="cpu", enabled=False)
 
-    args = SimpleNamespace(
-        checkpoint   = str(Config.HISAM_CHECKPOINT),
-        model_type   = Config.HISAM_MODEL_TYPE,
-        device       = str(Config.DEVICE),
-        hier_det     = True,
-        input_size   = [1024, 1024],
-        attn_layers  = 1,
-        prompt_len   = 12,
-        layout_thresh= 0.5,
-    )
-
-    try:
-        os.chdir(hisam_dir)
-        hisam = model_registry[Config.HISAM_MODEL_TYPE](args)
-        hisam.eval().to(Config.DEVICE)
-        amg = AutoMaskGenerator(
-            hisam,
-            efficient_hisam=(Config.HISAM_MODEL_TYPE in ["vit_s", "vit_t"]),
-        )
-        image_bgr = cv2.imread(image_path)
-        if image_bgr is None:
-            raise RuntimeError(f"이미지를 읽을 수 없습니다: {image_path}")
-        image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
-        img_h, img_w = image_rgb.shape[:2]
+    logger.info("set_image 시작 (이미지 크기: %dx%d, fp16=%s)", img_w, img_h, use_fp16)
+    with autocast_ctx:
         amg.set_image(image_rgb)
+        logger.info("set_image 완료 → predict 시작")
         with torch.inference_mode():
             masks, _scores, _affinity = amg.predict(
                 from_low_res    = False,
@@ -122,8 +147,7 @@ def run_hisam_to_json(image_path: str, json_path: str | None = None) -> dict:
                 score_thresh    = Config.HISAM_SCORE_THRESH,
                 nms_thresh      = Config.HISAM_NMS_THRESH,
             )
-    finally:
-        os.chdir(original_cwd)
+    logger.info("predict 완료")
 
     if masks is None:
         raise RuntimeError("Hi-SAM 마스크 예측 실패")
@@ -151,10 +175,5 @@ def run_hisam_to_json(image_path: str, json_path: str | None = None) -> dict:
         os.makedirs(os.path.dirname(json_path), exist_ok=True)
         with open(json_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, ensure_ascii=False, indent=2)
-
-    del hisam, amg
-    gc.collect()
-    if torch.cuda.is_available():
-        torch.cuda.empty_cache()
 
     return payload

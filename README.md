@@ -152,14 +152,20 @@ http://localhost:8010
 
 ```
 이미지
-  ↓ Hi-SAM (vit_l)
-텍스트 영역 polygon
-  ↓ PaddleOCR (korean, CPU)
-인식된 텍스트 + 좌표
-  ↓ 카카오 Local API (병렬 검색 + MAD 필터)
+  ↓ Hi-SAM (vit_l)  — text_detector.py
+텍스트 영역 polygon 목록
+  ↓ PaddleOCR (korean, CPU)  — ocr.py
+    base 256px / retry 512px 두 해상도 순차 추론
+    confidence 필터 → (y, x) 정렬 → 동일 X 세로 병합
+인식된 텍스트 + 픽셀 좌표  [{text, x, y, confidence}, ...]
+  ↓ 카카오 Local API (병렬 검색 + MAD 필터)  — anchor_builder.py
+    기호·키워드 블랙리스트 필터 → ThreadPoolExecutor 병렬 검색
+    MAD 이상치 분류 → outlier 동적 bbox 재검색 → inlier 확정
 앵커 (픽셀 좌표 ↔ GPS 좌표) 쌍
-  ↓ 호모그래피 + 재투영 오차 기반 이상치 제거
-픽셀↔GPS 변환 행렬
+  ↓ 호모그래피 + 재투영 오차 기반 이상치 제거  — homography.py
+    1차 정제 (≤ 7.0px) → Hough Circle 마커 오프셋 보정
+    → 2차 정제 (≤ 7.0px) → findHomography(픽셀/GPS 정규화)
+픽셀↔GPS 변환 행렬  HomographyTransform {H, H_inv}
 ```
 
 ## 유틸리티 (디버깅)

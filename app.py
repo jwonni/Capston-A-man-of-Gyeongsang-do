@@ -526,7 +526,7 @@ async def georeference(file: UploadFile = File(...)):
         # Stage 4: 1차 재투영 오차 정제
         anchors_pass1 = iterative_outlier_removal(
             anchors_after_mad,
-            max_error_px=Config.HOMOGRAPHY_MAX_ERROR_PX_PASS1,
+            max_error_px=Config.HOMOGRAPHY_MAX_ERROR_PX,
             min_anchors=Config.HOMOGRAPHY_MIN_ANCHORS,
         )
 
@@ -750,7 +750,7 @@ async def run_georeference_endpoint(
         # 1차 재투영 오차 정제
         anchors_pass1 = iterative_outlier_removal(
             anchors_after_mad,
-            max_error_px=Config.HOMOGRAPHY_MAX_ERROR_PX_PASS1,
+            max_error_px=Config.HOMOGRAPHY_MAX_ERROR_PX,
             min_anchors=Config.HOMOGRAPHY_MIN_ANCHORS,
         )
 

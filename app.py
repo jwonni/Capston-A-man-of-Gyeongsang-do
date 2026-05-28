@@ -34,6 +34,7 @@ from src.config import (
     FINAL_SIZE_THRESH,
     SPUR_LENGTH,
     SKEL_MORPH_CLOSE,
+    MIN_DIST,
 )
 from src.gpx_conversion.gpx_converter import convert_pixel_path_to_gpx, fix_white_line_path
 if Config.MODEL_TYPE == "segformer_unet_b2":
@@ -160,13 +161,13 @@ class PointsRequest(BaseModel):
     skeleton_b64: str | None = None
     start: list[float]   # [x, y]
     end: list[float]     # [x, y]
-    min_dist: float = 8.0
+    min_dist: float = MIN_DIST
     input_img_b64: str | None = None  # ── DEBUG: 512×512 resized marathon image for overlay
 
 
 class AutoExtractRequest(BaseModel):
     skeleton_b64: str
-    min_dist: float = 8.0
+    min_dist: float = MIN_DIST
     input_img_b64: str | None = None
 
 

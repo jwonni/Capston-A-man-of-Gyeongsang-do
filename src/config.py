@@ -19,7 +19,7 @@ MORPH_CLOSE_SIZE = 0        # morphology closing 커널 크기. 미지정 시 �
 FINAL_SIZE_THRESH = 0       # Step 3 후 남은 fragment 중 이 픽셀 수 미만을 제거. 0=주경로만 보존.
 SPUR_LENGTH = 20            # 이 픽셀 수 미만인 가지를 잔가지로 간주해 제거. 0=제거 안 함.
 SKEL_MORPH_CLOSE = 0        # 스켈레톤화 전 morphology closing 커널 크기 (0=비활성화, 권장 3~7).
-RDP_EPSILON = 1.0           # RDP 단순화 허용 오차 (px). 작을수록 더 많은 점 유지.
+MIN_DIST = 8.0              # 등간격 거리 샘플링 최소 간격 (px). 클수록 더 적은 점 유지.
 
 
 import os

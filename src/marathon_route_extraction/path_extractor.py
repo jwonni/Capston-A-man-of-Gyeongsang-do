@@ -14,6 +14,8 @@ from typing import Optional
 import numpy as np
 from skimage.morphology import skeletonize as _skeletonize
 
+from src.config import MIN_DIST as _DEFAULT_MIN_DIST
+
 _OFFSETS_8 = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
 
 
@@ -151,7 +153,7 @@ def extract_ordered_path(
     mask_arr: np.ndarray,
     start_xy: tuple[int, int],
     end_xy: tuple[int, int],
-    min_dist: float = 8.0,
+    min_dist: float = _DEFAULT_MIN_DIST,
 ) -> Optional[list[tuple[int, int]]]:
     """
     Skeletonize mask_arr and return an ordered pixel list from start to end.
@@ -185,7 +187,7 @@ def extract_ordered_path(
     return [(x, y) for y, x in sampled_yx]
 
 
-def auto_extract_ordered_path(mask_arr: np.ndarray, min_dist: float = 8.0) -> Optional[dict]:
+def auto_extract_ordered_path(mask_arr: np.ndarray, min_dist: float = _DEFAULT_MIN_DIST) -> Optional[dict]:
     """
     Automatically extract an ordered path without manual start/end selection.
 

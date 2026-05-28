@@ -34,7 +34,6 @@ from src.config import (
     FINAL_SIZE_THRESH,
     SPUR_LENGTH,
     SKEL_MORPH_CLOSE,
-    RDP_EPSILON,
 )
 from src.gpx_conversion.gpx_converter import convert_pixel_path_to_gpx, fix_white_line_path
 if Config.MODEL_TYPE == "segformer_unet_b2":
@@ -161,13 +160,13 @@ class PointsRequest(BaseModel):
     skeleton_b64: str | None = None
     start: list[float]   # [x, y]
     end: list[float]     # [x, y]
-    epsilon: float = RDP_EPSILON
+    min_dist: float = 8.0
     input_img_b64: str | None = None  # ── DEBUG: 512×512 resized marathon image for overlay
 
 
 class AutoExtractRequest(BaseModel):
     skeleton_b64: str
-    epsilon: float = RDP_EPSILON
+    min_dist: float = 8.0
     input_img_b64: str | None = None
 
 
@@ -301,7 +300,7 @@ async def extract_path(req: PointsRequest):
         end_xy   = (int(req.end[0]),   int(req.end[1]))
         ordered = extract_ordered_path(
             skeleton_arr, start_xy, end_xy,
-            epsilon=req.epsilon,
+            min_dist=req.min_dist,
         )
 
         # ── DEBUG ──────────────────────────────────────────────────────────────
@@ -347,7 +346,7 @@ async def auto_extract_path_endpoint(req: AutoExtractRequest):
     """
     try:
         skeleton_arr = _decode_mask(req.skeleton_b64)
-        result = auto_extract_ordered_path(skeleton_arr, epsilon=req.epsilon)
+        result = auto_extract_ordered_path(skeleton_arr, min_dist=req.min_dist)
 
         if result is None:
             return JSONResponse({

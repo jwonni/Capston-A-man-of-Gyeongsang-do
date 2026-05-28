@@ -6,7 +6,7 @@ FastAPI 백엔드 + 단일 페이지 HTML 프론트엔드로 마라톤 코스 �
 
 1. **경로 마스크 추출** — U-Net 모델로 마라톤 코스 이미지에서 경로 마스크 예측
 2. **후처리** — 연결 성분 필터링 + 스켈레톤화
-3. **경로 추출** — 스켈레톤 픽셀 그래프에서 BFS 탐색 후 RDP(Ramer-Douglas-Peucker) 알고리즘으로 경로 단순화
+3. **경로 추출** — 스켈레톤 픽셀 그래프에서 BFS 탐색 후 등간격 거리 기반 샘플링으로 경로 단순화
 4. **지리좌표 변환** — Hi-SAM 텍스트 감지 → PaddleOCR → 카카오 Local API → 호모그래피로 픽셀↔GPS 변환
 5. **GPX 출력** — 변환된 GPS 좌표를 GPX 파일로 내보내기
 
@@ -37,7 +37,7 @@ FastAPI 백엔드 + 단일 페이지 HTML 프론트엔드로 마라톤 코스 �
 │   │   └── gpx_converter.py            # 픽셀 경로 → GPX 변환
 │   └── marathon_route_extraction/
 │       ├── component_filter.py         # 연결 성분 필터링
-│       ├── path_extractor.py           # 스켈레톤 → BFS + RDP 경로 추출
+│       ├── path_extractor.py           # 스켈레톤 → BFS + 등간격 거리 샘플링 경로 추출
 │       ├── postprocess.py              # 4단계 후처리 파이프라인
 │       ├── segformer_unet_b2.py        # SegFormer-UNet B2 모델 / 추론
 │       └── unet.py                     # U-Net 모델 / 추론
@@ -136,8 +136,7 @@ http://localhost:8010
   ↓
 BFS로 start → end 전체 픽셀 경로 탐색
   ↓
-RDP (Ramer-Douglas-Peucker, epsilon=3.0px) 경로 단순화
-  — 직선 구간 노이즈 제거 + 꺾임점 보존
+등간격 거리 기반 샘플링 — 이전 선택 점으로부터 유클리드 거리 ≥ min_dist인 점만 추출
   ↓
 경로 픽셀 좌표 리스트 [(x, y), ...]
 ```

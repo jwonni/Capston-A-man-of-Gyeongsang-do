@@ -8,20 +8,14 @@ Entry point:
 """
 from __future__ import annotations
 
+import math
 from collections import deque
 from typing import Optional
 
 import numpy as np
 from skimage.morphology import skeletonize as _skeletonize
 
-# 그래프 단순화
-from .graph_simplifier import (
-    Graph,
-    simplify_graph,
-    find_nearest_node,
-    restore_detailed_path,
-    extract_keypoints,
-)
+from src.config import RDP_EPSILON
 
 _OFFSETS_8 = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
 
@@ -107,6 +101,35 @@ def _find_nearest_skeleton_point(
     return (int(pts[idx, 0]), int(pts[idx, 1]))
 
 
+def _perp_dist(p: tuple[int, int], a: tuple[int, int], b: tuple[int, int]) -> float:
+    """Perpendicular distance from point p to line segment a-b."""
+    if a == b:
+        return math.hypot(p[0] - a[0], p[1] - a[1])
+    num = abs((b[0] - a[0]) * (a[1] - p[1]) - (a[0] - p[0]) * (b[1] - a[1]))
+    den = math.hypot(b[0] - a[0], b[1] - a[1])
+    return num / den
+
+
+def _rdp(points: list[tuple[int, int]], epsilon: float) -> list[tuple[int, int]]:
+    """Ramer-Douglas-Peucker line simplification."""
+    if len(points) < 3:
+        return list(points)
+
+    start, end = points[0], points[-1]
+    max_dist, max_idx = 0.0, 0
+    for i in range(1, len(points) - 1):
+        d = _perp_dist(points[i], start, end)
+        if d > max_dist:
+            max_dist, max_idx = d, i
+
+    if max_dist > epsilon:
+        left  = _rdp(points[:max_idx + 1], epsilon)
+        right = _rdp(points[max_idx:], epsilon)
+        return left[:-1] + right
+
+    return [start, end]
+
+
 def _bfs_path(
     graph: dict[tuple, list],
     start: tuple[int, int],
@@ -140,9 +163,7 @@ def extract_ordered_path(
     mask_arr: np.ndarray,
     start_xy: tuple[int, int],
     end_xy: tuple[int, int],
-    tau: float = 3.0,
-    angle_thresh: float = 20.0,
-    min_dist: float = 8.0,
+    epsilon: float = RDP_EPSILON,
 ) -> Optional[list[tuple[int, int]]]:
     """
     Skeletonize mask_arr and return an ordered pixel list from start to end.
@@ -151,19 +172,17 @@ def extract_ordered_path(
         mask_arr:  (H, W) uint8 array — foreground pixels have value 255
         start_xy:  (x, y) user-clicked start point in mask coordinates
         end_xy:    (x, y) user-clicked end point in mask coordinates
+        epsilon:   RDP simplification threshold in pixels
 
     Returns:
         List of (x, y) tuples ordered start → end, or None if no path is found.
     """
     binary   = mask_arr > 127
-    # postprocess_mask already returns a skimage skeleton; re-running the slow
-    # pure-Python zhang_suen_thinning on it breaks junctions and takes minutes.
-    # Use the same skimage routine for speed and consistency.
     skeleton = _skeletonize(binary)
-    graph = simplify_graph(skeleton, tau)  # 그래프 단순화
+    graph    = _skeleton_to_graph(skeleton)
 
-    start_yx = find_nearest_node(graph, cy=start_xy[1], cx=start_xy[0])
-    end_yx   = find_nearest_node(graph, cy=end_xy[1],   cx=end_xy[0])
+    start_yx = _find_nearest_skeleton_point(skeleton, cx=start_xy[0], cy=start_xy[1])
+    end_yx   = _find_nearest_skeleton_point(skeleton, cx=end_xy[0],   cy=end_xy[1])
 
     if start_yx is None or end_yx is None:
         return None
@@ -171,14 +190,14 @@ def extract_ordered_path(
     path_yx = _bfs_path(graph, start_yx, end_yx)
     if path_yx is None:
         return None
-    detailed_yx  = restore_detailed_path(graph, path_yx)
-    keypoints_yx = extract_keypoints(detailed_yx, graph, angle_thresh, min_dist)
+
+    simplified_yx = _rdp(path_yx, epsilon)
 
     # Convert (row, col) → (x, y)
-    return [(x, y) for y, x in keypoints_yx]
+    return [(x, y) for y, x in simplified_yx]
 
 
-def auto_extract_ordered_path(mask_arr: np.ndarray) -> Optional[dict]:
+def auto_extract_ordered_path(mask_arr: np.ndarray, epsilon: float = RDP_EPSILON) -> Optional[dict]:
     """
     Automatically extract an ordered path without manual start/end selection.
 
@@ -230,7 +249,8 @@ def auto_extract_ordered_path(mask_arr: np.ndarray) -> Optional[dict]:
     if path_yx is None:
         return None
 
-    path_xy = [(int(x), int(y)) for y, x in path_yx]
+    simplified_yx = _rdp(path_yx, epsilon)
+    path_xy = [(int(x), int(y)) for y, x in simplified_yx]
     return {
         "start": [path_xy[0][0], path_xy[0][1]],
         "end":   [path_xy[-1][0], path_xy[-1][1]],

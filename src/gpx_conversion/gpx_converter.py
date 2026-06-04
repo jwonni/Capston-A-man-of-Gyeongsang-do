@@ -28,11 +28,13 @@ def convert_pixel_path_to_gpx(
     path: list[list[int | float]],
     creator: str = "Marathon Route Extractor",
     pixel_to_geo: Callable[[float, float], tuple[float, float]] | None = None,
+    elevations: list[float] | None = None,
 ) -> str:
     """픽셀 경로를 GPX 1.1 문자열로 변환한다.
 
     pixel_to_geo(px, py) → (lat, lng) 가 주어지면 실제 지리좌표를 사용하고,
     없으면 픽셀 좌표를 위도/경도로 그대로 사용한다 (하위 호환).
+    elevations 가 주어지면 각 trkpt에 <ele> 태그를 삽입한다.
     """
     if len(start) != 2 or len(end) != 2:
         raise ValueError("start/end must be [x, y]")
@@ -48,8 +50,11 @@ def convert_pixel_path_to_gpx(
         else:
             lat, lng = float(y), float(x)
         t = (base_time + timedelta(seconds=i)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        ele_tag = (f'        <ele>{elevations[i]:.1f}</ele>\n'
+                   if elevations and i < len(elevations) else '')
         trkpts.append(
             f'      <trkpt lat="{lat:.8f}" lon="{lng:.8f}">\n'
+            f'{ele_tag}'
             f'        <time>{t}</time>\n'
             f'      </trkpt>'
         )

@@ -34,6 +34,8 @@ from src.config import (
     FINAL_SIZE_THRESH,
     SPUR_LENGTH,
     SKEL_MORPH_CLOSE,
+    RDP_EPSILON,
+    MIN_DIST,
 )
 from src.gpx_conversion.gpx_converter import convert_pixel_path_to_gpx, fix_white_line_path
 if Config.MODEL_TYPE == "segformer_unet_b2":
@@ -160,14 +162,13 @@ class PointsRequest(BaseModel):
     skeleton_b64: str | None = None
     start: list[float]   # [x, y]
     end: list[float]     # [x, y]
-    tau: float = 3.0
-    angle_thresh: float = 20.0
-    min_dist: float = 8.0
+    min_dist: float = MIN_DIST
     input_img_b64: str | None = None  # ── DEBUG: 512×512 resized marathon image for overlay
 
 
 class AutoExtractRequest(BaseModel):
     skeleton_b64: str
+    min_dist: float = MIN_DIST
     input_img_b64: str | None = None
 
 
@@ -295,14 +296,11 @@ async def extract_path(req: PointsRequest):
             raise ValueError("start/end must be [x, y]")
         if not req.skeleton_b64:
             raise ValueError("skeleton_b64 is required")
-
         skeleton_arr = _decode_mask(req.skeleton_b64)
         start_xy = (int(req.start[0]), int(req.start[1]))
         end_xy   = (int(req.end[0]),   int(req.end[1]))
         ordered = extract_ordered_path(
             skeleton_arr, start_xy, end_xy,
-            tau=req.tau,
-            angle_thresh=req.angle_thresh,
             min_dist=req.min_dist,
         )
 
@@ -314,7 +312,6 @@ async def extract_path(req: PointsRequest):
             _, _data = req.input_img_b64.split(",", 1)
             bg_img = Image.open(io.BytesIO(base64.b64decode(_data))).convert("RGB")
         # ── END DEBUG ──────────────────────────────────────────────────────────
-
         if ordered is None:
             # ── DEBUG ──────────────────────────────────────────────────────────
             debug_b64 = _debug_path_overlay(skeleton_arr, [], start_xy, end_xy, bg_img)
@@ -325,7 +322,6 @@ async def extract_path(req: PointsRequest):
                 "message": "No connected path found between start and end.",
                 "debug_overlay_b64": debug_b64,  # ── DEBUG ──
             })
-
         # ── DEBUG ──────────────────────────────────────────────────────────────
         debug_b64 = _debug_path_overlay(skeleton_arr, ordered, start_xy, end_xy, bg_img)
         # ── END DEBUG ──────────────────────────────────────────────────────────
@@ -349,8 +345,7 @@ async def auto_extract_path_endpoint(req: AutoExtractRequest):
     """
     try:
         skeleton_arr = _decode_mask(req.skeleton_b64)
-        result = auto_extract_ordered_path(skeleton_arr)
-
+        result = auto_extract_ordered_path(skeleton_arr, min_dist=req.min_dist)
         if result is None:
             return JSONResponse({
                 "status": "failed",
@@ -427,6 +422,27 @@ async def convert_gpx(req: ConvertGPXRequest):
         })
     except Exception as e:
         print(f"[error] convert_gpx: {e}\n{traceback.format_exc()}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+class ElevationsRequest(BaseModel):
+    latlngs: list[list[float]]  # [[lat, lng], ...]
+
+
+@app.post("/api/elevations")
+async def get_elevations(req: ElevationsRequest):
+    """Open-Elevation API로 위경도 목록의 고도를 조회한다."""
+    try:
+        from src.georeferencing.ocr import fetch_elevations
+        pairs = [(float(p[0]), float(p[1])) for p in req.latlngs]
+        elevations = fetch_elevations(pairs)
+        if elevations is None:
+            raise HTTPException(status_code=502, detail="고도 데이터를 가져올 수 없습니다.")
+        return JSONResponse({"status": "success", "elevations": elevations})
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"[error] get_elevations: {e}\n{traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=str(e))
 
 

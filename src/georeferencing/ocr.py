@@ -389,14 +389,15 @@ def run_ocr(json_data: dict, out_dir: str) -> list[dict]:
                   r.get("text"), float(r.get("confidence", 0) or 0),
                   r.get("x"), r.get("y"))
 
-    # confidence 필터
+    # confidence + 최소 글자 수 필터
     filtered = [
         r for r in raw_results
         if isinstance(r.get("text"), str)
-        and r["text"].strip()
+        and len(r["text"].strip()) >= Config.OCR_MIN_TEXT_LEN
         and float(r.get("confidence", 0.0) or 0.0) >= Config.MIN_CONFIDENCE
     ]
-    log.info("[OCR] confidence(>=%.2f) 필터 후: %d개", Config.MIN_CONFIDENCE, len(filtered))
+    log.info("[OCR] confidence(>=%.2f) + 글자수(>=%d) 필터 후: %d개",
+             Config.MIN_CONFIDENCE, Config.OCR_MIN_TEXT_LEN, len(filtered))
 
     # 좌표 정렬
     if Config.SORT_BY_COORDS:
@@ -448,3 +449,48 @@ def classify_ocr_to_categories(ocr_results: list[dict]) -> dict:
             turning_point.append(entry)
 
     return {"start_finish": start_finish, "turning_point": turning_point}
+
+
+# ── Open-Elevation API ────────────────────────────────────────────────────────
+
+def fetch_elevations(
+    latlngs: list[tuple[float, float]],
+    timeout: int = 20,
+) -> list[float] | None:
+    """Open-Elevation API로 위도/경도 목록의 고도(m)를 조회한다.
+
+    Args:
+        latlngs: [(lat, lng), ...] 목록
+        timeout: HTTP 요청 타임아웃 (초)
+
+    Returns:
+        고도값(m) 목록, 실패 시 None
+    """
+    import json as _json
+    import urllib.request
+
+    if not latlngs:
+        return None
+
+    MAX_BATCH = 500
+    all_elevations: list[float] = []
+
+    for batch_start in range(0, len(latlngs), MAX_BATCH):
+        batch = latlngs[batch_start : batch_start + MAX_BATCH]
+        payload = _json.dumps(
+            {"locations": [{"latitude": lat, "longitude": lng} for lat, lng in batch]}
+        ).encode("utf-8")
+        req = urllib.request.Request(
+            "https://api.open-elevation.com/api/v1/lookup",
+            data=payload,
+            headers={"Content-Type": "application/json", "Accept": "application/json"},
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                data = _json.loads(resp.read())
+            all_elevations.extend(float(r["elevation"]) for r in data["results"])
+        except Exception:
+            return None
+
+    return all_elevations

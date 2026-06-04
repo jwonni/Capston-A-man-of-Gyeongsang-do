@@ -19,7 +19,8 @@ MORPH_CLOSE_SIZE = 0        # morphology closing 커널 크기. 미지정 시 �
 FINAL_SIZE_THRESH = 0       # Step 3 후 남은 fragment 중 이 픽셀 수 미만을 제거. 0=주경로만 보존.
 SPUR_LENGTH = 20            # 이 픽셀 수 미만인 가지를 잔가지로 간주해 제거. 0=제거 안 함.
 SKEL_MORPH_CLOSE = 0        # 스켈레톤화 전 morphology closing 커널 크기 (0=비활성화, 권장 3~7).
-
+RDP_EPSILON = 1.0 
+MIN_DIST = 8.0 
 
 import os
 from pathlib import Path
@@ -53,8 +54,8 @@ class Config:
     HISAM_CHECKPOINT = BASE_DIR / "Hi-SAM" / "pretrained_checkpoint" / "hi_sam_l.pth"
     HISAM_MODEL_TYPE = "vit_l"          # vit_t / vit_s / vit_b / vit_l / vit_h
 
-    HISAM_TOTAL_POINTS  = 600
-    HISAM_BATCH_POINTS  = 64
+    HISAM_TOTAL_POINTS  = 1500
+    HISAM_BATCH_POINTS  = 100
     HISAM_SCORE_THRESH  = 0.4
     HISAM_PRE_NMS_TOP_K = 500
     HISAM_NMS_THRESH    = 0.6
@@ -78,6 +79,7 @@ class Config:
     OCR_LANG        = "korean"
     MIN_CONFIDENCE  = 0.7
     DROP_EMPTY_TEXT = True
+    OCR_MIN_TEXT_LEN = 3
     SORT_BY_COORDS  = True
 
     # OCR 텍스트 세로 병합 파라미터

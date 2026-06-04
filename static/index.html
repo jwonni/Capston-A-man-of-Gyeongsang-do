@@ -6,6 +6,7 @@
     <title>Marathon Route Extraction</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         :root {
             --bg:       #f0f4f8;
@@ -282,6 +283,30 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* ── Elevation panel ────────────────────────────────────────────── */
+        .elevation-panel {
+            background: var(--panel);
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            padding: 20px 20px 16px;
+            margin-top: 16px;
+        }
+        .elevation-panel-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .elevation-panel-header h2 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0;
+        }
+        .elevation-chart-wrap {
+            position: relative;
+            height: 180px;
+        }
+
         /* ── Responsive ─────────────────────────────────────────────────── */
         @media (max-width: 900px) {
             .main-grid { grid-template-columns: 1fr; }
@@ -443,6 +468,16 @@
                 </div>
 
             </div><!-- .gpx-panel -->
+
+            <div class="elevation-panel" id="elevationPanel" style="display:none">
+                <div class="elevation-panel-header">
+                    <h2>고도 그래프</h2>
+                </div>
+                <div class="elevation-chart-wrap">
+                    <canvas id="elevationChart"></canvas>
+                </div>
+            </div>
+
         </div><!-- .right-col -->
 
     </div><!-- .main-grid -->
@@ -458,8 +493,11 @@
         path:              [],
         homography_params: null,
         gpxContent:        null,
+        elevations:        null,
+        routeLatlngs:      null,
         pipelineRunning:   false,
         leafletMap:        null,
+        elevationChart:    null,
         ocrResults:        [],
     };
 
@@ -560,6 +598,8 @@
 
         if (latlngs.length < 2) return;
 
+        state.routeLatlngs = latlngs;
+
         // Destroy previous map
         if (state.leafletMap) { state.leafletMap.remove(); state.leafletMap = null; }
 
@@ -591,8 +631,105 @@
         document.getElementById('statEnd').textContent   = `${e[0].toFixed(5)}°N`;
     }
 
+    function injectElevationsIntoGpx(gpxString, elevations) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(gpxString, 'application/xml');
+        const trkpts = doc.querySelectorAll('trkpt');
+        trkpts.forEach((pt, i) => {
+            if (i >= elevations.length) return;
+            const existing = pt.querySelector('ele');
+            if (existing) existing.remove();
+            const ele = doc.createElementNS('http://www.topografix.com/GPX/1/1', 'ele');
+            ele.textContent = elevations[i].toFixed(1);
+            pt.insertBefore(ele, pt.firstChild);
+        });
+        return new XMLSerializer().serializeToString(doc);
+    }
+
+    async function fetchAndShowElevations() {
+        const latlngs = state.routeLatlngs;
+        if (!latlngs || latlngs.length < 2) return;
+
+        const panel = document.getElementById('elevationPanel');
+        const wrap  = panel.querySelector('.elevation-chart-wrap');
+        panel.style.display = '';
+        wrap.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#64748b;font-size:0.88rem"><span class="spinner"></span>&nbsp;고도 데이터 불러오는 중...</div>';
+
+        try {
+            const d = await apiPost('/api/elevations', { latlngs });
+            // GPX에 <ele> 태그 삽입 후 state.gpxContent 갱신 (다운로드 파일에 고도 포함)
+            if (state.gpxContent && d.elevations) {
+                state.gpxContent = injectElevationsIntoGpx(state.gpxContent, d.elevations);
+            }
+            wrap.innerHTML = '<canvas id="elevationChart"></canvas>';
+            showElevationChart(d.elevations);
+        } catch (_) {
+            wrap.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#94a3b8;font-size:0.85rem">고도 데이터를 불러올 수 없습니다</div>';
+        }
+    }
+
+    function showElevationChart(elevations) {
+        if (!elevations || elevations.length < 2) return;
+
+        const latlngs = state.routeLatlngs || [];
+        const distances = [0];
+        for (let i = 1; i < elevations.length; i++) {
+            if (latlngs.length > i) {
+                const [lat1, lng1] = latlngs[i - 1];
+                const [lat2, lng2] = latlngs[i];
+                const R = 6371;
+                const dLat = (lat2 - lat1) * Math.PI / 180;
+                const dLng = (lng2 - lng1) * Math.PI / 180;
+                const a = Math.sin(dLat/2)**2 +
+                    Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) * Math.sin(dLng/2)**2;
+                distances.push(distances[i-1] + 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+            } else {
+                distances.push(distances[i-1] + 0.1);
+            }
+        }
+
+        if (state.elevationChart) { state.elevationChart.destroy(); state.elevationChart = null; }
+
+        const ctx = document.getElementById('elevationChart').getContext('2d');
+        state.elevationChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: distances.map(d => d.toFixed(2)),
+                datasets: [{
+                    label: '고도 (m)',
+                    data: elevations,
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239,68,68,0.12)',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    fill: true,
+                    tension: 0.3,
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: {
+                        title: { display: true, text: '거리 (km)', font: { size: 11 } },
+                        ticks: { maxTicksLimit: 8, font: { size: 10 } },
+                    },
+                    y: {
+                        title: { display: true, text: '고도 (m)', font: { size: 11 } },
+                        ticks: { font: { size: 10 } },
+                    },
+                },
+            },
+        });
+    }
+
     function resetRightPanel() {
         if (state.leafletMap) { state.leafletMap.remove(); state.leafletMap = null; }
+        if (state.elevationChart) { state.elevationChart.destroy(); state.elevationChart = null; }
+        document.getElementById('elevationPanel').style.display = 'none';
+        state.elevations   = null;
+        state.routeLatlngs = null;
         leafletMapContainer.style.display = 'none';
         gpxOverlayImg.style.display       = 'none';
         gpxOverlayImg.src                 = '';
@@ -770,6 +907,9 @@
 
             // Show route on Leaflet map
             showGpxOnLeaflet(state.gpxContent);
+
+            // Fetch elevation data asynchronously (non-blocking)
+            fetchAndShowElevations();
 
             // Update extra stats
             document.getElementById('statAnchors').textContent     = `${d_geo.num_anchors}개`;

@@ -6,10 +6,9 @@ FastAPI 백엔드 + 단일 페이지 HTML 프론트엔드로 마라톤 코스 �
 
 1. **경로 마스크 추출** — U-Net 모델로 마라톤 코스 이미지에서 경로 마스크 예측
 2. **후처리** — 연결 성분 필터링 + 스켈레톤화
-3. **그래프 단순화** — 스켈레톤을 5단계 파이프라인으로 의미론적 그래프 G′로 압축
-4. **경로 추출** — G′에서 BFS 탐색 후 엣지 픽셀 복원 + 꺾임점 기반 키포인트 추출
-5. **지리좌표 변환** — Hi-SAM 텍스트 감지 → PaddleOCR → 카카오 Local API → 호모그래피로 픽셀↔GPS 변환
-6. **GPX 출력** — 변환된 GPS 좌표를 GPX 파일로 내보내기
+3. **경로 추출** — 스켈레톤 픽셀 그래프에서 BFS 탐색 후 RDP 알고리즘으로 경로 단순화
+4. **지리좌표 변환** — Hi-SAM 텍스트 감지 → PaddleOCR → 카카오 Local API → 호모그래피로 픽셀↔GPS 변환
+5. **GPX 출력** — 변환된 GPS 좌표를 GPX 파일로 내보내기
 
 ## 프로젝트 구조
 
@@ -38,8 +37,7 @@ FastAPI 백엔드 + 단일 페이지 HTML 프론트엔드로 마라톤 코스 �
 │   │   └── gpx_converter.py            # 픽셀 경로 → GPX 변환
 │   └── marathon_route_extraction/
 │       ├── component_filter.py         # 연결 성분 필터링
-│       ├── graph_simplifier.py         # 5단계 그래프 단순화 파이프라인
-│       ├── path_extractor.py           # 스켈레톤 → 순서 있는 경로 추출
+│       ├── path_extractor.py           # 스켈레톤 → BFS + RDP 경로 추출
 │       ├── postprocess.py              # 4단계 후처리 파이프라인
 │       ├── segformer_unet_b2.py        # SegFormer-UNet B2 모델 / 추론
 │       └── unet.py                     # U-Net 모델 / 추론
@@ -133,17 +131,12 @@ http://localhost:8010
 후처리 (노이즈 제거 + fragment 연결 + 스켈레톤화)
   ↓
 스켈레톤 이미지
-  ↓ /api/extract_path  — graph_simplifier.py
-그래프 단순화 5단계
-  1. 1차 선형 압축    — degree-2 중간 노드 제거
-  2. 노드 병합        — 유클리드 거리 ≤ τ 인 노드를 centroid로 통합
-  3. 2차 선형 압축    — 병합 후 새로 생긴 degree-2 노드 재압축
-  4. 컴포넌트 연결    — 분리 성분을 가장 가까운 노드쌍으로 반복 연결
-  5. 핵심 노드 유지   — leaf(degree 1) + junction(degree ≥ 3)만 남은 G′
+  ↓ /api/extract_path  — path_extractor.py
+스켈레톤 픽셀 그래프 구성 (픽셀 1개 = 노드, 8방향 인접 연결)
   ↓
-단순화된 그래프 G′에서 BFS 경로 탐색 (start → end)
+BFS로 start → end 전체 픽셀 경로 탐색
   ↓
-엣지 픽셀 복원 + 꺾임점 추출 (각도 기반 키포인트)
+RDP  경로 단순화 — 직선 구간 노이즈 제거 + 꺾인 구간 보존
   ↓
 경로 픽셀 좌표 리스트 [(x, y), ...]
 ```

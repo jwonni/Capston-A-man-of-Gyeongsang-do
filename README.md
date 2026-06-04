@@ -4,7 +4,7 @@ FastAPI 백엔드 + 단일 페이지 HTML 프론트엔드로 마라톤 코스 �
 
 ## 주요 기능
 
-1. **경로 마스크 추출** — U-Net 모델로 마라톤 코스 이미지에서 경로 마스크 예측
+1. **경로 마스크 추출** — Segformer-UNet-b2 모델로 마라톤 코스 이미지에서 경로 마스크 예측
 2. **후처리** — 연결 성분 필터링 + 스켈레톤화
 3. **경로 추출** — 스켈레톤 픽셀 그래프에서 BFS 탐색 후 RDP 알고리즘으로 경로 단순화
 4. **지리좌표 변환** — Hi-SAM 텍스트 감지 → PaddleOCR → 카카오 Local API → 호모그래피로 픽셀↔GPS 변환
@@ -58,7 +58,7 @@ pip install -r requirements.txt
 
 ### 2. 경로 추출 모델 가중치 다운로드 (SegFormer-UNet B2)
 
-U-Net과 SegFormer-UNet-B2 가중치는 아래 Google Drive에서 다운
+SegFormer-UNet-B2 가중치는 아래 Google Drive에서 다운
 
 - 다운로드 링크: https://drive.google.com/drive/folders/1TKDRnaR8HlrcM2B8wclnDiv_GN5hD2gW?usp=sharing
 
@@ -67,9 +67,7 @@ Drive에 저장된 파일명이 아래와 같다면:
 - `model_best.pt`
 - `model_last.pt`
 
-프로젝트에서는 아래처럼 이름을 바꿔 `weights/` 폴더에 저장
-
-- 각각 `model_best.pt` -> `segformer_unet_b2_best.pt`와 `unet_best.pt`으로 변경
+프로젝트에 `weights/` 폴더를 만들고 가중치 파일을 저장, 그리고 `model_best.pt` -> `segformer_unet_b2_best.pt`으로 파일 이름 변경
 
 ### 3. Hi-SAM 설정 (지리좌표 변환 사용 시)
 

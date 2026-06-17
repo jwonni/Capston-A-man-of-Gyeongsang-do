@@ -34,7 +34,6 @@ from src.config import (
     FINAL_SIZE_THRESH,
     SPUR_LENGTH,
     SKEL_MORPH_CLOSE,
-    RDP_EPSILON,
     MIN_DIST,
 )
 from src.gpx_conversion.gpx_converter import convert_pixel_path_to_gpx, fix_white_line_path

@@ -25,8 +25,8 @@ pycocotools>=2.0
 absl-py>=1.0
 python-Levenshtein>=0.12
 
-# PaddleOCR (CPU only - avoid CUDA conflicts with Hi-SAM / torch)
-paddlepaddle>=3.0,<3.3
+# PaddleOCR GPU: pip install paddlepaddle-gpu==3.2.2 -i https://www.paddlepaddle.org.cn/packages/stable/cu118/
+# paddlepaddle>=3.0,<3.3  # CPU fallback (주석 해제하면 CPU 전용으로 복구)
 paddleocr>=3.4,<3.5
 
 # Hi-SAM repository uses its own requirements. Do not install apache_beam or Polygon3

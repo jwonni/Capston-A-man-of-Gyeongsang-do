@@ -66,7 +66,7 @@ class Config:
     HISAM_CROP_Y_MARGIN = 0
 
     # ── PaddleOCR 입력 전처리 ────────────────────────────────────────────────────
-    PADDLE_DEVICE = "cpu"               # torch(Hi-SAM)와 CUDA 충돌 방지
+    PADDLE_DEVICE = "gpu"               # paddlepaddle-gpu 설치 필요 (cu118 빌드, CUDA 12.x 호환)
     PREP_TARGET_LONG_SIDE  = 256
     PREP_RETRY_LONG_SIDE   = 512
     PREP_MIN_HEIGHT        = 64

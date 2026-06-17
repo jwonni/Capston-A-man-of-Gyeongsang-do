@@ -6,7 +6,7 @@ FastAPI 백엔드 + 단일 페이지 HTML 프론트엔드로 마라톤 코스 �
 
 1. **경로 마스크 추출** — Segformer-UNet-b2 모델로 마라톤 코스 이미지에서 경로 마스크 예측
 2. **후처리** — 연결 성분 필터링 + 스켈레톤화
-3. **경로 추출** — 스켈레톤 픽셀 그래프에서 BFS 탐색 후 RDP 알고리즘으로 경로 단순화
+3. **경로 추출** — 스켈레톤 픽셀 그래프에서 BFS 탐색 후 등간격 거리 기반 샘플링으로 경로 단순화
 4. **지리좌표 변환** — Hi-SAM 텍스트 감지 → PaddleOCR → 카카오 Local API → 호모그래피로 픽셀↔GPS 변환
 5. **GPX 출력** — 변환된 GPS 좌표를 GPX 파일로 내보내기
 
@@ -37,7 +37,7 @@ FastAPI 백엔드 + 단일 페이지 HTML 프론트엔드로 마라톤 코스 �
 │   │   └── gpx_converter.py            # 픽셀 경로 → GPX 변환
 │   └── marathon_route_extraction/
 │       ├── component_filter.py         # 연결 성분 필터링
-│       ├── path_extractor.py           # 스켈레톤 → BFS + RDP 경로 추출
+│       ├── path_extractor.py           # 스켈레톤 → BFS + 등간격 거리 샘플링 경로 추출
 │       ├── postprocess.py              # 4단계 후처리 파이프라인
 │       ├── segformer_unet_b2.py        # SegFormer-UNet B2 모델 / 추론
 │       └── unet.py                     # U-Net 모델 / 추론
@@ -134,7 +134,7 @@ http://localhost:8010
   ↓
 BFS로 start → end 전체 픽셀 경로 탐색
   ↓
-RDP  경로 단순화 — 직선 구간 노이즈 제거 + 꺾인 구간 보존
+등간격 거리 기반 샘플링 — 이전 선택 점으로부터 유클리드 거리 ≥ min_dist인 점만 추출
   ↓
 경로 픽셀 좌표 리스트 [(x, y), ...]
 ```
@@ -145,7 +145,7 @@ RDP  경로 단순화 — 직선 구간 노이즈 제거 + 꺾인 구간 보존
 이미지
   ↓ Hi-SAM (vit_l)  — text_detector.py
 텍스트 영역 polygon 목록
-  ↓ PaddleOCR (korean, CPU)  — ocr.py
+  ↓ PaddleOCR (korean, GPU)  — ocr.py
     (y, x) 정렬 → 동일 X 세로 병합
 인식된 텍스트 + 픽셀 좌표  [{text, x, y, confidence}, ...]
   ↓ 카카오 Local API (병렬 검색 + MAD 필터)  — anchor_builder.py
@@ -169,5 +169,4 @@ python scripts/visualize_component_filter.py --input-mask sample_route.png --min
 ## 참고 사항
 
 - GPU가 없으면 CPU로 자동 전환됨 (Hi-SAM 추론은 시간이 오래 걸릴 수 있음)
-- PaddleOCR은 CPU 전용으로 고정 (Hi-SAM의 torch GPU와 CUDA 충돌 방지)
-- Windows 환경에서는 PaddlePaddle `3.0 이상 3.3 미만` 버전 사용 권장 (oneDNN 버그 회피)
+- PaddleOCR은 GPU를 사용함 (`paddlepaddle-gpu==3.2.2` cu118 빌드, PyTorch CUDA 12.x와 공존 가능)

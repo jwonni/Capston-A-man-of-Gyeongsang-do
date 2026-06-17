@@ -157,10 +157,18 @@ _paddle_ocr: Any = None
 
 
 def load_paddle_ocr() -> Any:
-    """PaddleOCR 싱글톤 로드 (CPU 고정)."""
+    """PaddleOCR 싱글톤 로드."""
     global _paddle_ocr
     if _paddle_ocr is None:
         os.environ.setdefault("PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK", "True")
+        # Hi-SAM(PyTorch) 완료 후 CUDA 캐시 해제 — PaddlePaddle 컨텍스트 초기화 충돌 방지
+        try:
+            import torch
+            if torch.cuda.is_available():
+                torch.cuda.synchronize()
+                torch.cuda.empty_cache()
+        except Exception:
+            pass
         import paddle
         paddle.set_flags({"FLAGS_use_mkldnn": False})
         paddle.device.set_device(Config.PADDLE_DEVICE)
